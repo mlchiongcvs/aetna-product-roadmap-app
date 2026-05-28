@@ -12,6 +12,9 @@ const CLIENT_NAME = process.env.X_CLIENT_NAME || "aetna-roadmap-app";
 
 app.use(express.json({ limit: "25mb" }));
 
+// Health check (required by CAP)
+app.get("/health", (req, res) => res.status(200).json({ status: "ok" }));
+
 // Serve static frontend
 app.use(express.static(join(__dirname, "../dist")));
 
