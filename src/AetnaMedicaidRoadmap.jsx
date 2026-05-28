@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import * as XLSX from "xlsx";
 
 // ── CONSTANTS ────────────────────────────────────────────────────────────────
 const PILLARS = [
@@ -196,6 +197,7 @@ export default function RoadmapApp() {
   const [dragOver,      setDragOver]      = useState(false);
   const [textInput,     setTextInput]     = useState("");
   const [notification,  setNotification]  = useState(null);
+  const [apiKey,        setApiKey]        = useState(() => localStorage.getItem("anthropic-api-key") || "");
   const fileInputRef = useRef(null);
 
   // Persist to localStorage
@@ -222,13 +224,26 @@ export default function RoadmapApp() {
 
   const handleDroppedFiles = (fileList) => {
     const valid = Array.from(fileList).filter(f =>
-      f.type === "application/pdf" || f.name.endsWith(".pptx") || f.name.endsWith(".docx") || f.type.startsWith("text/")
+      f.type === "application/pdf" || f.name.endsWith(".pptx") || f.name.endsWith(".docx") || f.name.endsWith(".xlsx") || f.name.endsWith(".xls") || f.type.startsWith("text/")
     );
     setUploadedFiles(prev => [...prev, ...valid]);
   };
 
+  const excelToText = async (file) => {
+    const buffer = await file.arrayBuffer();
+    const workbook = XLSX.read(buffer, { type: "array" });
+    let text = "";
+    for (const sheetName of workbook.SheetNames) {
+      const sheet = workbook.Sheets[sheetName];
+      text += `--- Sheet: ${sheetName} ---\n`;
+      text += XLSX.utils.sheet_to_csv(sheet) + "\n\n";
+    }
+    return text;
+  };
+
   // ── AI DOCUMENT ANALYSIS ─────────────────────────────────────────────────
   const analyzeDocuments = async () => {
+    if (!apiKey.trim()) { notify("Enter your Anthropic API key first.", "error"); return; }
     if (!uploadedFiles.length && !textInput.trim()) { notify("Upload files or paste text first.", "error"); return; }
     setIsProcessing(true);
     setProcessingLog([]);
@@ -241,6 +256,9 @@ export default function RoadmapApp() {
         if (file.type === "application/pdf") {
           const b64 = await fileToBase64(file);
           contentParts.push({ type:"document", source:{ type:"base64", media_type:"application/pdf", data:b64 } });
+        } else if (file.name.endsWith(".xlsx") || file.name.endsWith(".xls")) {
+          const text = await excelToText(file);
+          contentParts.push({ type:"text", text:`--- Spreadsheet: ${file.name} ---\n${text.slice(0,12000)}` });
         } else {
           const text = await file.text().catch(() => `[Could not read ${file.name}]`);
           contentParts.push({ type:"text", text:`--- Document: ${file.name} ---\n${text.slice(0,8000)}` });
@@ -290,7 +308,12 @@ Return 5-20 items. If unclear, make reasonable inferences based on Medicaid heal
       log("Sending to Claude AI for analysis...");
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method:"POST",
-        headers:{ "Content-Type":"application/json" },
+        headers:{
+          "Content-Type":"application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true",
+        },
         body: JSON.stringify({
           model:"claude-sonnet-4-20250514",
           max_tokens:4000,
@@ -343,7 +366,7 @@ Return 5-20 items. If unclear, make reasonable inferences based on Medicaid heal
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method:"POST",
-        headers:{ "Content-Type":"application/json" },
+        headers:{ "Content-Type":"application/json", "x-api-key": apiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model:"claude-sonnet-4-20250514",
           max_tokens:1500,
@@ -388,7 +411,7 @@ After creating, tell me the Jira issue key (like PROJECT-123).
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method:"POST",
-        headers:{ "Content-Type":"application/json" },
+        headers:{ "Content-Type":"application/json", "x-api-key": apiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model:"claude-sonnet-4-20250514",
           max_tokens:2000,
@@ -677,15 +700,24 @@ After creating, share the page URL.
                   Upload strategy decks, research documents, planning briefs, or meeting notes. Claude AI reads them and extracts structured roadmap initiatives automatically — no manual entry needed.
                 </p>
 
+                {/* API Key */}
+                <div style={{ marginBottom:20 }}>
+                  <div style={{ fontSize:12, fontWeight:600, color:"#1C1C2E", marginBottom:8 }}>Anthropic API Key</div>
+                  <input value={apiKey} onChange={e=>{ setApiKey(e.target.value); localStorage.setItem("anthropic-api-key", e.target.value); }}
+                    type="password" placeholder="sk-ant-..."
+                    style={{ width:"100%", padding:"10px 14px", borderRadius:10, border:"1px solid #E4E2DA", fontSize:13, fontFamily:"inherit", background:"#FFF" }} />
+                  <div style={{ fontSize:11, color:"#8A8AA0", marginTop:4 }}>Your key is stored locally in your browser and never sent anywhere except the Anthropic API.</div>
+                </div>
+
                 {/* Drop zone */}
                 <div onDragOver={e=>{e.preventDefault();setDragOver(true);}} onDragLeave={()=>setDragOver(false)}
                   onDrop={e=>{e.preventDefault();setDragOver(false);handleDroppedFiles(e.dataTransfer.files);}}
                   onClick={() => fileInputRef.current?.click()}
                   style={{ border:`2px dashed ${dragOver?"#7D3F98":"#C8C6C0"}`, borderRadius:14, padding:"48px 32px", textAlign:"center", background:dragOver?"#F5F0FA":"#FAFAF8", cursor:"pointer", transition:"all 0.2s", marginBottom:20 }}>
-                  <input ref={fileInputRef} type="file" multiple accept=".pdf,.pptx,.docx,.txt" style={{ display:"none" }} onChange={e=>handleDroppedFiles(e.target.files)} />
+                  <input ref={fileInputRef} type="file" multiple accept=".pdf,.pptx,.docx,.xlsx,.xls,.txt" style={{ display:"none" }} onChange={e=>handleDroppedFiles(e.target.files)} />
                   <div style={{ fontSize:40, marginBottom:12 }}>📄</div>
                   <div style={{ fontSize:16, fontWeight:600, color:"#1C1C2E", marginBottom:6 }}>Drop files or click to upload</div>
-                  <div style={{ fontSize:13, color:"#8A8AA0" }}>PDF, PPTX, DOCX, TXT · The PPTX roadmap we built earlier works great here</div>
+                  <div style={{ fontSize:13, color:"#8A8AA0" }}>PDF, PPTX, DOCX, XLSX, TXT</div>
                 </div>
 
                 {/* File list */}
@@ -694,7 +726,7 @@ After creating, share the page URL.
                     <div style={{ fontSize:12, fontWeight:600, color:"#1C1C2E", marginBottom:10 }}>Ready for analysis ({uploadedFiles.length})</div>
                     {uploadedFiles.map((file,i) => (
                       <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 14px", background:"#FFF", borderRadius:8, border:"1px solid #E4E2DA", marginBottom:6 }}>
-                        <span style={{ fontSize:18 }}>{file.type==="application/pdf"?"📕":file.name.endsWith(".pptx")?"📊":"📝"}</span>
+                        <span style={{ fontSize:18 }}>{file.type==="application/pdf"?"📕":file.name.endsWith(".pptx")?"📊":(file.name.endsWith(".xlsx")||file.name.endsWith(".xls"))?"📗":"📝"}</span>
                         <span style={{ flex:1, fontSize:13, color:"#1C1C2E" }}>{file.name}</span>
                         <span style={{ fontSize:11, color:"#8A8AA0" }}>{(file.size/1024).toFixed(0)} KB</span>
                         <span onClick={()=>setUploadedFiles(prev=>prev.filter((_,j)=>j!==i))} style={{ fontSize:14, cursor:"pointer", color:"#C0392B", padding:"0 4px" }}>×</span>
