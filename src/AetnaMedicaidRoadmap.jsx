@@ -197,7 +197,6 @@ export default function RoadmapApp() {
   const [dragOver,      setDragOver]      = useState(false);
   const [textInput,     setTextInput]     = useState("");
   const [notification,  setNotification]  = useState(null);
-  const [apiKey,        setApiKey]        = useState(() => localStorage.getItem("anthropic-api-key") || "");
   const fileInputRef = useRef(null);
 
   // Persist to localStorage
@@ -243,7 +242,6 @@ export default function RoadmapApp() {
 
   // ── AI DOCUMENT ANALYSIS ─────────────────────────────────────────────────
   const analyzeDocuments = async () => {
-    if (!apiKey.trim()) { notify("Enter your Anthropic API key first.", "error"); return; }
     if (!uploadedFiles.length && !textInput.trim()) { notify("Upload files or paste text first.", "error"); return; }
     setIsProcessing(true);
     setProcessingLog([]);
@@ -306,14 +304,9 @@ Return 5-20 items. If unclear, make reasonable inferences based on Medicaid heal
       `});
 
       log("Sending to Claude AI for analysis...");
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/messages", {
         method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true",
-        },
+        headers:{ "Content-Type":"application/json" },
         body: JSON.stringify({
           model:"claude-sonnet-4-20250514",
           max_tokens:4000,
@@ -364,9 +357,9 @@ Return 5-20 items. If unclear, make reasonable inferences based on Medicaid heal
     setIsProcessing(true);
     setProcessingMsg(`Creating Jira epic for "${item.title.slice(0,30)}..."...`);
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/messages", {
         method:"POST",
-        headers:{ "Content-Type":"application/json", "x-api-key": apiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+        headers:{ "Content-Type":"application/json" },
         body: JSON.stringify({
           model:"claude-sonnet-4-20250514",
           max_tokens:1500,
@@ -385,7 +378,6 @@ Steps:
 
 After creating, tell me the Jira issue key (like PROJECT-123).
           `}],
-          mcp_servers:[{ type:"url", url:"https://mcp.atlassian.com/v1/mcp", name:"atlassian-mcp" }]
         })
       });
       const data = await res.json();
@@ -409,9 +401,9 @@ After creating, tell me the Jira issue key (like PROJECT-123).
     setIsProcessing(true);
     setProcessingMsg("Publishing to Confluence...");
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/messages", {
         method:"POST",
-        headers:{ "Content-Type":"application/json", "x-api-key": apiKey, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+        headers:{ "Content-Type":"application/json" },
         body: JSON.stringify({
           model:"claude-sonnet-4-20250514",
           max_tokens:2000,
@@ -437,7 +429,6 @@ Priority: ${item.priority}
 
 After creating, share the page URL.
           `}],
-          mcp_servers:[{ type:"url", url:"https://mcp.atlassian.com/v1/mcp", name:"atlassian-mcp" }]
         })
       });
       const data = await res.json();
@@ -699,15 +690,6 @@ After creating, share the page URL.
                 <p style={{ color:"#6B6B8A", fontSize:14, marginBottom:32, lineHeight:1.6 }}>
                   Upload strategy decks, research documents, planning briefs, or meeting notes. Claude AI reads them and extracts structured roadmap initiatives automatically — no manual entry needed.
                 </p>
-
-                {/* API Key */}
-                <div style={{ marginBottom:20 }}>
-                  <div style={{ fontSize:12, fontWeight:600, color:"#1C1C2E", marginBottom:8 }}>Anthropic API Key</div>
-                  <input value={apiKey} onChange={e=>{ setApiKey(e.target.value); localStorage.setItem("anthropic-api-key", e.target.value); }}
-                    type="password" placeholder="sk-ant-..."
-                    style={{ width:"100%", padding:"10px 14px", borderRadius:10, border:"1px solid #E4E2DA", fontSize:13, fontFamily:"inherit", background:"#FFF" }} />
-                  <div style={{ fontSize:11, color:"#8A8AA0", marginTop:4 }}>Your key is stored locally in your browser and never sent anywhere except the Anthropic API.</div>
-                </div>
 
                 {/* Drop zone */}
                 <div onDragOver={e=>{e.preventDefault();setDragOver(true);}} onDragLeave={()=>setDragOver(false)}
