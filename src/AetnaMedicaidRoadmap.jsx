@@ -1014,11 +1014,6 @@ After creating, share the page URL.
                         {q}
                       </div>
                     ))}
-                    {/* Timeline line */}
-                    <div style={{ position:"absolute", top:"50%", left:16, right:16, height:2, background:"#D0CEC8", zIndex:0 }} />
-                    {TIMELINE_QUARTERS.map((_, i) => (
-                      <div key={i} style={{ position:"absolute", top:"50%", left:`${(i / totalCols) * 100 + (50/totalCols)}%`, transform:"translate(-50%, -50%)", width:8, height:8, borderRadius:"50%", background:"#FFF", border:"2px solid #8A8AA0", zIndex:1 }} />
-                    ))}
                   </div>
 
                   {/* Pillar sections with items */}
