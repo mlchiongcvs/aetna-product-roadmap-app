@@ -992,34 +992,6 @@ input, textarea, select { font-family: var(--font-body); }
         <span id="rmFilterCount" style="display:none;background:var(--aetna-red);color:white;font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700;"></span>
       </button>
     </div>
-    <!-- Collapsible filter panel -->
-    <div id="rmFilterPanel" style="display:none;margin-bottom:16px;padding:16px 18px;background:white;border:1px solid var(--aetna-gray-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);animation:slideDown 0.2s ease;">
-      <div class="roadmap-filters" id="rmFilters" style="margin-bottom:0;">
-        <button class="filter-btn active" onclick="rmFilter('all',this)">All product lines</button>
-        <div class="filter-sep"></div>
-        <button class="filter-btn" onclick="rmFilter('pl0',this)" style="border-color:#378ADD;color:#185FA5;">Member Access</button>
-        <button class="filter-btn" onclick="rmFilter('pl1',this)" style="border-color:#1D9E75;color:#0F6E56;">Enrollment &amp; Eligibility</button>
-        <button class="filter-btn" onclick="rmFilter('pl2',this)" style="border-color:#BA7517;color:#854F0B;">Claims &amp; Encounters</button>
-        <button class="filter-btn" onclick="rmFilter('pl3',this)" style="border-color:#639922;color:#3B6D11;">Provider &amp; Network</button>
-        <button class="filter-btn" onclick="rmFilter('pl4',this)" style="border-color:#7F77DD;color:#534AB7;">Clinical &amp; Care Mgmt</button>
-        <button class="filter-btn" onclick="rmFilter('pl5',this)" style="border-color:#D85A30;color:#993C1D;">Finance &amp; Billing</button>
-        <button class="filter-btn" onclick="rmFilter('pl6',this)" style="border-color:#D4537E;color:#993556;">Data &amp; Analytics</button>
-        <button class="filter-btn" onclick="rmFilter('pl7',this)" style="border-color:#888780;color:#5F5E5A;">Contract &amp; Compliance</button>
-        <div class="filter-sep"></div>
-        <button class="filter-btn" onclick="rmFilter('s-me',this)">Member Experience</button>
-        <button class="filter-btn" onclick="rmFilter('s-tc',this)">Total Cost of Care</button>
-        <button class="filter-btn" onclick="rmFilter('s-co',this)">Core Operations</button>
-        <button class="filter-btn" onclick="rmFilter('s-cs',this)">Cost Structure</button>
-        <button class="filter-btn" onclick="rmFilter('s-gr',this)">Growth</button>
-        <div class="filter-sep"></div>
-        <span style="font-size:10px;font-weight:700;color:var(--aetna-gray-500);text-transform:uppercase;letter-spacing:0.05em;padding:0 4px;align-self:center;">By User</span>
-        <button class="filter-btn" onclick="rmFilter('u-member',this)" style="border-color:#0077C8;color:#0077C8;">👤 Member</button>
-        <button class="filter-btn" onclick="rmFilter('u-caregiver',this)" style="border-color:#C8102E;color:#C8102E;">🤝 Caregiver</button>
-        <button class="filter-btn" onclick="rmFilter('u-provider',this)" style="border-color:#00A3A1;color:#007A79;">🏥 Provider</button>
-        <button class="filter-btn" onclick="rmFilter('u-casemanager',this)" style="border-color:#7F77DD;color:#534AB7;">💼 Case Manager</button>
-        <button class="filter-btn" onclick="rmFilter('u-clinician',this)" style="border-color:#00843D;color:#00612D;">🩺 Clinician</button>
-      </div>
-    </div>
 
     <div id="rmSummary" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;"></div>
 
@@ -1485,19 +1457,24 @@ function fmtM(v){if(!v||v===0)return '—';return '$'+v.toFixed(1)+'M';}
 // buildTT/showTT/hideTT removed — replaced by flyout panel
 
 // ── FILTER TOGGLE ─────────────────────────────────────────────────
+let filterPanelOpen=false;
 function toggleRmFilters(){
-  const panel=document.getElementById('rmFilterPanel');
+  const panel=document.getElementById('filterPanel');
+  const overlay=document.getElementById('filterOverlay');
   const btn=document.getElementById('rmFilterToggle');
-  if(panel.style.display==='none'){
-    panel.style.display='block';
+  filterPanelOpen=!filterPanelOpen;
+  if(filterPanelOpen){
+    panel.classList.add('open');
+    overlay.classList.add('open');
     btn.style.background='var(--aetna-navy)';
     btn.style.color='white';
     btn.style.borderColor='var(--aetna-navy)';
   } else {
-    panel.style.display='none';
+    panel.classList.remove('open');
+    overlay.classList.remove('open');
     btn.style.background='white';
     btn.style.color='var(--aetna-navy)';
-    btn.style.borderColor='var(--aetna-gray-300)';
+    btn.style.borderColor='';
   }
 }
 
@@ -1507,7 +1484,7 @@ PLs.forEach((_,i)=>{rmExpanded[i]=true;});
 let currentFilter='all';
 function rmFilter(f,btn){
   currentFilter=f;
-  document.querySelectorAll('#rmFilters .filter-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#filterPanel .filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   // Update filter badge on toggle button
   const badge=document.getElementById('rmFilterCount');
@@ -1661,6 +1638,54 @@ function closePanel(){
   document.getElementById('flyoutPanel').classList.remove('open');
 }
 </script>
+
+<!-- FILTER FLYOUT PANEL -->
+<div id="filterOverlay" class="flyout-overlay" onclick="toggleRmFilters()"></div>
+<div id="filterPanel" class="flyout-panel" style="width:320px;right:-340px;">
+  <div class="flyout-header" style="border-left:none;padding:18px 22px 14px;">
+    <div style="flex:1;">
+      <div class="flyout-title" style="font-size:14px;">Filters</div>
+      <div style="font-size:11px;color:var(--aetna-gray-500);margin-top:2px;">Filter initiatives by product line, strategy, or user</div>
+    </div>
+    <button class="flyout-close" onclick="toggleRmFilters()">✕</button>
+  </div>
+  <div class="flyout-body" style="padding:18px 22px;">
+    <div style="margin-bottom:18px;">
+      <div class="flyout-lbl" style="margin-bottom:8px;">Product Line</div>
+      <div class="roadmap-filters" id="rmFilters" style="flex-direction:column;align-items:stretch;gap:6px;">
+        <button class="filter-btn active" onclick="rmFilter('all',this)" style="text-align:left;">All product lines</button>
+        <button class="filter-btn" onclick="rmFilter('pl0',this)" style="text-align:left;border-color:#378ADD;color:#185FA5;">Member Access</button>
+        <button class="filter-btn" onclick="rmFilter('pl1',this)" style="text-align:left;border-color:#1D9E75;color:#0F6E56;">Enrollment &amp; Eligibility</button>
+        <button class="filter-btn" onclick="rmFilter('pl2',this)" style="text-align:left;border-color:#BA7517;color:#854F0B;">Claims &amp; Encounters</button>
+        <button class="filter-btn" onclick="rmFilter('pl3',this)" style="text-align:left;border-color:#639922;color:#3B6D11;">Provider &amp; Network</button>
+        <button class="filter-btn" onclick="rmFilter('pl4',this)" style="text-align:left;border-color:#7F77DD;color:#534AB7;">Clinical &amp; Care Mgmt</button>
+        <button class="filter-btn" onclick="rmFilter('pl5',this)" style="text-align:left;border-color:#D85A30;color:#993C1D;">Finance &amp; Billing</button>
+        <button class="filter-btn" onclick="rmFilter('pl6',this)" style="text-align:left;border-color:#D4537E;color:#993556;">Data &amp; Analytics</button>
+        <button class="filter-btn" onclick="rmFilter('pl7',this)" style="text-align:left;border-color:#888780;color:#5F5E5A;">Contract &amp; Compliance</button>
+      </div>
+    </div>
+    <div style="margin-bottom:18px;">
+      <div class="flyout-lbl" style="margin-bottom:8px;">Strategic Alignment</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <button class="filter-btn" onclick="rmFilter('s-me',this)" style="text-align:left;">Member Experience</button>
+        <button class="filter-btn" onclick="rmFilter('s-tc',this)" style="text-align:left;">Total Cost of Care</button>
+        <button class="filter-btn" onclick="rmFilter('s-co',this)" style="text-align:left;">Core Operations</button>
+        <button class="filter-btn" onclick="rmFilter('s-cs',this)" style="text-align:left;">Cost Structure</button>
+        <button class="filter-btn" onclick="rmFilter('s-gr',this)" style="text-align:left;">Growth</button>
+      </div>
+    </div>
+    <div>
+      <div class="flyout-lbl" style="margin-bottom:8px;">By User</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <button class="filter-btn" onclick="rmFilter('u-member',this)" style="text-align:left;border-color:#0077C8;color:#0077C8;">👤 Member</button>
+        <button class="filter-btn" onclick="rmFilter('u-caregiver',this)" style="text-align:left;border-color:#C8102E;color:#C8102E;">🤝 Caregiver</button>
+        <button class="filter-btn" onclick="rmFilter('u-provider',this)" style="text-align:left;border-color:#00A3A1;color:#007A79;">🏥 Provider</button>
+        <button class="filter-btn" onclick="rmFilter('u-casemanager',this)" style="text-align:left;border-color:#7F77DD;color:#534AB7;">💼 Case Manager</button>
+        <button class="filter-btn" onclick="rmFilter('u-clinician',this)" style="text-align:left;border-color:#00843D;color:#00612D;">🩺 Clinician</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- FLYOUT PANEL -->
 <div id="flyoutOverlay" class="flyout-overlay" onclick="closePanel()"></div>
