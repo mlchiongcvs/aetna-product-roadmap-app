@@ -231,7 +231,7 @@ function ItemDetailPanel({ item, onClose, onStatusChange, onAddComment, onSyncJi
 
 // ── MAIN APP ─────────────────────────────────────────────────────────────────
 export default function RoadmapApp() {
-  const [view,          setView]          = useState("dashboard");
+  const [view,          setView]          = useState("stratsite");
   const [items,         setItems]         = useState(DEMO_ITEMS);
   const [selectedItem,  setSelectedItem]  = useState(null);
   const [filterPillar,  setFilterPillar]  = useState("all");
@@ -543,16 +543,15 @@ After creating, share the page URL.
 
   // ── NAV ITEMS ─────────────────────────────────────────────────────────────
   const NAV = [
+    { id:"stratsite", icon:"◈", label:"Strategy Site" },
+    { id:"storyboard", icon:"▤", label:"Storyboard" },
     { id:"dashboard", icon:"▪", label:"Dashboard" },
     { id:"ingest",    icon:"↑", label:"Ingest Documents" },
     { id:"roadmap",   icon:"▦", label:"Roadmap Board" },
     { id:"rally",     icon:"◆", label:"Rally Roadmap" },
     { id:"timeline",  icon:"━", label:"3-Year Timeline" },
-    { id:"strategy",  icon:"◇", label:"Strategy & Org" },
     { id:"investments", icon:"$", label:"Investments" },
     { id:"team",      icon:"◎", label:"Team & Reviews" },
-    { id:"stratsite", icon:"◈", label:"Strategy Site" },
-    { id:"storyboard", icon:"▤", label:"Storyboard" },
   ];
 
   // ── RENDER ────────────────────────────────────────────────────────────────
@@ -1176,8 +1175,7 @@ After creating, share the page URL.
             );
           })()}
 
-          {/* ── STRATEGY & ORG ──────────────────────────────────────────── */}
-          {view==="strategy" && (
+          {false && (
             <div style={{ flex:1, overflow:"auto", padding:28, background:"#F5F4F0" }}>
               {/* Hero */}
               <div style={{ background:"linear-gradient(135deg, #0f1629, #1a2744, #1e3a5f)", borderRadius:14, padding:"28px 32px", marginBottom:20, color:"#FFF" }}>
