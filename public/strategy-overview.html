@@ -345,17 +345,50 @@ input, textarea, select { font-family: var(--font-body); }
   opacity: 0.5;
   background-image: repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(0,0,0,0.07) 3px,rgba(0,0,0,0.07) 4px);
 }
-.g-tt {
-  display: none; position: absolute;
-  z-index: 999; width: 320px;
-  background: white; border: 1px solid var(--aetna-gray-300);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  top: calc(100% + 4px); left: 0;
-  pointer-events: none;
+.g-tt { display: none !important; }
+
+/* ── FLYOUT PANEL ──────────────────────────────────────────────── */
+.flyout-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.25); z-index: 9998;
 }
-.g-tt.tt-right { left: auto; right: 0; }
-.g-bar-wrap:hover .g-tt { display: block; }
+.flyout-overlay.open { display: block; }
+.flyout-panel {
+  position: fixed; top: 0; right: -420px; width: 400px; height: 100vh;
+  background: white; z-index: 9999;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+  transition: right 0.25s ease;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.flyout-panel.open { right: 0; }
+.flyout-header {
+  padding: 20px 24px 16px; border-bottom: 1px solid var(--aetna-gray-200);
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.flyout-close {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--aetna-gray-300); background: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; cursor: pointer; flex-shrink: 0;
+  color: var(--aetna-gray-500); transition: all 0.15s;
+}
+.flyout-close:hover { background: var(--aetna-gray-100); color: var(--aetna-gray-900); }
+.flyout-title { font-size: 15px; font-weight: 700; color: var(--aetna-navy); line-height: 1.3; flex: 1; }
+.flyout-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
+.flyout-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+.flyout-section { margin-bottom: 18px; }
+.flyout-section:last-child { margin-bottom: 0; }
+.flyout-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--aetna-gray-500); margin-bottom: 4px; }
+.flyout-val { font-size: 13px; color: var(--aetna-gray-700); line-height: 1.6; }
+.flyout-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.flyout-metric { background: var(--aetna-gray-100); border-radius: var(--radius-md); padding: 10px 12px; }
+.flyout-metric-lbl { font-size: 10px; color: var(--aetna-gray-500); margin-bottom: 2px; }
+.flyout-metric-val { font-size: 16px; font-weight: 700; color: var(--aetna-navy); }
+.flyout-measures { display: flex; flex-direction: column; gap: 4px; }
+.flyout-mitem { font-size: 12px; color: var(--aetna-gray-700); padding: 6px 0; border-bottom: 1px solid var(--aetna-gray-200); line-height: 1.5; display: flex; gap: 6px; }
+.flyout-mitem:last-child { border-bottom: none; }
+.flyout-footer { padding: 12px 24px; border-top: 1px solid var(--aetna-gray-200); font-size: 11px; color: var(--aetna-blue); display: flex; align-items: center; gap: 6px; }
 .g-tt-head {
   padding: 8px 11px 6px; border-bottom: 1px solid var(--aetna-gray-200);
 }
@@ -1438,42 +1471,7 @@ function colsFor(init){
 function spanRange(init){const s=colsFor(init);if(!s.size)return null;return{start:Math.min(...s),end:Math.max(...s)};}
 function fmtM(v){if(!v||v===0)return '—';return '$'+v.toFixed(1)+'M';}
 
-function buildTT(init,color,colIdx,ttId){
-  const isR=colIdx>=7;
-  const measures=init.measures.split(';').map(m=>m.trim()).filter(Boolean);
-  const fBg=init.funded?'#E0F2E9':'#EBEBEB';
-  const fClr=init.funded?'#00612D':'#767676';
-  const fLbl=init.funded?'● Funded':'◌ Not funded / TBD';
-  return `<div id="${ttId}" class="g-tt${isR?' tt-right':''}" style="display:none;position:absolute;z-index:9999;">
-    <div class="g-tt-head" style="border-left:3px solid ${color};">
-      <div class="g-tt-name">${init.name}</div>
-      <div class="g-tt-badges">
-        <span style="background:${fBg};color:${fClr};font-size:9px;padding:1px 7px;border-radius:10px;font-weight:600;">${fLbl}</span>
-        ${init.strat.map(s=>`<span style="background:${SM[s].c}18;color:${SM[s].c};font-size:9px;padding:1px 7px;border-radius:10px;font-weight:600;">${SM[s].l}</span>`).join('')}
-      </div>
-    </div>
-    <div class="g-tt-body">
-      <div class="g-tt-sec"><div class="g-tt-lbl">Description</div><div class="g-tt-val">${init.desc}</div></div>
-      <div class="g-tt-sec"><div class="g-tt-lbl">Outcomes</div><div class="g-tt-val">${init.outcomes}</div></div>
-      <div class="g-tt-sec"><div class="g-tt-lbl">Users impacted</div><div class="g-tt-val">${init.users}</div></div>
-      <div class="g-tt-metrics">
-        <div class="g-tt-metric"><div class="g-tt-metric-lbl">2026 cost of tech</div><div class="g-tt-metric-val">${fmtM(init.capex26)}</div></div>
-        <div class="g-tt-metric"><div class="g-tt-metric-lbl">2027 cost of tech</div><div class="g-tt-metric-val">${fmtM(init.capex27)}</div></div>
-        <div class="g-tt-metric"><div class="g-tt-metric-lbl">EBIT benefit</div><div class="g-tt-metric-val" style="color:#00612D;">${fmtM(init.ebit)}</div></div>
-        <div class="g-tt-metric"><div class="g-tt-metric-lbl">Non-EBIT benefit</div><div class="g-tt-metric-val" style="color:#00612D;">${fmtM(init.nonEbit)}</div></div>
-        <div class="g-tt-metric" style="grid-column:span 2;"><div class="g-tt-metric-lbl">ROI (5-year)</div><div class="g-tt-metric-val">${init.roi}</div></div>
-      </div>
-      <div class="g-tt-sec" style="margin-top:6px;">
-        <div class="g-tt-lbl">Key measures &amp; expected impact</div>
-        <div class="g-tt-measures">${measures.map(m=>`<div class="g-tt-mitem"><span style="flex-shrink:0;">→</span><span>${m}</span></div>`).join('')}</div>
-      </div>
-    </div>
-    <div class="g-tt-src">🔗 Source: ${init.src}</div>
-  </div>`;
-}
-
-function showTT(id){const el=document.getElementById(id);if(el)el.style.display='block';}
-function hideTT(id){const el=document.getElementById(id);if(el)el.style.display='none';}
+// buildTT/showTT/hideTT removed — replaced by flyout panel
 
 const rmExpanded={};
 PLs.forEach((_,i)=>{rmExpanded[i]=true;});
@@ -1548,16 +1546,13 @@ function renderRM(filter){
           let cells='';
           for(let ci=0;ci<11;ci++){
             if(ci===r.start){
-              const ttId='tt-'+init.id+'-'+ci;
+              cacheInit(init);
               cells+=`<div style="grid-column:${r.start+1}/span ${span};position:relative;padding:1px;">
-                <div class="g-bar-wrap"
-                  onmouseenter="showTT('${ttId}')"
-                  onmouseleave="hideTT('${ttId}')">
+                <div class="g-bar-wrap" onclick="openPanel('${init.id}')" style="cursor:pointer;">
                   <div class="g-bar${init.funded?'':' unfunded'}" style="background:${c}22;color:${c};border:1px solid ${c}55;">
                     <span style="font-size:10px;">${init.funded?'●':'◌'}</span>
                     <span style="overflow:hidden;text-overflow:ellipsis;">${nm}</span>
                   </div>
-                  ${buildTT(init,c,r.start,ttId)}
                 </div>
               </div>`;
               ci=r.end;
@@ -1579,7 +1574,71 @@ function renderRM(filter){
 }
 
 function rmToggle(pi){rmExpanded[pi]=!rmExpanded[pi];renderRM(currentFilter);}
+
+// ── FLYOUT PANEL ──────────────────────────────────────────────────
+const _initCache={};
+function cacheInit(init){_initCache[init.id]=init;}
+
+function openPanel(initId){
+  const init=_initCache[initId];
+  if(!init)return;
+  const c=SM[init.strat[0]]?.c||'#003865';
+  const fBg=init.funded?'#E0F2E9':'#EBEBEB';
+  const fClr=init.funded?'#00612D':'#767676';
+  const fLbl=init.funded?'● Funded':'◌ Not funded / TBD';
+  const measures=init.measures.split(';').map(m=>m.trim()).filter(Boolean);
+
+  document.getElementById('flyoutTitle').textContent=init.name;
+  document.getElementById('flyoutTitle').parentElement.style.borderLeftColor=c;
+
+  document.getElementById('flyoutBadges').innerHTML=
+    `<span style="background:${fBg};color:${fClr};font-size:10px;padding:2px 9px;border-radius:10px;font-weight:600;">${fLbl}</span>`+
+    init.strat.map(s=>`<span style="background:${SM[s].c}18;color:${SM[s].c};font-size:10px;padding:2px 9px;border-radius:10px;font-weight:600;">${SM[s].l}</span>`).join('');
+
+  document.getElementById('flyoutBody').innerHTML=`
+    <div class="flyout-section"><div class="flyout-lbl">Description</div><div class="flyout-val">${init.desc}</div></div>
+    <div class="flyout-section"><div class="flyout-lbl">Outcomes</div><div class="flyout-val">${init.outcomes}</div></div>
+    <div class="flyout-section"><div class="flyout-lbl">Users Impacted</div><div class="flyout-val">${init.users}</div></div>
+    <div class="flyout-section">
+      <div class="flyout-lbl">Financial Summary</div>
+      <div class="flyout-metrics">
+        <div class="flyout-metric"><div class="flyout-metric-lbl">2026 Cost of Tech</div><div class="flyout-metric-val">${fmtM(init.capex26)}</div></div>
+        <div class="flyout-metric"><div class="flyout-metric-lbl">2027 Cost of Tech</div><div class="flyout-metric-val">${fmtM(init.capex27)}</div></div>
+        <div class="flyout-metric"><div class="flyout-metric-lbl">EBIT Benefit</div><div class="flyout-metric-val" style="color:#00612D;">${fmtM(init.ebit)}</div></div>
+        <div class="flyout-metric"><div class="flyout-metric-lbl">Non-EBIT Benefit</div><div class="flyout-metric-val" style="color:#00612D;">${fmtM(init.nonEbit)}</div></div>
+        <div class="flyout-metric" style="grid-column:span 2;"><div class="flyout-metric-lbl">ROI (5-Year)</div><div class="flyout-metric-val">${init.roi}</div></div>
+      </div>
+    </div>
+    <div class="flyout-section">
+      <div class="flyout-lbl">Key Measures & Expected Impact</div>
+      <div class="flyout-measures">${measures.map(m=>`<div class="flyout-mitem"><span style="flex-shrink:0;color:${c};">→</span><span>${m}</span></div>`).join('')}</div>
+    </div>`;
+
+  document.getElementById('flyoutSrc').innerHTML='🔗 Source: '+init.src;
+
+  document.getElementById('flyoutOverlay').classList.add('open');
+  document.getElementById('flyoutPanel').classList.add('open');
+}
+
+function closePanel(){
+  document.getElementById('flyoutOverlay').classList.remove('open');
+  document.getElementById('flyoutPanel').classList.remove('open');
+}
 </script>
+
+<!-- FLYOUT PANEL -->
+<div id="flyoutOverlay" class="flyout-overlay" onclick="closePanel()"></div>
+<div id="flyoutPanel" class="flyout-panel">
+  <div class="flyout-header" style="border-left:3px solid #003865;">
+    <div style="flex:1;">
+      <div id="flyoutTitle" class="flyout-title"></div>
+      <div id="flyoutBadges" class="flyout-badges"></div>
+    </div>
+    <button class="flyout-close" onclick="closePanel()">✕</button>
+  </div>
+  <div id="flyoutBody" class="flyout-body"></div>
+  <div id="flyoutSrc" class="flyout-footer"></div>
+</div>
 
 </body>
 </html>
