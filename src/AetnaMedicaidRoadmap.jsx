@@ -231,7 +231,7 @@ function ItemDetailPanel({ item, onClose, onStatusChange, onAddComment, onSyncJi
 
 // ── MAIN APP ─────────────────────────────────────────────────────────────────
 export default function RoadmapApp() {
-  const [view,          setView]          = useState("stratsite");
+  const [view,          setView]          = useState("strat-overview");
   const [items,         setItems]         = useState(DEMO_ITEMS);
   const [selectedItem,  setSelectedItem]  = useState(null);
   const [filterPillar,  setFilterPillar]  = useState("all");
@@ -543,15 +543,17 @@ After creating, share the page URL.
 
   // ── NAV ITEMS ─────────────────────────────────────────────────────────────
   const NAV = [
-    { id:"stratsite", icon:"◈", label:"Strategy Site" },
-    { id:"storyboard", icon:"▤", label:"Storyboard" },
-    { id:"dashboard", icon:"▪", label:"Dashboard" },
-    { id:"ingest",    icon:"↑", label:"Ingest Documents" },
-    { id:"roadmap",   icon:"▦", label:"Roadmap Board" },
-    { id:"rally",     icon:"◆", label:"Rally Roadmap" },
-    { id:"timeline",  icon:"━", label:"3-Year Timeline" },
-    { id:"investments", icon:"$", label:"Investments" },
-    { id:"team",      icon:"◎", label:"Team & Reviews" },
+    { id:"strat-overview", icon:"◈", label:"3-Year Overview" },
+    { id:"strat-story",    icon:"◇", label:"Story Arc" },
+    { id:"strat-roadmap",  icon:"▦", label:"Roadmap" },
+    { id:"strat-context",  icon:"◻", label:"Context & Assumptions" },
+    { id:"storyboard",     icon:"▤", label:"Storyboard" },
+    { id:"dashboard",      icon:"▪", label:"Dashboard" },
+    { id:"ingest",         icon:"↑", label:"Ingest Documents" },
+    { id:"rally",          icon:"◆", label:"Rally Roadmap" },
+    { id:"timeline",       icon:"━", label:"3-Year Timeline" },
+    { id:"investments",    icon:"$", label:"Investments" },
+    { id:"team",           icon:"◎", label:"Team & Reviews" },
   ];
 
   // ── RENDER ────────────────────────────────────────────────────────────────
@@ -1885,8 +1887,20 @@ After creating, share the page URL.
             </div>
           )}
 
-          {view==="stratsite" && (
-            <iframe src="/strategy-overview.html" style={{ flex:1, width:"100%", height:"calc(100vh - 56px)", border:"none" }} title="Strategy Site" />
+          {view==="strat-overview" && (
+            <iframe src="/strategy-overview.html?page=overview" style={{ flex:1, width:"100%", height:"calc(100vh - 56px)", border:"none" }} title="3-Year Overview" />
+          )}
+
+          {view==="strat-story" && (
+            <iframe src="/strategy-overview.html?page=story" style={{ flex:1, width:"100%", height:"calc(100vh - 56px)", border:"none" }} title="Story Arc" />
+          )}
+
+          {view==="strat-roadmap" && (
+            <iframe src="/strategy-overview.html?page=roadmap" style={{ flex:1, width:"100%", height:"calc(100vh - 56px)", border:"none" }} title="Roadmap" />
+          )}
+
+          {view==="strat-context" && (
+            <iframe src="/strategy-overview.html?page=assumptions" style={{ flex:1, width:"100%", height:"calc(100vh - 56px)", border:"none" }} title="Context & Assumptions" />
           )}
 
           {view==="storyboard" && (

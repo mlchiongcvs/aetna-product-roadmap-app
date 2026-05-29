@@ -727,5 +727,12 @@ footer{background:var(--navy);padding:12px 60px;display:flex;justify-content:spa
   <span>©2026 CVS Health and/or one of its affiliates</span>
 </footer>
 
+<script>
+// Hide internal nav when embedded in parent app
+if(window.self !== window.top){
+  document.querySelector('.topnav').style.display='none';
+}
+</script>
+
 </body>
 </html>
