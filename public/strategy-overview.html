@@ -1592,11 +1592,15 @@ function renderRM(filter){
           for(let ci=0;ci<11;ci++){
             if(ci===r.start){
               cacheInit(init);
+              const ebitLbl=init.ebit?`$${init.ebit}M`:'';
+              const roiLbl=init.roi&&init.roi!=='N/A'&&init.roi!=='0:1'?init.roi:'';
+              const metrics=(ebitLbl||roiLbl)?`<span style="margin-left:auto;display:flex;gap:6px;flex-shrink:0;font-size:9px;opacity:0.85;font-weight:700;">${ebitLbl?`<span title="EBIT">⬥${ebitLbl}</span>`:''}${roiLbl?`<span title="ROI">${roiLbl}</span>`:''}</span>`:'';
               cells+=`<div style="grid-column:${r.start+1}/span ${span};position:relative;padding:1px;">
                 <div class="g-bar-wrap" onclick="openPanel('${init.id}')" style="cursor:pointer;">
                   <div class="g-bar${init.funded?'':' unfunded'}" style="background:${c}22;color:${c};border:1px solid ${c}55;">
                     <span style="font-size:10px;">${init.funded?'●':'◌'}</span>
                     <span style="overflow:hidden;text-overflow:ellipsis;">${nm}</span>
+                    ${metrics}
                   </div>
                 </div>
               </div>`;
