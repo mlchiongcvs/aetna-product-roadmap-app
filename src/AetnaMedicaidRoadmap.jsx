@@ -32,6 +32,52 @@ const DEMO_ITEMS = [
   { id:"d7", title:"Design System V2 — Full Token Adoption", description:"Migrate all product surfaces to unified design token system, eliminating inconsistency across member portal, provider tools, and internal dashboards.", pillar:"platform-modernization", horizon:"later", status:"planning", priority:"medium", owner:"Design Systems", keyInitiatives:["Token audit & taxonomy","Figma library migration","Engineering implementation guide","Surface-by-surface rollout plan"], jiraKey:null, confluenceUrl:null, source:"Platform Strategy.pdf", lastUpdated:"2026-04-15", comments:[], aiInsights:"Foundational investment enabling faster feature delivery. Estimated 30% reduction in design-to-dev handoff time once complete.", tags:["design-system","tokens","platform"] },
 ];
 
+// ── TIMELINE DATA ───────────────────────────────────────────────────────────
+const TIMELINE_PILLARS = [
+  { id:"enterprise-value", label:"Enterprise Value", sub:"Enterprise-wide platforms", color:"#1565C0", dot:"#1565C0" },
+  { id:"efficiency",       label:"Efficiency",       sub:"Standardized processes",    color:"#2E7D32", dot:"#2E7D32" },
+  { id:"growth",           label:"Growth",           sub:"Innovative technology",     color:"#6A1B9A", dot:"#6A1B9A" },
+  { id:"cost-reduction",   label:"Cost Reduction",   sub:"Shared operational platforms", color:"#B71C1C", dot:"#B71C1C" },
+];
+const TIMELINE_QUARTERS = ["Q3 '26","Q4 '26","Q1 '27","Q2 '27","Q3 '27","Q4 '27","2028","2029+"];
+const TIMELINE_PHASES = [
+  { label:"Now", cols:2 },
+  { label:"Next", cols:3 },
+  { label:"Future", cols:3 },
+];
+const TIMELINE_ITEMS = [
+  // Product capabilities (solid bars)
+  { id:"t1",  name:"Dynamo",     domain:"Claims",            pillar:"efficiency",     type:"product", startCol:0, spanCols:8, users:[0,1,1,0,0] },
+  { id:"t2",  name:"D&A",        domain:"Digital",           pillar:"efficiency",     type:"product", startCol:0, spanCols:8, users:[0,1,1,0,0] },
+  { id:"t3",  name:"UM",         domain:"Digital",           pillar:"efficiency",     type:"product", startCol:0, spanCols:8, users:[0,1,1,0,0] },
+  { id:"t4",  name:"Platform",   domain:"Member Enrollment", pillar:"efficiency",     type:"product", startCol:0, spanCols:3, users:[2,0,0,0,0] },
+  { id:"t5",  name:"FCC",        domain:"Digital",           pillar:"efficiency",     type:"product", startCol:5, spanCols:3, users:[2,0,0,0] },
+  { id:"t6",  name:"GPS",        domain:"Member Enrollment", pillar:"efficiency",     type:"product", startCol:5, spanCols:3, users:[2,0,0,0] },
+  { id:"t7",  name:"Infra",      domain:"Claims",            pillar:"efficiency",     type:"product", startCol:5, spanCols:3, users:[0,2,1,0,0] },
+  { id:"t8",  name:"Enablers",   domain:"Digital",           pillar:"efficiency",     type:"product", startCol:5, spanCols:3, users:[2,0,0,0] },
+  { id:"t9",  name:"PopHealth",  domain:"Digital",           pillar:"efficiency",     type:"product", startCol:5, spanCols:3, users:[2,0,0,0] },
+  { id:"t10", name:"QNXT",       domain:"Digital",           pillar:"efficiency",     type:"product", startCol:5, spanCols:3, users:[0,2,2,0] },
+  // Technology investments (dashed bars) - Enterprise Value
+  { id:"t11", name:"Real-Time Event Streaming",               domain:"All", pillar:"enterprise-value", type:"tech", startCol:0, spanCols:5, users:[0,2,2,2,0,0] },
+  { id:"t12", name:"Modern Data Platform Migration",          domain:"All", pillar:"enterprise-value", type:"tech", startCol:0, spanCols:5, users:[0,2,2,2,0,0] },
+  { id:"t13", name:"Agile Delivery Standardization",          domain:"All", pillar:"enterprise-value", type:"tech", startCol:0, spanCols:5, users:[0,2,2,0,2,0] },
+  { id:"t14", name:"Medicaid Data & Analytics Modernization", domain:"All", pillar:"enterprise-value", type:"tech", startCol:0, spanCols:5, users:[0,2,2,2,0,0] },
+  { id:"t15", name:"Portal consolidation",                    domain:"Provider", pillar:"enterprise-value", type:"tech", startCol:2, spanCols:3, users:[0,2,2,0] },
+  { id:"t16", name:"Central DB",                              domain:"Provider", pillar:"enterprise-value", type:"tech", startCol:2, spanCols:3, users:[0,2,2,0] },
+  { id:"t17", name:"Code cleanup",                            domain:"Enterprise", pillar:"enterprise-value", type:"tech", startCol:2, spanCols:3, users:[0,2,2,0] },
+  { id:"t18", name:"Standardize the application stack (.Net to Java/Py)", domain:"Integration", pillar:"enterprise-value", type:"tech", startCol:3, spanCols:2, users:[2,0] },
+  // Growth
+  { id:"t19", name:"Member Self-Service Portal",     domain:"Digital",  pillar:"growth", type:"product", startCol:0, spanCols:4, users:[2,1,0,0,0] },
+  { id:"t20", name:"Provider Network Expansion",    domain:"Network",  pillar:"growth", type:"product", startCol:1, spanCols:5, users:[0,2,1,0,0] },
+  // Cost Reduction
+  { id:"t21", name:"Automated Claims Processing",    domain:"Claims",     pillar:"cost-reduction", type:"tech", startCol:0, spanCols:5, users:[0,2,2,2,0,0] },
+  { id:"t22", name:"Legacy System Decommission",     domain:"Enterprise", pillar:"cost-reduction", type:"tech", startCol:2, spanCols:6, users:[0,1,2,2,0] },
+  { id:"t23", name:"Shared Service Bus",             domain:"Integration",pillar:"cost-reduction", type:"tech", startCol:1, spanCols:4, users:[2,1,1,0,0] },
+  { id:"t24", name:"RPA for Manual Workflows",       domain:"Ops",        pillar:"cost-reduction", type:"product", startCol:0, spanCols:3, users:[2,0,0,0,0] },
+  { id:"t25", name:"Cloud Cost Optimization",        domain:"Infra",      pillar:"cost-reduction", type:"tech", startCol:3, spanCols:5, users:[0,2,2,1,0] },
+  { id:"t26", name:"Vendor Consolidation Program",   domain:"Enterprise", pillar:"cost-reduction", type:"product", startCol:4, spanCols:4, users:[0,0,2,1,0] },
+];
+
 const getPillar  = (id) => PILLARS.find(p => p.id === id)  || PILLARS[0];
 const getStatus  = (id) => STATUSES.find(s => s.id === id) || STATUSES[0];
 const getHorizon = (id) => HORIZONS.find(h => h.id === id) || HORIZONS[0];
@@ -197,6 +243,12 @@ export default function RoadmapApp() {
   const [dragOver,      setDragOver]      = useState(false);
   const [textInput,     setTextInput]     = useState("");
   const [notification,  setNotification]  = useState(null);
+  const [rallyFeatures, setRallyFeatures] = useState([]);
+  const [rallyLoading,  setRallyLoading]  = useState(false);
+  const [rallyFilter,   setRallyFilter]   = useState({ product:"all", pillar:"all", vs:"all", release:"all", project:"all", search:"" });
+  const [timelinePanel, setTimelinePanel] = useState(false);
+  const [timelineFilter, setTimelineFilter] = useState({ pillar:"all", type:"all", domain:"all", phase:"all", search:"" });
+  const [rallyPanel, setRallyPanel] = useState(false);
   const fileInputRef = useRef(null);
 
   // Persist to localStorage
@@ -206,6 +258,11 @@ export default function RoadmapApp() {
   useEffect(() => {
     try { localStorage.setItem("roadmap-items-v2", JSON.stringify(items)); } catch {}
   }, [items]);
+
+  // Load Rally features on mount
+  useEffect(() => {
+    fetch("/api/rally/features").then(r => r.ok ? r.json() : []).then(setRallyFeatures).catch(() => {});
+  }, []);
 
   const notify = (msg, type="success") => {
     setNotification({ msg, type });
@@ -489,6 +546,10 @@ After creating, share the page URL.
     { id:"dashboard", icon:"▪", label:"Dashboard" },
     { id:"ingest",    icon:"↑", label:"Ingest Documents" },
     { id:"roadmap",   icon:"▦", label:"Roadmap Board" },
+    { id:"rally",     icon:"◆", label:"Rally Roadmap" },
+    { id:"timeline",  icon:"━", label:"3-Year Timeline" },
+    { id:"strategy",  icon:"◇", label:"Strategy & Org" },
+    { id:"investments", icon:"$", label:"Investments" },
     { id:"team",      icon:"◎", label:"Team & Reviews" },
   ];
 
@@ -838,6 +899,872 @@ After creating, share the page URL.
               )}
             </div>
           )}
+
+          {/* ── 3-YEAR TIMELINE ───────────────────────────────────────────── */}
+          {view==="timeline" && (() => {
+            const tf = timelineFilter;
+            const allDomains = [...new Set(TIMELINE_ITEMS.map(i=>i.domain))].sort();
+            const filteredItems = TIMELINE_ITEMS.filter(item => {
+              if (tf.pillar !== "all" && item.pillar !== tf.pillar) return false;
+              if (tf.type !== "all" && item.type !== tf.type) return false;
+              if (tf.domain !== "all" && item.domain !== tf.domain) return false;
+              if (tf.phase !== "all") {
+                const phaseStart = tf.phase === "now" ? 0 : tf.phase === "next" ? 2 : 5;
+                const phaseEnd = tf.phase === "now" ? 2 : tf.phase === "next" ? 5 : 8;
+                if (item.startCol >= phaseEnd || item.startCol + item.spanCols <= phaseStart) return false;
+              }
+              if (tf.search) {
+                const q = tf.search.toLowerCase();
+                if (!`${item.name} ${item.domain} ${item.pillar}`.toLowerCase().includes(q)) return false;
+              }
+              return true;
+            });
+
+            const pillarStats = TIMELINE_PILLARS.map(p => {
+              const items = filteredItems.filter(i => i.pillar === p.id);
+              return { ...p, feat: items.filter(i=>i.type==="product").length, tech: items.filter(i=>i.type==="tech").length };
+            });
+            const totalCols = TIMELINE_QUARTERS.length;
+            const activeFilterCount = [tf.pillar, tf.type, tf.domain, tf.phase].filter(v=>v!=="all").length + (tf.search ? 1 : 0);
+
+            const UserDots = ({ users }) => (
+              <div style={{ display:"flex", gap:2, alignItems:"center" }}>
+                {(users||[]).map((u, i) => (
+                  <span key={i} style={{ width:8, height:8, borderRadius:"50%", display:"inline-block",
+                    background: u===2 ? ["#1565C0","#2E7D32","#6A1B9A","#B71C1C","#E65100"][i%5] : u===1 ? ["#1565C0","#2E7D32","#6A1B9A","#B71C1C","#E65100"][i%5] : "transparent",
+                    border: u===0 ? "1.5px solid #B0B8C4" : "none",
+                    opacity: u===1 ? 0.5 : 1,
+                  }} />
+                ))}
+              </div>
+            );
+
+            return (
+            <div style={{ flex:1, display:"flex", overflow:"hidden" }}>
+              {/* Main timeline content */}
+              <div style={{ flex:1, overflow:"auto", padding:28, background:"#F5F4F0" }}>
+                {/* Header */}
+                <div style={{ marginBottom:20 }}>
+                  <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:6 }}>
+                    <h1 style={{ fontSize:22, fontWeight:700, color:"#1C1C2E", margin:0 }}>Aetna Medicaid Technology 3 Year Roadmap</h1>
+                    <div style={{ display:"flex", gap:8 }}>
+                      <button onClick={()=>setView("dashboard")} style={{ fontSize:12, padding:"6px 14px", borderRadius:8, border:"1px solid #E4E2DA", background:"#FFF", color:"#1C1C2E", cursor:"pointer", fontWeight:500 }}>Home</button>
+                      <button onClick={()=>setView("rally")} style={{ fontSize:12, padding:"6px 14px", borderRadius:8, border:"1px solid #E4E2DA", background:"#FFF", color:"#1C1C2E", cursor:"pointer", fontWeight:500 }}>Feature Details →</button>
+                      <button onClick={()=>setTimelinePanel(!timelinePanel)} style={{ fontSize:12, padding:"6px 14px", borderRadius:8, border: timelinePanel ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: timelinePanel ? "#F5F0FA" : "#FFF", color: timelinePanel ? "#7D3F98" : "#1C1C2E", cursor:"pointer", fontWeight:600, display:"flex", alignItems:"center", gap:5 }}>
+                        <span style={{ fontSize:14 }}>⚙</span> Filters{activeFilterCount > 0 && <span style={{ background:"#7D3F98", color:"#FFF", fontSize:10, fontWeight:700, borderRadius:10, padding:"1px 6px", marginLeft:2 }}>{activeFilterCount}</span>}
+                      </button>
+                    </div>
+                  </div>
+                  <p style={{ fontSize:13, color:"#5A6170", margin:0 }}>Product themes and technology investments aligned to strategic pillars — click product bars to drill into features — Last updated: May 29, 2026</p>
+                </div>
+
+                {/* Pillar stats */}
+                <div style={{ display:"flex", gap:12, marginBottom:20 }}>
+                  {pillarStats.map(p => (
+                    <div key={p.id} style={{ flex:1, background:"#0D1629", borderRadius:10, padding:"12px 16px", display:"flex", alignItems:"center", gap:10, cursor:"pointer", border: tf.pillar===p.id ? `2px solid ${p.dot}` : "2px solid transparent", transition:"border 0.15s" }}
+                      onClick={() => setTimelineFilter({...tf, pillar: tf.pillar===p.id ? "all" : p.id})}>
+                      <div style={{ width:8, height:8, borderRadius:"50%", background:p.dot }} />
+                      <span style={{ fontSize:11, color:"rgba(255,255,255,0.8)", fontWeight:500 }}>{p.label}</span>
+                      <span style={{ fontSize:18, fontWeight:700, color:"#FFF", marginLeft:6 }}>{p.feat}</span>
+                      <span style={{ fontSize:10, color:"rgba(255,255,255,0.5)" }}>feat</span>
+                      <span style={{ fontSize:10, color:"rgba(255,255,255,0.3)", margin:"0 2px" }}>·</span>
+                      <span style={{ fontSize:18, fontWeight:700, color:"#FFF" }}>{p.tech}</span>
+                      <span style={{ fontSize:10, color:"rgba(255,255,255,0.5)" }}>tech</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Legend */}
+                <div style={{ display:"flex", alignItems:"center", gap:20, marginBottom:16, padding:"10px 16px", background:"#FFF", borderRadius:8, border:"1px solid #E4E2DA" }}>
+                  <span style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em" }}>Legend</span>
+                  <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                    <div style={{ width:28, height:14, borderRadius:4, background:"#E3ECFA", border:"1.5px solid #1565C0" }} />
+                    <span style={{ fontSize:11, color:"#4A4A6A" }}>Product capability (Rally)</span>
+                  </div>
+                  <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                    <div style={{ width:28, height:14, borderRadius:4, background:"#F8F8FA", border:"1.5px dashed #8A8AA0" }} />
+                    <span style={{ fontSize:11, color:"#4A4A6A" }}>Technology investment (Architecture)</span>
+                  </div>
+                  <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                    <div style={{ width:8, height:8, borderRadius:"50%", background:"#1565C0" }} />
+                    <span style={{ fontSize:11, color:"#4A4A6A" }}>Explicit user</span>
+                  </div>
+                  <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                    <div style={{ width:8, height:8, borderRadius:"50%", border:"1.5px solid #8A8AA0" }} />
+                    <span style={{ fontSize:11, color:"#4A4A6A" }}>Implied user</span>
+                  </div>
+                  <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>Showing {filteredItems.length} of {TIMELINE_ITEMS.length}</span>
+                </div>
+
+                {/* Timeline chart */}
+                <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", overflow:"hidden" }}>
+                  {/* Phase header (Now / Next / Future) */}
+                  <div style={{ display:"grid", gridTemplateColumns:`repeat(${totalCols}, 1fr)`, borderBottom:"2px solid #1C1C2E" }}>
+                    {TIMELINE_PHASES.map((phase, pi) => (
+                      <div key={pi} style={{ gridColumn:`span ${phase.cols}`, textAlign:"center", padding:"10px 0", fontWeight:700, fontSize:13, color:"#1C1C2E", borderRight: pi < TIMELINE_PHASES.length-1 ? "1px solid #E4E2DA" : "none", background:"#F8F7F4" }}>
+                        {phase.label}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Quarter labels */}
+                  <div style={{ display:"grid", gridTemplateColumns:`repeat(${totalCols}, 1fr)`, borderBottom:"1px solid #E4E2DA", position:"relative" }}>
+                    {TIMELINE_QUARTERS.map((q, i) => (
+                      <div key={i} style={{ textAlign:"center", padding:"8px 0", fontSize:11, color:"#6B6B8A", fontWeight:500, borderRight: i < totalCols-1 ? "1px solid #F0EEE8" : "none" }}>
+                        {q}
+                      </div>
+                    ))}
+                    {/* Timeline line */}
+                    <div style={{ position:"absolute", top:"50%", left:16, right:16, height:2, background:"#D0CEC8", zIndex:0 }} />
+                    {TIMELINE_QUARTERS.map((_, i) => (
+                      <div key={i} style={{ position:"absolute", top:"50%", left:`${(i / totalCols) * 100 + (50/totalCols)}%`, transform:"translate(-50%, -50%)", width:8, height:8, borderRadius:"50%", background:"#FFF", border:"2px solid #8A8AA0", zIndex:1 }} />
+                    ))}
+                  </div>
+
+                  {/* Pillar sections with items */}
+                  {TIMELINE_PILLARS.map(pillar => {
+                    const pillarItems = filteredItems.filter(i => i.pillar === pillar.id);
+                    if (pillarItems.length === 0) return null;
+                    return (
+                      <div key={pillar.id} style={{ borderBottom:"1px solid #E4E2DA" }}>
+                        {/* Pillar label on left */}
+                        <div style={{ display:"flex" }}>
+                          <div style={{ width:140, flexShrink:0, padding:"16px 14px", borderRight:"1px solid #E4E2DA", display:"flex", flexDirection:"column", justifyContent:"center" }}>
+                            <div style={{ fontSize:12, fontWeight:700, color:pillar.color }}>{pillar.label}</div>
+                            <div style={{ fontSize:10, color:"#8A8AA0", marginTop:2 }}>{pillar.sub}</div>
+                          </div>
+                          {/* Items grid area */}
+                          <div style={{ flex:1, position:"relative", minHeight: pillarItems.length * 40 + 16 }}>
+                            {/* Vertical grid lines */}
+                            <div style={{ position:"absolute", inset:0, display:"grid", gridTemplateColumns:`repeat(${totalCols}, 1fr)`, pointerEvents:"none" }}>
+                              {TIMELINE_QUARTERS.map((_, i) => (
+                                <div key={i} style={{ borderRight: i < totalCols-1 ? "1px solid #F5F4F0" : "none" }} />
+                              ))}
+                            </div>
+                            {/* Bars */}
+                            <div style={{ position:"relative", padding:"8px 0" }}>
+                              {pillarItems.map((item, idx) => {
+                                const leftPct = (item.startCol / totalCols) * 100;
+                                const widthPct = (item.spanCols / totalCols) * 100;
+                                const isProduct = item.type === "product";
+                                return (
+                                  <div key={item.id} style={{ position:"relative", height:32, marginBottom:4, paddingLeft:8, paddingRight:8 }}>
+                                    <div className="card-hover" style={{
+                                      position:"absolute", top:2, left:`calc(${leftPct}% + 4px)`, width:`calc(${widthPct}% - 8px)`, height:28,
+                                      borderRadius:6,
+                                      background: isProduct ? pillar.color+"14" : "#F8F8FA",
+                                      border: isProduct ? `1.5px solid ${pillar.color}50` : "1.5px dashed #B0B8C4",
+                                      display:"flex", alignItems:"center", padding:"0 10px", gap:8, cursor:"pointer",
+                                    }}>
+                                      <span style={{ fontSize:12, fontWeight:600, color:"#1C1C2E", whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{item.name}</span>
+                                      <span style={{ fontSize:10, padding:"1px 6px", borderRadius:4, background:"#0D1629", color:"#FFF", fontWeight:500, whiteSpace:"nowrap", flexShrink:0 }}>{item.domain}</span>
+                                      <div style={{ marginLeft:"auto", flexShrink:0 }}>
+                                        <UserDots users={item.users} />
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* ── FILTER PANEL (slides in from right) ──────────────────── */}
+              {timelinePanel && (
+                <div style={{ width:320, borderLeft:"1px solid #E4E2DA", background:"#FFF", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0, animation:"fadeUp 0.2s ease" }}>
+                  {/* Panel header */}
+                  <div style={{ padding:"16px 20px", borderBottom:"1px solid #E4E2DA", display:"flex", alignItems:"center", justifyContent:"space-between", background:"#F8F7F4" }}>
+                    <div>
+                      <div style={{ fontSize:14, fontWeight:700, color:"#1C1C2E" }}>Filter Timeline</div>
+                      <div style={{ fontSize:11, color:"#8A8AA0", marginTop:2 }}>{filteredItems.length} of {TIMELINE_ITEMS.length} items visible</div>
+                    </div>
+                    <button onClick={()=>setTimelinePanel(false)} style={{ background:"none", border:"none", fontSize:18, cursor:"pointer", color:"#8A8AA0", lineHeight:1 }}>×</button>
+                  </div>
+
+                  <div style={{ flex:1, overflow:"auto", padding:20 }}>
+                    {/* Search */}
+                    <div style={{ marginBottom:20 }}>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em", display:"block", marginBottom:6 }}>Search</label>
+                      <input type="search" placeholder="Search items..."
+                        value={tf.search} onChange={e=>setTimelineFilter({...tf, search:e.target.value})}
+                        style={{ width:"100%", padding:"8px 12px", borderRadius:8, border:"1px solid #E4E2DA", fontSize:12 }} />
+                    </div>
+
+                    {/* Strategic Pillar */}
+                    <div style={{ marginBottom:20 }}>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em", display:"block", marginBottom:8 }}>Strategic Pillar</label>
+                      <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                        <button onClick={()=>setTimelineFilter({...tf, pillar:"all"})}
+                          style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: tf.pillar==="all" ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: tf.pillar==="all" ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: tf.pillar==="all" ? 600 : 400, color: tf.pillar==="all" ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                          All Pillars <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{TIMELINE_ITEMS.length}</span>
+                        </button>
+                        {TIMELINE_PILLARS.map(p => {
+                          const count = TIMELINE_ITEMS.filter(i=>i.pillar===p.id).length;
+                          return (
+                            <button key={p.id} onClick={()=>setTimelineFilter({...tf, pillar: tf.pillar===p.id ? "all" : p.id})}
+                              style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: tf.pillar===p.id ? `1.5px solid ${p.color}` : "1px solid #E4E2DA", background: tf.pillar===p.id ? p.color+"10" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: tf.pillar===p.id ? 600 : 400, color: tf.pillar===p.id ? p.color : "#4A4A6A", textAlign:"left" }}>
+                              <div style={{ width:8, height:8, borderRadius:"50%", background:p.color, flexShrink:0 }} />
+                              {p.label} <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{count}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Item Type */}
+                    <div style={{ marginBottom:20 }}>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em", display:"block", marginBottom:8 }}>Item Type</label>
+                      <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                        {[{id:"all",label:"All Types",icon:null},{id:"product",label:"Product Capability",icon:"▪"},{id:"tech",label:"Technology Investment",icon:"┄"}].map(t => (
+                          <button key={t.id} onClick={()=>setTimelineFilter({...tf, type: tf.type===t.id ? "all" : t.id})}
+                            style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: tf.type===t.id ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: tf.type===t.id ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: tf.type===t.id ? 600 : 400, color: tf.type===t.id ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                            {t.icon && <span style={{ fontSize:10, opacity:0.6 }}>{t.icon}</span>}
+                            {t.label}
+                            <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{t.id==="all" ? TIMELINE_ITEMS.length : TIMELINE_ITEMS.filter(i=>i.type===t.id).length}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Domain */}
+                    <div style={{ marginBottom:20 }}>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em", display:"block", marginBottom:8 }}>Domain</label>
+                      <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                        <button onClick={()=>setTimelineFilter({...tf, domain:"all"})}
+                          style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: tf.domain==="all" ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: tf.domain==="all" ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: tf.domain==="all" ? 600 : 400, color: tf.domain==="all" ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                          All Domains <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{TIMELINE_ITEMS.length}</span>
+                        </button>
+                        {allDomains.map(d => {
+                          const count = TIMELINE_ITEMS.filter(i=>i.domain===d).length;
+                          return (
+                            <button key={d} onClick={()=>setTimelineFilter({...tf, domain: tf.domain===d ? "all" : d})}
+                              style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: tf.domain===d ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: tf.domain===d ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: tf.domain===d ? 600 : 400, color: tf.domain===d ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                              <span style={{ fontSize:10, padding:"1px 6px", borderRadius:4, background:"#0D1629", color:"#FFF", fontWeight:500 }}>{d}</span>
+                              <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{count}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Time Phase */}
+                    <div style={{ marginBottom:20 }}>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em", display:"block", marginBottom:8 }}>Time Phase</label>
+                      <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                        {[{id:"all",label:"All Phases"},{id:"now",label:"Now (Q3-Q4 '26)"},{id:"next",label:"Next (Q1-Q3 '27)"},{id:"future",label:"Future (Q4 '27+)"}].map(p => (
+                          <button key={p.id} onClick={()=>setTimelineFilter({...tf, phase: tf.phase===p.id ? "all" : p.id})}
+                            style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: tf.phase===p.id ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: tf.phase===p.id ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: tf.phase===p.id ? 600 : 400, color: tf.phase===p.id ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                            {p.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Reset button */}
+                    {activeFilterCount > 0 && (
+                      <button onClick={()=>setTimelineFilter({ pillar:"all", type:"all", domain:"all", phase:"all", search:"" })}
+                        style={{ width:"100%", padding:"10px", borderRadius:8, border:"1px solid #DC2626", background:"#FEF2F2", color:"#DC2626", cursor:"pointer", fontSize:12, fontWeight:600 }}>
+                        Clear All Filters ({activeFilterCount})
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+            );
+          })()}
+
+          {/* ── STRATEGY & ORG ──────────────────────────────────────────── */}
+          {view==="strategy" && (
+            <div style={{ flex:1, overflow:"auto", padding:28, background:"#F5F4F0" }}>
+              {/* Hero */}
+              <div style={{ background:"linear-gradient(135deg, #0f1629, #1a2744, #1e3a5f)", borderRadius:14, padding:"28px 32px", marginBottom:20, color:"#FFF" }}>
+                <div style={{ fontSize:10, fontWeight:700, color:"#7D3F98", letterSpacing:"0.14em", textTransform:"uppercase", marginBottom:4 }}>Aetna Medicaid DDAT</div>
+                <h1 style={{ fontSize:22, fontWeight:700, margin:"0 0 8px" }}>Strategic Context & Organization</h1>
+                <p style={{ fontSize:13, color:"rgba(255,255,255,0.7)", margin:0, lineHeight:1.5 }}>From projects to products — transforming Medicaid technology into a unified, product-driven platform</p>
+              </div>
+
+              {/* Story Arc */}
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:12, marginBottom:20 }}>
+                {[
+                  { phase:"Phase 1", title:"Growth & Fragmentation", desc:"Rapid expansion via market wins; organic tech growth to ~350 apps across ~9 product lines", color:"#B71C1C" },
+                  { phase:"Phase 2", title:"Scale Without Integration", desc:"More capabilities layered on without consolidation; technical debt accelerated", color:"#E65100" },
+                  { phase:"Phase 3", title:"Complexity Peaks", desc:"Frequent leadership changes; rising costs; limited ROI visibility across portfolio", color:"#F9A825" },
+                  { phase:"Phase 4", title:"Turning Point (Now)", desc:"Platform consolidation, product operating model, cloud-native strategy underway", color:"#2E7D32" },
+                ].map((p, i) => (
+                  <div key={i} style={{ background:"#FFF", borderRadius:10, border:"1px solid #E4E2DA", borderTop:`3px solid ${p.color}`, padding:16 }}>
+                    <div style={{ fontSize:10, fontWeight:700, color:p.color, textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:4 }}>{p.phase}</div>
+                    <div style={{ fontSize:13, fontWeight:700, color:"#1C1C2E", marginBottom:6 }}>{p.title}</div>
+                    <div style={{ fontSize:12, color:"#5A6170", lineHeight:1.5 }}>{p.desc}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Vision */}
+              <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20, marginBottom:20 }}>
+                <div style={{ fontSize:11, fontWeight:700, color:"#7D3F98", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:12 }}>3-Year Vision</div>
+                <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:16 }}>
+                  <div style={{ flex:1, background:"#FEF2F2", borderRadius:8, padding:14, textAlign:"center" }}>
+                    <div style={{ fontSize:11, fontWeight:600, color:"#B71C1C", marginBottom:4 }}>FROM</div>
+                    <div style={{ fontSize:13, fontWeight:700, color:"#1C1C2E" }}>Projects → Fragmentation → Cost Center</div>
+                  </div>
+                  <div style={{ fontSize:20, color:"#7D3F98", fontWeight:700 }}>→</div>
+                  <div style={{ flex:1, background:"#F0FAF0", borderRadius:8, padding:14, textAlign:"center" }}>
+                    <div style={{ fontSize:11, fontWeight:600, color:"#2E7D32", marginBottom:4 }}>TO</div>
+                    <div style={{ fontSize:13, fontWeight:700, color:"#1C1C2E" }}>Products → Platforms → Value Engine</div>
+                  </div>
+                </div>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+                  {["Shift to shared enterprise platforms (Aetna Health, OneCM, QNXT modernization)",
+                    "Cloud-native, API-first, event-driven architecture (Azure-based)",
+                    "Product operating model with OKRs and outcome-based funding",
+                    "Unified data + integration strategy (Snowflake, GCP, ATC)"].map((s, i) => (
+                    <div key={i} style={{ display:"flex", alignItems:"flex-start", gap:8, padding:"8px 12px", background:"#F8F7F4", borderRadius:6, fontSize:12, color:"#4A4A6A", lineHeight:1.45 }}>
+                      <span style={{ color:"#7D3F98", fontWeight:700, flexShrink:0 }}>✦</span>{s}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
+                {/* Leadership */}
+                <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20 }}>
+                  <div style={{ fontSize:11, fontWeight:700, color:"#7D3F98", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Leadership Team</div>
+                  {[
+                    { name:"Greg Krause", role:"AVP, Software Development Engineering", domain:"Overall Medicaid Technology Lead" },
+                    { name:"Jeffrey Krasner", role:"Lead Director, Product Management", domain:"Product operating model, OKRs, roadmaps" },
+                    { name:"Manjusha Nair", role:"Exec Director, Engineering", domain:"Claims & Encounters, Tech Operations" },
+                    { name:"Rajesh Johnson", role:"Exec Director, Engineering", domain:"Member Enrollment & Strategic Programs" },
+                    { name:"Paul Cavanaugh", role:"Exec Director, Engineering", domain:"Digital, Clinical Innovation, Data Integration" },
+                    { name:"Swati Nanda", role:"Lead Director, Architecture", domain:"Solution Architecture, blueprints" },
+                    { name:"Vikas Sharma", role:"Lead Director, Engineering", domain:"Finance Reporting, Provider Payments, Data" },
+                    { name:"Lan Thanh Hoang", role:"Exec Director, Engineering", domain:"Provider & Growth Initiatives" },
+                  ].map((l, i) => (
+                    <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 0", borderBottom: i < 7 ? "1px solid #F0EEE8" : "none" }}>
+                      <div style={{ width:32, height:32, borderRadius:8, background:"#F5F0FA", display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:700, color:"#7D3F98", flexShrink:0 }}>{l.name.split(" ").map(w=>w[0]).join("")}</div>
+                      <div style={{ flex:1 }}>
+                        <div style={{ fontSize:12, fontWeight:600, color:"#1C1C2E" }}>{l.name}</div>
+                        <div style={{ fontSize:10, color:"#8A8AA0" }}>{l.role}</div>
+                      </div>
+                      <div style={{ fontSize:10, color:"#5A6170", maxWidth:160, textAlign:"right" }}>{l.domain}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 8 Product Lines */}
+                <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20 }}>
+                  <div style={{ fontSize:11, fontWeight:700, color:"#7D3F98", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>8 Proposed Product Lines</div>
+                  {[
+                    { num:1, name:"Member Access & Self-Service", north:"Every member can enroll, understand benefits, and act digitally", owner:"Scott Waller" },
+                    { num:2, name:"Enrollment & Eligibility Platform", north:"Real-time enrollment activation, zero fallout, full compliance", owner:"Rajesh Johnson" },
+                    { num:3, name:"Claims & Encounters", north:"Single standardized claims platform, real-time adjudication", owner:"Manjusha Nair" },
+                    { num:4, name:"Provider & Network", north:"Providers onboard and interact with minimal friction", owner:"Lan Thanh Hoang" },
+                    { num:5, name:"Clinical & Care Management", north:"Proactive, data-driven care management", owner:"Mark Buckley" },
+                    { num:6, name:"Finance & Billing", north:"Automated financial ops, near real-time reconciliation", owner:"Vikas Sharma" },
+                    { num:7, name:"Data & Analytics Platform", north:"One trusted data platform, real-time insights", owner:"Swati Nanda" },
+                    { num:8, name:"Contract & Compliance", north:"Automated contract/regulatory execution", owner:"Lan Thanh Hoang" },
+                  ].map((pl, i) => (
+                    <div key={i} style={{ padding:"10px 0", borderBottom: i < 7 ? "1px solid #F0EEE8" : "none" }}>
+                      <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:3 }}>
+                        <span style={{ width:20, height:20, borderRadius:4, background:"#7D3F98", color:"#FFF", fontSize:10, fontWeight:700, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>{pl.num}</span>
+                        <span style={{ fontSize:12, fontWeight:600, color:"#1C1C2E" }}>{pl.name}</span>
+                        <span style={{ fontSize:10, color:"#8A8AA0", marginLeft:"auto" }}>{pl.owner}</span>
+                      </div>
+                      <div style={{ fontSize:11, color:"#5A6170", paddingLeft:28, lineHeight:1.4 }}>{pl.north}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Users & Technology Layers */}
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginTop:16 }}>
+                <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20 }}>
+                  <div style={{ fontSize:11, fontWeight:700, color:"#7D3F98", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>User Types</div>
+                  {[
+                    { type:"Member", desc:"The Medicaid enrollee" },
+                    { type:"Caregiver", desc:"Family/support for the member" },
+                    { type:"Provider", desc:"Physicians, facilities" },
+                    { type:"Case Manager", desc:"Coordinates care" },
+                    { type:"Clinician", desc:"Clinical decision-making" },
+                  ].map((u, i) => (
+                    <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 0", borderBottom: i < 4 ? "1px solid #F0EEE8" : "none" }}>
+                      <div style={{ width:28, height:28, borderRadius:"50%", background:"#F5F0FA", display:"flex", alignItems:"center", justifyContent:"center", fontSize:11, fontWeight:700, color:"#7D3F98" }}>{i+1}</div>
+                      <div>
+                        <div style={{ fontSize:12, fontWeight:600, color:"#1C1C2E" }}>{u.type}</div>
+                        <div style={{ fontSize:10, color:"#8A8AA0" }}>{u.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20 }}>
+                  <div style={{ fontSize:11, fontWeight:700, color:"#7D3F98", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Technology Layers</div>
+                  {[
+                    { layer:"Integration Platform", desc:"The connective tissue", color:"#1565C0" },
+                    { layer:"Transactional", desc:"Claims, Constituent Service, Clinical, Network & Provider", color:"#2E7D32" },
+                    { layer:"Core Admin", desc:"Enrollment, Benefits, Plan, Health Plan Admin", color:"#6A1B9A" },
+                    { layer:"Data & Insights", desc:"Data Platforms and Data Sources", color:"#B71C1C" },
+                  ].map((t, i) => (
+                    <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 0", borderBottom: i < 3 ? "1px solid #F0EEE8" : "none" }}>
+                      <div style={{ width:4, height:32, borderRadius:2, background:t.color }} />
+                      <div>
+                        <div style={{ fontSize:12, fontWeight:600, color:"#1C1C2E" }}>{t.layer}</div>
+                        <div style={{ fontSize:10, color:"#8A8AA0" }}>{t.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Terminology */}
+              <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20, marginTop:16 }}>
+                <div style={{ fontSize:11, fontWeight:700, color:"#7D3F98", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Terminology Reference</div>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8 }}>
+                  {[
+                    ["QNXT","Core claims/enrollment admin platform"],
+                    ["GPS","Guided Personal Services (Salesforce)"],
+                    ["Aetna Health","Enterprise member portal"],
+                    ["OneCM","Enterprise case management platform"],
+                    ["HEDIS","Quality measurement standard"],
+                    ["STARS","CMS quality rating system"],
+                    ["ABX","Cost structure & efficiency initiative"],
+                    ["ATC","Real-time data streaming layer"],
+                    ["MDH","Medicaid Data Hub API layer"],
+                    ["FHIR","Healthcare interoperability standard"],
+                    ["FCC","Family Care Central"],
+                    ["834","EDI enrollment/eligibility standard"],
+                    ["OKR","Objectives & Key Results"],
+                    ["DDAT","Digital, Data & Analytics Technology"],
+                    ["Duals","Members in both Medicare & Medicaid"],
+                  ].map(([term, def], i) => (
+                    <div key={i} style={{ padding:"6px 10px", background:"#F8F7F4", borderRadius:6 }}>
+                      <span style={{ fontSize:11, fontWeight:700, color:"#7D3F98", marginRight:6 }}>{term}</span>
+                      <span style={{ fontSize:10, color:"#5A6170" }}>{def}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── INVESTMENTS ──────────────────────────────────────────────── */}
+          {view==="investments" && (
+            <div style={{ flex:1, overflow:"auto", padding:28, background:"#F5F4F0" }}>
+              {/* Hero */}
+              <div style={{ background:"linear-gradient(135deg, #0f1629, #1a2744, #1e3a5f)", borderRadius:14, padding:"28px 32px", marginBottom:20, color:"#FFF" }}>
+                <div style={{ fontSize:10, fontWeight:700, color:"#7D3F98", letterSpacing:"0.14em", textTransform:"uppercase", marginBottom:4 }}>Capital Portfolio</div>
+                <h1 style={{ fontSize:22, fontWeight:700, margin:"0 0 8px" }}>FY2026–2027 Investment Overview</h1>
+                <p style={{ fontSize:13, color:"rgba(255,255,255,0.7)", margin:0 }}>Total projected EBIT benefit (2026–2031): $676.6M</p>
+              </div>
+
+              {/* Top-line stats */}
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:12, marginBottom:20 }}>
+                {[
+                  { label:"2026 CapEx", value:"$45.3M", color:"#1565C0" },
+                  { label:"2027 CapEx", value:"$67.9M", color:"#2E7D32" },
+                  { label:"2026 Budget", value:"$105.2M", color:"#6A1B9A" },
+                  { label:"FTE Count", value:"~125", color:"#B71C1C" },
+                ].map((s, i) => (
+                  <div key={i} style={{ background:"#FFF", borderRadius:10, border:"1px solid #E4E2DA", borderLeft:`3px solid ${s.color}`, padding:"16px 20px" }}>
+                    <div style={{ fontSize:10, fontWeight:600, color:"#8A8AA0", textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:4 }}>{s.label}</div>
+                    <div style={{ fontSize:24, fontWeight:700, color:"#1C1C2E" }}>{s.value}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }}>
+                {/* Carryover Investments */}
+                <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20 }}>
+                  <div style={{ fontSize:11, fontWeight:700, color:"#7D3F98", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>Carryover Investments</div>
+                  <div style={{ fontSize:10, color:"#8A8AA0", marginBottom:14 }}>~$43.52M current 2027 CapEx</div>
+                  {[
+                    { name:"Aetna Health & Innovation Platform", amount:"$9.13M", desc:"Member experience modernization" },
+                    { name:"Medicaid Contractual Projects", amount:"$8.44M", desc:"Compliance (Final Rule/Duals, OB3)" },
+                    { name:"Claims Carry-Over", amount:"$5.23M", desc:"Universal Claim Tracker, Xten Upgrade, Fee Schedule" },
+                    { name:"Enrollment Carry-Over", amount:"$4.69M", desc:"End-to-end automation, eligibility processing" },
+                    { name:"Claims GPS Carry-Over", amount:"$4.04M", desc:"Moving Medicaid to GPS (Salesforce)" },
+                    { name:"Claims Workflow Management", amount:"$3.92M", desc:"QNXT Upgrade, remedy replacement" },
+                    { name:"Medicaid Clinical Carry-Over", amount:"$3.47M", desc:"Prior Auth, care coordination" },
+                  ].map((inv, i) => (
+                    <div key={i} style={{ padding:"10px 0", borderBottom: i < 6 ? "1px solid #F0EEE8" : "none" }}>
+                      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:2 }}>
+                        <span style={{ fontSize:12, fontWeight:600, color:"#1C1C2E" }}>{inv.name}</span>
+                        <span style={{ fontSize:12, fontWeight:700, color:"#7D3F98" }}>{inv.amount}</span>
+                      </div>
+                      <div style={{ fontSize:11, color:"#5A6170" }}>{inv.desc}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* New 2027 Investments */}
+                <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20 }}>
+                  <div style={{ fontSize:11, fontWeight:700, color:"#2E7D32", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>New 2027 Investments</div>
+                  <div style={{ fontSize:10, color:"#8A8AA0", marginBottom:14 }}>~$20.12M new CapEx</div>
+                  {[
+                    { name:"Aetna Medicaid Quality Optimization", amount:"$9.70M", desc:"HEDIS gaps, STARS, AI-driven quality", highlight:true },
+                    { name:"Medicaid Cloud Optimization", amount:"$5.44M", desc:"Legacy to Azure cloud-native migration" },
+                    { name:"Premium Billing Modernization", amount:"$0.83M", desc:"End-to-end billing capability" },
+                    { name:"Member Domain AI/Automation", amount:"$0.73M", desc:"AI/ML for enrollment, 834, pharmacy reconciliation" },
+                    { name:"AI Data Abstractions for HEDIS", amount:"$0.50M", desc:"Extract clinical insights from unstructured data" },
+                  ].map((inv, i) => (
+                    <div key={i} style={{ padding:"10px 0", borderBottom: i < 4 ? "1px solid #F0EEE8" : "none", background: inv.highlight ? "#F0FAF0" : "transparent", borderRadius: inv.highlight ? 6 : 0, paddingLeft: inv.highlight ? 10 : 0, paddingRight: inv.highlight ? 10 : 0 }}>
+                      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:2 }}>
+                        <span style={{ fontSize:12, fontWeight:600, color:"#1C1C2E" }}>{inv.name}</span>
+                        <span style={{ fontSize:12, fontWeight:700, color:"#2E7D32" }}>{inv.amount}</span>
+                      </div>
+                      <div style={{ fontSize:11, color:"#5A6170" }}>{inv.desc}</div>
+                    </div>
+                  ))}
+
+                  <div style={{ marginTop:20, borderTop:"1px solid #E4E2DA", paddingTop:16 }}>
+                    <div style={{ fontSize:11, fontWeight:700, color:"#B71C1C", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>ABX Initiatives</div>
+                    <div style={{ fontSize:10, color:"#8A8AA0", marginBottom:10 }}>Cost structure focus — ~$12.8M 2027</div>
+                    {["Medicaid Cloud Optimization","Triangulation","QNXT Consolidation","Pursuant HRQ In-House Migration","Enrollment Carryover"].map((a, i) => (
+                      <div key={i} style={{ fontSize:11, color:"#4A4A6A", padding:"4px 0", display:"flex", alignItems:"center", gap:6 }}>
+                        <span style={{ width:4, height:4, borderRadius:2, background:"#B71C1C", flexShrink:0 }} />{a}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Historical Spend */}
+              <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20, marginBottom:16 }}>
+                <div style={{ fontSize:11, fontWeight:700, color:"#7D3F98", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Historical Spend Trend</div>
+                <div style={{ display:"flex", alignItems:"flex-end", gap:16, height:120 }}>
+                  {[
+                    { year:"FY2023", val:74.9, max:105.2 },
+                    { year:"FY2024", val:64.1, max:105.2 },
+                    { year:"FY2025", val:82.7, max:105.2 },
+                    { year:"2026 1RF", val:103.5, max:105.2 },
+                    { year:"2026 Budget", val:105.2, max:105.2 },
+                  ].map((d, i) => (
+                    <div key={i} style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", gap:4 }}>
+                      <span style={{ fontSize:11, fontWeight:700, color:"#1C1C2E" }}>${d.val}M</span>
+                      <div style={{ width:"100%", height:`${(d.val/d.max)*80}px`, background: i >= 3 ? "linear-gradient(180deg, #7D3F98, #5c2d82)" : "#E4E2DA", borderRadius:"4px 4px 0 0", transition:"height 0.3s" }} />
+                      <span style={{ fontSize:9, color:"#8A8AA0", fontWeight:500 }}>{d.year}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Key Initiatives In-Flight */}
+              <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20, marginBottom:16 }}>
+                <div style={{ fontSize:11, fontWeight:700, color:"#7D3F98", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Key Strategic Initiatives In-Flight</div>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+                  {[
+                    { code:"A", name:"Aetna Health (Medicaid)", desc:"Member portal migration" },
+                    { code:"B", name:"Family Care Central", desc:"Complex care portal" },
+                    { code:"C", name:"Guided Personal Services (GPS)", desc:"Salesforce-based service" },
+                    { code:"D", name:"Your Aetna Virtual Assistant", desc:"AI-powered member support" },
+                    { code:"E", name:"OneCM Platform (SFHC)", desc:"Case Management modernization" },
+                    { code:"F", name:"Network & Provider Modernization", desc:"Provider platform upgrade" },
+                    { code:"G", name:"Data Platform (GCP/Snowflake)", desc:"Unified data strategy" },
+                  ].map((init, i) => (
+                    <div key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 12px", background:"#F8F7F4", borderRadius:8 }}>
+                      <span style={{ width:24, height:24, borderRadius:6, background:"#7D3F98", color:"#FFF", fontSize:11, fontWeight:700, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>{init.code}</span>
+                      <div>
+                        <div style={{ fontSize:12, fontWeight:600, color:"#1C1C2E" }}>{init.name}</div>
+                        <div style={{ fontSize:10, color:"#8A8AA0" }}>{init.desc}</div>
+                      </div>
+                      <span style={{ marginLeft:"auto", fontSize:10, padding:"2px 8px", borderRadius:10, background:"#E6F4EA", color:"#1E7E34", fontWeight:600 }}>In-Flight</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Critical Deadlines */}
+              <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20 }}>
+                <div style={{ fontSize:11, fontWeight:700, color:"#B71C1C", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Critical Deadlines</div>
+                {[
+                  { item:"Claims Remedy Replacement", deadline:"Jan 1, 2027", note:"Day-1 scope lock + stakeholder sign-off", severity:"critical" },
+                  { item:"QNXT 2025.R1 Upgrade", deadline:"Active", note:"Both Claims and Enrollment teams", severity:"high" },
+                  { item:"TX STAR CHP Implementation", deadline:"Completed 4/1", note:"Post-KY 1115 Waiver", severity:"done" },
+                  { item:"Open Enrollment / Welcome Season", deadline:"Ongoing", note:"Operational readiness priority", severity:"high" },
+                ].map((d, i) => (
+                  <div key={i} style={{ display:"flex", alignItems:"center", gap:12, padding:"10px 0", borderBottom: i < 3 ? "1px solid #F0EEE8" : "none" }}>
+                    <span style={{ fontSize:11, padding:"3px 8px", borderRadius:6, fontWeight:700, background: d.severity==="critical"?"#FEE2E2":d.severity==="done"?"#E6F4EA":"#FEF3C7", color: d.severity==="critical"?"#DC2626":d.severity==="done"?"#1E7E34":"#B45309" }}>{d.deadline}</span>
+                    <div style={{ flex:1 }}>
+                      <div style={{ fontSize:12, fontWeight:600, color:"#1C1C2E" }}>{d.item}</div>
+                      <div style={{ fontSize:10, color:"#8A8AA0" }}>{d.note}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Vendor Ecosystem */}
+              <div style={{ background:"#FFF", borderRadius:12, border:"1px solid #E4E2DA", padding:20, marginTop:16 }}>
+                <div style={{ fontSize:11, fontWeight:700, color:"#7D3F98", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:14 }}>Vendor Ecosystem</div>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:8 }}>
+                  {[
+                    { vendor:"Microsoft Azure", role:"Primary cloud platform" },
+                    { vendor:"Salesforce Health Cloud", role:"GPS platform" },
+                    { vendor:"Infosys", role:"Product Support Services" },
+                    { vendor:"Cognizant", role:"QNXT platform support" },
+                    { vendor:"edifecs (Cotiviti)", role:"Interoperability" },
+                    { vendor:"Availity", role:"Provider portal / HIN" },
+                    { vendor:"Echo Payments", role:"Payment platform" },
+                  ].map((v, i) => (
+                    <div key={i} style={{ padding:"10px 12px", background:"#F8F7F4", borderRadius:8, textAlign:"center" }}>
+                      <div style={{ fontSize:11, fontWeight:600, color:"#1C1C2E", marginBottom:2 }}>{v.vendor}</div>
+                      <div style={{ fontSize:9, color:"#8A8AA0" }}>{v.role}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── RALLY ROADMAP ──────────────────────────────────────────── */}
+          {view==="rally" && (() => {
+            const rf = rallyFilter;
+            const visible = rallyFeatures.filter(f => {
+              if (rf.product !== "all" && f.product !== rf.product) return false;
+              if (rf.pillar !== "all" && f.pillar !== rf.pillar) return false;
+              if (rf.vs !== "all") { const fvs = f.valueSector||""; if (rf.vs === "(none)" ? fvs !== "" : fvs !== rf.vs) return false; }
+              if (rf.release !== "all") { const fr = f.release||""; if (rf.release === "(none)" ? fr !== "" : fr !== rf.release) return false; }
+              if (rf.project !== "all" && f.project !== rf.project) return false;
+              if (rf.search) { const q = rf.search.toLowerCase(); if (!`${f.name} ${f.id} ${f.project} ${f.product} ${f.pillar} ${f.release} ${f.valueSector}`.toLowerCase().includes(q)) return false; }
+              return true;
+            });
+            const laneCounts = { done:0, now:0, next:0, future:0 };
+            visible.forEach(f => laneCounts[f.lane]++);
+
+            const products = [...new Set(rallyFeatures.map(f=>f.product))].sort();
+            const pillars = [...new Set(rallyFeatures.map(f=>f.pillar))].sort();
+            const valueSectors = [...new Set(rallyFeatures.map(f=>f.valueSector||""))].filter(Boolean).sort();
+            const releases = [...new Set(rallyFeatures.map(f=>f.release||""))].filter(Boolean).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+            const projects = [...new Set(rallyFeatures.map(f=>f.project))].sort();
+            const activeFilterCount = [rf.product, rf.pillar, rf.vs, rf.release, rf.project].filter(v=>v!=="all").length + (rf.search ? 1 : 0);
+
+            const LANE_META = {
+              done:   { label:"Done",   sub:"Completed last 30 days", dot:"#43a047" },
+              now:    { label:"Now",    sub:"In flight this PI",      dot:"#1a73e8" },
+              next:   { label:"Next",   sub:"On deck next PI",        dot:"#6b4fd6" },
+              future: { label:"Future", sub:"Exploring & defining",   dot:"#717784" },
+            };
+            const STATUS_COLORS = { "Done":"#1565c0", "In Progress":"#1e7e34", "Ready":"#1565c0", "Prepare":"#b84400", "Backlog":"#545b64", "Ask":"#545b64" };
+            const PILLAR_COLORS = { "Enterprise Value":"#1565C0", "Efficiency":"#2E7D32", "Growth":"#6A1B9A", "Cost Reduction":"#B71C1C" };
+            const PRODUCT_COLORS = { "Assign a Doc":"#1b5e20", "Enrollment Ops":"#0d47a1", "Extracts & ID Cards":"#e65100", "Duals/D-SNP":"#880e4f", "Enrollment Ancillary":"#4a148c", "Other":"#37474f" };
+
+            return (
+            <div style={{ flex:1, display:"flex", overflow:"hidden" }}>
+              {/* Main content */}
+              <div style={{ flex:1, overflow:"auto", padding:24 }}>
+                {/* Stats header */}
+                <div style={{ background:"linear-gradient(135deg, #0f1629, #1a2744, #1e3a5f)", borderRadius:14, padding:"20px 28px", marginBottom:16, color:"#FFF" }}>
+                  <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
+                    <div style={{ fontSize:16, fontWeight:700 }}>Medicaid Member Enrollment — Rally Roadmap</div>
+                    <button onClick={()=>setRallyPanel(!rallyPanel)} style={{ fontSize:11, padding:"5px 14px", borderRadius:6, background: rallyPanel ? "rgba(125,63,152,0.3)" : "rgba(255,255,255,0.12)", color:"#FFF", border: rallyPanel ? "1px solid rgba(125,63,152,0.6)" : "1px solid rgba(255,255,255,0.2)", cursor:"pointer", fontWeight:600, display:"flex", alignItems:"center", gap:5 }}>
+                      <span>⚙</span> Filters{activeFilterCount > 0 && <span style={{ background:"#7D3F98", fontSize:10, fontWeight:700, borderRadius:10, padding:"1px 6px" }}>{activeFilterCount}</span>}
+                    </button>
+                  </div>
+                  <div style={{ display:"flex", gap:24, alignItems:"center" }}>
+                    {Object.entries(LANE_META).map(([key, meta]) => (
+                      <div key={key} style={{ textAlign:"center" }}>
+                        <div style={{ fontSize:22, fontWeight:700 }}>{laneCounts[key]}</div>
+                        <div style={{ fontSize:10, color:"rgba(255,255,255,0.7)", textTransform:"uppercase", letterSpacing:"0.08em" }}>{meta.label}</div>
+                      </div>
+                    ))}
+                    <div style={{ marginLeft:"auto", fontSize:11, color:"rgba(255,255,255,0.6)" }}>
+                      {visible.length} of {rallyFeatures.length} features
+                      <button onClick={async () => { setRallyLoading(true); try { const r = await fetch("/api/rally/refresh",{method:"POST"}); const d = await r.json(); if (d.success) { const f2 = await fetch("/api/rally/features"); setRallyFeatures(await f2.json()); notify(`Refreshed ${d.count} features from Rally`); } else { notify(d.error||"Refresh failed","error"); } } catch(e){ notify(e.message,"error"); } setRallyLoading(false); }}
+                        style={{ marginLeft:12, fontSize:11, padding:"4px 12px", borderRadius:6, background:"rgba(255,255,255,0.15)", color:"#FFF", border:"1px solid rgba(255,255,255,0.2)", cursor:"pointer" }}>
+                        {rallyLoading ? "⟳ Refreshing..." : "↻ Refresh from Rally"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Search */}
+                <div style={{ marginBottom:16 }}>
+                  <input type="search" placeholder="Search features by name, ID, project, product..."
+                    value={rf.search} onChange={e => setRallyFilter({...rf, search:e.target.value})}
+                    style={{ width:"100%", padding:"10px 16px", borderRadius:10, border:"1px solid #E4E2DA", fontSize:13, background:"#FFF" }} />
+                </div>
+
+                {/* Lanes grid */}
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:16, alignItems:"start" }}>
+                  {["done","now","next","future"].map(laneKey => {
+                    const meta = LANE_META[laneKey];
+                    const STATE_ORDER = { "":0, "Backlog":1, "Ask":2, "Prepare":3, "Ready":4, "In Progress":5, "Done":6 };
+                    const laneFeatures = visible.filter(f => f.lane===laneKey).sort((a,b) => (STATE_ORDER[b.state]||0) - (STATE_ORDER[a.state]||0));
+                    return (
+                      <div key={laneKey} style={{ background:"#FFF", borderRadius:14, border:"1px solid #E4E2DA", overflow:"hidden" }}>
+                        <div style={{ padding:"14px 16px 10px", borderBottom:"1px solid #F0EEE8" }}>
+                          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+                            <div style={{ width:10, height:10, borderRadius:"50%", background:meta.dot }} />
+                            <span style={{ fontSize:14, fontWeight:700, color:"#1C1C2E" }}>{meta.label}</span>
+                            <span style={{ fontSize:12, color:"#8A8AA0", marginLeft:"auto" }}>{laneFeatures.length}</span>
+                          </div>
+                          <div style={{ fontSize:11, color:"#8A8AA0", marginTop:4 }}>{meta.sub}</div>
+                        </div>
+                        <div style={{ padding:12, maxHeight:600, overflow:"auto" }}>
+                          {laneFeatures.length === 0 && <div style={{ textAlign:"center", padding:20, color:"#8A8AA0", fontSize:12 }}>No features</div>}
+                          {laneFeatures.map(f => (
+                            <div key={f.id} className="card-hover" style={{ background:"#FAFBFD", border:"1px solid #E9ECF3", borderLeft:`3px solid ${meta.dot}`, borderRadius:8, padding:"10px 12px", marginBottom:8, cursor:"default" }}>
+                              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:4 }}>
+                                <span style={{ fontSize:10, padding:"2px 7px", borderRadius:10, background:(STATUS_COLORS[f.state]||"#545b64")+"18", color:STATUS_COLORS[f.state]||"#545b64", fontWeight:600, textTransform:"uppercase" }}>{f.state||"Defining"}</span>
+                                <a href={f.rallyUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize:11, color:"#1558b0", textDecoration:"none", fontFamily:"monospace", fontWeight:500 }}>{f.id}</a>
+                              </div>
+                              <div style={{ fontSize:12, fontWeight:600, color:"#1C1C2E", lineHeight:1.35, marginBottom:6, display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>{f.name}</div>
+                              <div style={{ display:"flex", flexWrap:"wrap", gap:4 }}>
+                                <span style={{ fontSize:9, padding:"2px 6px", borderRadius:3, background:(PRODUCT_COLORS[f.product]||"#37474f")+"14", color:PRODUCT_COLORS[f.product]||"#37474f", fontWeight:600 }}>{f.product}</span>
+                                <span style={{ fontSize:9, padding:"2px 6px", borderRadius:10, background:(PILLAR_COLORS[f.pillar]||"#1565C0")+"14", color:PILLAR_COLORS[f.pillar]||"#1565C0", fontWeight:700 }}>{f.pillar}</span>
+                                {f.release && <span style={{ fontSize:9, padding:"2px 5px", borderRadius:3, background:"#f0f2f5", color:"#6B7280", fontWeight:600 }}>{f.release}</span>}
+                                {f.date && <span style={{ fontSize:9, color:"#8A8AA0", marginLeft:"auto" }}>{f.date}</span>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* ── FILTER PANEL (right side) ──────────────────────────────── */}
+              {rallyPanel && (
+                <div style={{ width:320, borderLeft:"1px solid #E4E2DA", background:"#FFF", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0, animation:"fadeUp 0.2s ease" }}>
+                  {/* Panel header */}
+                  <div style={{ padding:"16px 20px", borderBottom:"1px solid #E4E2DA", display:"flex", alignItems:"center", justifyContent:"space-between", background:"#F8F7F4" }}>
+                    <div>
+                      <div style={{ fontSize:14, fontWeight:700, color:"#1C1C2E" }}>Filter Features</div>
+                      <div style={{ fontSize:11, color:"#8A8AA0", marginTop:2 }}>{visible.length} of {rallyFeatures.length} features visible</div>
+                    </div>
+                    <button onClick={()=>setRallyPanel(false)} style={{ background:"none", border:"none", fontSize:18, cursor:"pointer", color:"#8A8AA0", lineHeight:1 }}>×</button>
+                  </div>
+
+                  <div style={{ flex:1, overflow:"auto", padding:20 }}>
+                    {/* Search */}
+                    <div style={{ marginBottom:20 }}>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em", display:"block", marginBottom:6 }}>Search</label>
+                      <input type="search" placeholder="Search features..."
+                        value={rf.search} onChange={e=>setRallyFilter({...rf, search:e.target.value})}
+                        style={{ width:"100%", padding:"8px 12px", borderRadius:8, border:"1px solid #E4E2DA", fontSize:12 }} />
+                    </div>
+
+                    {/* Product */}
+                    <div style={{ marginBottom:20 }}>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em", display:"block", marginBottom:8 }}>Product</label>
+                      <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                        <button onClick={()=>setRallyFilter({...rf, product:"all"})}
+                          style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: rf.product==="all" ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: rf.product==="all" ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: rf.product==="all" ? 600 : 400, color: rf.product==="all" ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                          All Products <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{rallyFeatures.length}</span>
+                        </button>
+                        {products.map(p => {
+                          const count = rallyFeatures.filter(f=>f.product===p).length;
+                          const color = PRODUCT_COLORS[p]||"#37474f";
+                          return (
+                            <button key={p} onClick={()=>setRallyFilter({...rf, product: rf.product===p ? "all" : p})}
+                              style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: rf.product===p ? `1.5px solid ${color}` : "1px solid #E4E2DA", background: rf.product===p ? color+"10" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: rf.product===p ? 600 : 400, color: rf.product===p ? color : "#4A4A6A", textAlign:"left" }}>
+                              <div style={{ width:8, height:8, borderRadius:2, background:color, flexShrink:0 }} />
+                              {p} <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{count}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Strategic Pillar */}
+                    <div style={{ marginBottom:20 }}>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em", display:"block", marginBottom:8 }}>Strategic Pillar</label>
+                      <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                        <button onClick={()=>setRallyFilter({...rf, pillar:"all"})}
+                          style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: rf.pillar==="all" ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: rf.pillar==="all" ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: rf.pillar==="all" ? 600 : 400, color: rf.pillar==="all" ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                          All Pillars <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{rallyFeatures.length}</span>
+                        </button>
+                        {pillars.map(p => {
+                          const count = rallyFeatures.filter(f=>f.pillar===p).length;
+                          const color = PILLAR_COLORS[p]||"#1565C0";
+                          return (
+                            <button key={p} onClick={()=>setRallyFilter({...rf, pillar: rf.pillar===p ? "all" : p})}
+                              style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: rf.pillar===p ? `1.5px solid ${color}` : "1px solid #E4E2DA", background: rf.pillar===p ? color+"10" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: rf.pillar===p ? 600 : 400, color: rf.pillar===p ? color : "#4A4A6A", textAlign:"left" }}>
+                              <div style={{ width:8, height:8, borderRadius:"50%", background:color, flexShrink:0 }} />
+                              {p} <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{count}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* PI / Release */}
+                    <div style={{ marginBottom:20 }}>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em", display:"block", marginBottom:8 }}>PI / Release</label>
+                      <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                        <button onClick={()=>setRallyFilter({...rf, release:"all"})}
+                          style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: rf.release==="all" ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: rf.release==="all" ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: rf.release==="all" ? 600 : 400, color: rf.release==="all" ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                          All Releases <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{rallyFeatures.length}</span>
+                        </button>
+                        {releases.map(r => {
+                          const count = rallyFeatures.filter(f=>f.release===r).length;
+                          return (
+                            <button key={r} onClick={()=>setRallyFilter({...rf, release: rf.release===r ? "all" : r})}
+                              style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: rf.release===r ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: rf.release===r ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: rf.release===r ? 600 : 400, color: rf.release===r ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                              {r} <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{count}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Value Sector */}
+                    <div style={{ marginBottom:20 }}>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em", display:"block", marginBottom:8 }}>Value Sector</label>
+                      <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                        <button onClick={()=>setRallyFilter({...rf, vs:"all"})}
+                          style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: rf.vs==="all" ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: rf.vs==="all" ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: rf.vs==="all" ? 600 : 400, color: rf.vs==="all" ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                          All Sectors <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{rallyFeatures.length}</span>
+                        </button>
+                        {valueSectors.map(vs => {
+                          const count = rallyFeatures.filter(f=>(f.valueSector||"")===vs).length;
+                          return (
+                            <button key={vs} onClick={()=>setRallyFilter({...rf, vs: rf.vs===vs ? "all" : vs})}
+                              style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: rf.vs===vs ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: rf.vs===vs ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: rf.vs===vs ? 600 : 400, color: rf.vs===vs ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                              {vs} <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{count}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Rally Project */}
+                    <div style={{ marginBottom:20 }}>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#6B6B8A", textTransform:"uppercase", letterSpacing:"0.06em", display:"block", marginBottom:8 }}>Rally Project</label>
+                      <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+                        <button onClick={()=>setRallyFilter({...rf, project:"all"})}
+                          style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: rf.project==="all" ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: rf.project==="all" ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: rf.project==="all" ? 600 : 400, color: rf.project==="all" ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                          All Projects <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{rallyFeatures.length}</span>
+                        </button>
+                        {projects.map(p => {
+                          const count = rallyFeatures.filter(f=>f.project===p).length;
+                          return (
+                            <button key={p} onClick={()=>setRallyFilter({...rf, project: rf.project===p ? "all" : p})}
+                              style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", borderRadius:8, border: rf.project===p ? "1.5px solid #7D3F98" : "1px solid #E4E2DA", background: rf.project===p ? "#F5F0FA" : "#FFF", cursor:"pointer", fontSize:12, fontWeight: rf.project===p ? 600 : 400, color: rf.project===p ? "#7D3F98" : "#4A4A6A", textAlign:"left" }}>
+                              {p} <span style={{ marginLeft:"auto", fontSize:11, color:"#8A8AA0" }}>{count}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Reset */}
+                    {activeFilterCount > 0 && (
+                      <button onClick={()=>setRallyFilter({ product:"all", pillar:"all", vs:"all", release:"all", project:"all", search:"" })}
+                        style={{ width:"100%", padding:"10px", borderRadius:8, border:"1px solid #DC2626", background:"#FEF2F2", color:"#DC2626", cursor:"pointer", fontSize:12, fontWeight:600 }}>
+                        Clear All Filters ({activeFilterCount})
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+            );
+          })()}
 
           {/* ── TEAM & REVIEWS ────────────────────────────────────────── */}
           {view==="team" && (
