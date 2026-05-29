@@ -1324,10 +1324,18 @@ function showPage(name){
   if(name==='roadmap') renderRM('all');
 }
 
-/* ── DEEP-LINK from storyboard via sessionStorage ───────── */
+/* ── DEEP-LINK from URL param or sessionStorage ───────── */
 (function(){
-  const goto=sessionStorage.getItem('gotoPage');
-  if(goto){sessionStorage.removeItem('gotoPage');showPage(goto);}
+  const params=new URLSearchParams(window.location.search);
+  const urlPage=params.get('page');
+  if(urlPage){
+    // Hide internal nav when embedded as single-page view
+    document.querySelector('.topnav').style.display='none';
+    showPage(urlPage);
+  } else {
+    const goto=sessionStorage.getItem('gotoPage');
+    if(goto){sessionStorage.removeItem('gotoPage');showPage(goto);}
+  }
 })();
 
 /* ── EDIT TOGGLE ────────────────────────────────────────── */
