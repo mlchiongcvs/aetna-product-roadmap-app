@@ -1353,9 +1353,10 @@ After creating, share the page URL.
             <div style={{ flex:1, overflow:"auto", padding:28, background:"#F5F4F0" }}>
               {/* Hero */}
               <div style={{ background:"linear-gradient(135deg, #0f1629, #1a2744, #1e3a5f)", borderRadius:14, padding:"28px 32px", marginBottom:20, color:"#FFF" }}>
-                <div style={{ fontSize:10, fontWeight:700, color:"#7D3F98", letterSpacing:"0.14em", textTransform:"uppercase", marginBottom:4 }}>Capital Portfolio</div>
+                <div style={{ fontSize:10, fontWeight:700, color:"#7D3F98", letterSpacing:"0.14em", textTransform:"uppercase", marginBottom:4 }}>Our Strategy</div>
                 <h1 style={{ fontSize:22, fontWeight:700, margin:"0 0 8px" }}>FY2026–2027 Investment Overview</h1>
-                <p style={{ fontSize:13, color:"rgba(255,255,255,0.7)", margin:0 }}>Total projected EBIT benefit (2026–2031): $676.6M</p>
+                <p style={{ fontSize:13, color:"rgba(255,255,255,0.7)", margin:0 }}>Improve population health and program sustainability by advancing total cost of care, strengthening state and provider partnerships, and delivering simpler, more personalized member experiences.</p>
+                <p style={{ fontSize:11, color:"rgba(255,255,255,0.45)", margin:"8px 0 0" }}>Total projected EBIT benefit (2026–2031): $676.6M</p>
               </div>
 
               {/* Top-line stats */}
