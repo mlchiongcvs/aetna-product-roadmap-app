@@ -551,6 +551,8 @@ After creating, share the page URL.
     { id:"strategy",  icon:"◇", label:"Strategy & Org" },
     { id:"investments", icon:"$", label:"Investments" },
     { id:"team",      icon:"◎", label:"Team & Reviews" },
+    { id:"stratsite", icon:"◈", label:"Strategy Site" },
+    { id:"storyboard", icon:"▤", label:"Storyboard" },
   ];
 
   // ── RENDER ────────────────────────────────────────────────────────────────
@@ -1883,6 +1885,14 @@ After creating, share the page URL.
                 </div>
               </div>
             </div>
+          )}
+
+          {view==="stratsite" && (
+            <iframe src="/strategy-overview.html" style={{ flex:1, width:"100%", height:"calc(100vh - 56px)", border:"none" }} title="Strategy Site" />
+          )}
+
+          {view==="storyboard" && (
+            <iframe src="/storyboard.html" style={{ flex:1, width:"100%", height:"calc(100vh - 56px)", border:"none" }} title="Storyboard" />
           )}
         </div>
       </div>

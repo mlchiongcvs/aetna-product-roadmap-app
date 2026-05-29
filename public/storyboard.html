@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aetna Medicaid — Our Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#003865;--navy2:#004F9F;--red:#C8102E;--red2:#9B0D22;
+  --blue:#0077C8;--teal:#00A3A1;--green:#00843D;--amber:#E87722;
+  --g1:#F7F7F7;--g2:#EBEBEB;--g3:#D4D4D4;--g5:#767676;--g7:#444;--g9:#1C1C1E;
+  --white:#fff;
+  --fd:'Source Serif 4',Georgia,serif;
+  --fb:'Source Sans 3',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--g9);color:var(--white);line-height:1.5;}
+
+/* NAV — matches main strategy site */
+nav.topnav{
+  position:sticky;top:0;z-index:1000;
+  background:var(--navy);
+  display:flex;align-items:center;gap:0;padding:0;
+  box-shadow:0 4px 12px rgba(0,0,0,.10);
+  height:56px;
+}
+.topnav-brand{
+  display:flex;align-items:center;gap:12px;
+  padding:0 24px;
+  border-right:1px solid rgba(255,255,255,.12);
+  min-width:260px;height:56px;flex-shrink:0;
+}
+.brand-heart{width:28px;height:28px;flex-shrink:0;}
+.brand-text{color:#fff;font-size:13px;font-weight:600;line-height:1.25;}
+.brand-sub{color:rgba(255,255,255,.55);font-size:11px;font-weight:400;}
+.topnav-links{display:flex;align-items:stretch;flex:1;}
+.nav-link{
+  display:flex;align-items:center;gap:8px;
+  padding:0 22px;height:56px;
+  color:rgba(255,255,255,.75);
+  font-size:13px;font-weight:500;
+  border:none;background:transparent;
+  border-bottom:3px solid transparent;
+  transition:color .18s,border-color .18s,background .18s;
+  white-space:nowrap;cursor:pointer;
+  text-decoration:none;
+}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,.06);text-decoration:none;}
+.nav-link.active{color:#fff;border-bottom-color:var(--red);background:rgba(255,255,255,.05);}
+.nav-num{
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;flex-shrink:0;
+}
+.nav-link.active .nav-num{background:var(--red);color:#fff;}
+
+/* OPENING STATEMENT */
+.opener{
+  background:var(--navy);
+  padding:52px 60px 44px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.opener-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600;margin-bottom:12px;}
+.opener-h1{font-family:var(--fd);font-size:38px;font-weight:700;line-height:1.15;max-width:760px;margin-bottom:16px;}
+.opener-h1 mark{background:none;color:var(--red);}
+.opener-deck{font-size:16px;color:rgba(255,255,255,.65);max-width:680px;line-height:1.7;margin-bottom:28px;}
+.opener-stats{display:flex;gap:0;border:1px solid rgba(255,255,255,.1);border-radius:10px;overflow:hidden;width:fit-content;}
+.ostat{padding:14px 28px;text-align:center;border-right:1px solid rgba(255,255,255,.1);}
+.ostat:last-child{border-right:none;}
+.ostat-n{font-family:var(--fd);font-size:28px;font-weight:700;color:#fff;}
+.ostat-l{font-size:10px;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
+
+/* SCROLL HINT */
+.scroll-hint{background:var(--g9);padding:10px 60px;font-size:11px;color:rgba(255,255,255,.25);display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.06);}
+
+/* STORYBOARD */
+.sb-outer{overflow-x:auto;background:var(--g9);padding:40px 60px 52px;}
+.sb-outer::-webkit-scrollbar{height:4px;}
+.sb-outer::-webkit-scrollbar-thumb{background:var(--red);border-radius:4px;}
+.sb-outer::-webkit-scrollbar-track{background:rgba(255,255,255,.05);}
+.sb{display:flex;gap:0;min-width:1560px;align-items:stretch;}
+
+/* PHASE */
+.phase{flex:1;min-width:340px;display:flex;flex-direction:column;position:relative;}
+.phase+.phase{border-left:1px solid rgba(255,255,255,.07);}
+
+/* Phase header strip */
+.ph-strip{
+  padding:14px 20px 12px;
+  display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.ph-num{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;flex-shrink:0;
+}
+.ph-strip-text{}
+.ph-era{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;opacity:.5;margin-bottom:1px;}
+.ph-label{font-size:14px;font-weight:700;color:#fff;}
+
+/* Illustration area */
+.ph-illo{
+  padding:24px 20px 20px;
+  display:flex;flex-direction:column;align-items:center;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  gap:14px;
+}
+
+/* Big callout stat */
+.callout{text-align:center;}
+.callout-n{font-family:var(--fd);font-size:52px;font-weight:700;line-height:1;}
+.callout-l{font-size:11px;color:rgba(255,255,255,.45);margin-top:4px;letter-spacing:.04em;}
+
+/* Narrative */
+.ph-narrative{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.07);flex:1;}
+.ph-nar-title{font-family:var(--fd);font-size:16px;font-weight:600;margin-bottom:6px;line-height:1.3;}
+.ph-nar-text{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.65;}
+
+/* Outcome row */
+.ph-outcomes{padding:12px 20px;display:flex;flex-wrap:wrap;gap:5px;border-bottom:1px solid rgba(255,255,255,.07);}
+.tag{font-size:10px;padding:3px 9px;border-radius:10px;font-weight:500;}
+.tag-g{background:rgba(0,132,61,.2);color:#62e09a;border:1px solid rgba(0,132,61,.35);}
+.tag-r{background:rgba(200,16,46,.2);color:#ff8fa0;border:1px solid rgba(200,16,46,.3);}
+
+/* Root cause block */
+.ph-roots{padding:14px 20px;display:flex;flex-direction:column;gap:8px;}
+.roots-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:2px;}
+.rc{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);}
+.rc-ico{font-size:16px;flex-shrink:0;margin-top:1px;}
+.rc-t{font-size:11.5px;font-weight:600;color:rgba(255,255,255,.85);margin-bottom:2px;}
+.rc-d{font-size:11px;color:rgba(255,255,255,.45);line-height:1.5;}
+
+/* TURNING POINT special treatment */
+.phase.tp{background:rgba(0,80,30,.06);}
+.phase.tp .ph-strip{background:rgba(0,132,61,.1);border-bottom-color:rgba(0,132,61,.2);}
+.phase.tp .ph-illo{background:rgba(0,132,61,.05);}
+.phase.tp .ph-roots{background:rgba(0,132,61,.04);}
+.tp-badge{
+  font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--green);color:#fff;
+  padding:3px 10px;border-radius:20px;margin-left:auto;
+}
+
+/* BOTTOM: Root Cause synthesis */
+.synthesis{background:var(--navy);padding:44px 60px;}
+.syn-eyebrow{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:600;margin-bottom:8px;}
+.syn-title{font-family:var(--fd);font-size:24px;font-weight:700;margin-bottom:4px;}
+.syn-sub{font-size:13px;color:rgba(255,255,255,.45);margin-bottom:28px;}
+.syn-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+.sc{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:18px 16px;position:relative;overflow:hidden;}
+.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0;}
+.sc.c1::after{background:var(--blue);}
+.sc.c2::after{background:var(--amber);}
+.sc.c3::after{background:var(--red);}
+.sc.c4::after{background:var(--teal);}
+.sc.c5::after{background:var(--green);}
+.sc-num{font-family:var(--fd);font-size:36px;font-weight:700;color:rgba(255,255,255,.07);position:absolute;top:6px;right:12px;line-height:1;}
+.sc-ico{font-size:22px;margin-bottom:8px;}
+.sc-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:5px;}
+.sc-desc{font-size:11.5px;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:10px;}
+.sc-solve{font-size:11px;color:rgba(0,200,100,.85);font-weight:500;line-height:1.5;padding-top:8px;border-top:1px solid rgba(255,255,255,.07);}
+.sc-solve::before{content:'→ ';}
+
+/* QUOTE */
+.qwrap{background:var(--g9);padding:0 60px 52px;}
+.qblock{
+  border:1px solid rgba(255,255,255,.07);
+  border-left:4px solid var(--red);
+  border-radius:12px;background:rgba(0,56,101,.35);
+  padding:32px 36px;display:flex;gap:24px;
+}
+.qmark{font-family:var(--fd);font-size:80px;line-height:.65;color:var(--red);opacity:.3;flex-shrink:0;}
+.qtext{font-family:var(--fd);font-size:17px;font-style:italic;line-height:1.65;color:rgba(255,255,255,.85);}
+.qattr{font-size:11px;color:rgba(255,255,255,.3);margin-top:12px;}
+
+footer{background:var(--navy);padding:12px 60px;display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.25);border-top:1px solid rgba(255,255,255,.06);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <div class="topnav-brand">
+    <svg class="brand-heart" viewBox="0 0 28 28" fill="none">
+      <path d="M14 24.5s-11-7.2-11-14A6 6 0 0114 6a6 6 0 0111 4.5c0 6.8-11 14-11 14z" fill="#C8102E"/>
+    </svg>
+    <div>
+      <div class="brand-text">Aetna Medicaid Technology</div>
+      <div class="brand-sub">3-Year Strategy &amp; Roadmap</div>
+    </div>
+  </div>
+  <div class="topnav-links">
+    <a class="nav-link" href="/strategy-overview.html" style="text-decoration:none;">
+      <span class="nav-num">1</span>3-Year Roadmap Overview
+    </a>
+    <a class="nav-link active" href="/storyboard.html" style="text-decoration:none;">
+      <span class="nav-num">2</span>Our Story
+    </a>
+    <a class="nav-link" href="/strategy-overview.html#roadmap" onclick="sessionStorage.setItem('gotoPage','roadmap');" style="text-decoration:none;">
+      <span class="nav-num">3</span>Roadmap
+    </a>
+    <a class="nav-link" href="/strategy-overview.html#assumptions" onclick="sessionStorage.setItem('gotoPage','assumptions');" style="text-decoration:none;">
+      <span class="nav-num">4</span>Roadmap Assumptions &amp; Context
+    </a>
+  </div>
+</nav>
+
+<!-- OPENING STATEMENT -->
+<div class="opener">
+  <div class="opener-eyebrow">Five years · One story · The turning point</div>
+  <h1 class="opener-h1">We grew fast.<br>We grew <mark>fragmented</mark>.<br>Now we grow <mark style="color:#00843D;">right</mark>.</h1>
+  <p class="opener-deck">This is the honest account of how five years of rapid Medicaid expansion built real capability on a fragile foundation — and why 2026 is the moment we finally fix it from the ground up.</p>
+  <div class="opener-stats">
+    <div class="ostat"><div class="ostat-n">~350</div><div class="ostat-l">Apps today</div></div>
+    <div class="ostat"><div class="ostat-n">$105M</div><div class="ostat-l">Annual run cost</div></div>
+    <div class="ostat"><div class="ostat-n">2.4M</div><div class="ostat-l">Members depending on us</div></div>
+    <div class="ostat"><div class="ostat-n">5</div><div class="ostat-l">Root causes to solve</div></div>
+    <div class="ostat"><div class="ostat-n">3 yrs</div><div class="ostat-l">To get it right</div></div>
+  </div>
+</div>
+
+<div class="scroll-hint">
+  ← Scroll right to follow the full story →
+</div>
+
+<!-- ═══════════════════════ STORYBOARD ═══════════════════════ -->
+<div class="sb-outer">
+<div class="sb">
+
+<!-- ═══ PHASE 1 ═══ -->
+<div class="phase">
+  <div class="ph-strip">
+    <div class="ph-num" style="background:rgba(0,119,200,.25);color:#5ab3f5;">1</div>
+    <div class="ph-strip-text">
+      <div class="ph-era">2021 – 2022</div>
+      <div class="ph-label">Growth at all costs</div>
+    </div>
+  </div>
+
+  <div class="ph-illo">
+    <!-- SVG: map with market pins spreading out -->
+    <svg viewBox="0 0 300 160" width="300" height="160" style="display:block;">
+      <!-- US silhouette simplified -->
+      <rect x="20" y="30" width="260" height="110" rx="8" fill="#0B2D50" stroke="#1a4a7a" stroke-width="0.5"/>
+      <!-- Market pins -->
+      <circle cx="80" cy="70" r="10" fill="#0077C8" opacity=".9"/>
+      <circle cx="80" cy="70" r="16" fill="none" stroke="#0077C8" stroke-width="1" opacity=".35"/>
+      <text x="80" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" font-weight="700" fill="white">TX</text>
+
+      <circle cx="200" cy="60" r="10" fill="#0077C8" opacity=".9"/>
+      <circle cx="200" cy="60" r="16" fill="none" stroke="#0077C8" stroke-width="1" opacity=".35"/>
+      <text x="200" y="64" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" font-weight="700" fill="white">NY</text>
+
+      <circle cx="230" cy="90" r="10" fill="#0077C8" opacity=".9"/>
+      <circle cx="230" cy="90" r="16" fill="none" stroke="#0077C8" stroke-width="1" opacity=".35"/>
+      <text x="230" y="94" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" font-weight="700" fill="white">NJ</text>
+
+      <circle cx="140" cy="50" r="8" fill="#185FA5" opacity=".7"/>
+      <text x="140" y="54" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" font-weight="700" fill="white">IL</text>
+
+      <circle cx="170" cy="100" r="8" fill="#185FA5" opacity=".7"/>
+      <text x="170" y="104" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" font-weight="700" fill="white">VA</text>
+
+      <circle cx="110" cy="105" r="8" fill="#185FA5" opacity=".6"/>
+      <text x="110" y="109" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" font-weight="700" fill="white">LA</text>
+
+      <circle cx="255" cy="68" r="7" fill="#0C447C" opacity=".6"/>
+      <text x="255" y="72" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="6" font-weight="700" fill="white">CT</text>
+
+      <!-- Growth arrow -->
+      <text x="150" y="148" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,.4)">New markets added year over year</text>
+    </svg>
+
+    <!-- Big stat -->
+    <div class="callout">
+      <div class="callout-n" style="color:#5ab3f5;">+12</div>
+      <div class="callout-l">states serving Medicaid members</div>
+    </div>
+
+    <!-- SVG: systems spawning independently -->
+    <svg viewBox="0 0 300 120" width="300" height="120" style="display:block;">
+      <text x="150" y="16" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" font-weight="600" fill="rgba(255,255,255,.35)">Each market builds its own stack</text>
+      <!-- Market A -->
+      <rect x="10" y="28" width="64" height="22" rx="4" fill="#0B2D50" stroke="#1a4a7a" stroke-width="0.5"/>
+      <text x="42" y="43" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.6)">Market A</text>
+      <rect x="10" y="56" width="64" height="16" rx="3" fill="#0d3566" stroke="#1a5199" stroke-width="0.5"/>
+      <text x="42" y="67" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.5)">Claims sys A</text>
+      <rect x="10" y="78" width="64" height="16" rx="3" fill="#0d3566" stroke="#1a5199" stroke-width="0.5"/>
+      <text x="42" y="89" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.5)">Enroll sys A</text>
+      <rect x="10" y="100" width="64" height="16" rx="3" fill="#0d3566" stroke="#1a5199" stroke-width="0.5"/>
+      <text x="42" y="111" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.5)">Portal A</text>
+
+      <!-- Market B -->
+      <rect x="118" y="28" width="64" height="22" rx="4" fill="#0B2D50" stroke="#1a4a7a" stroke-width="0.5"/>
+      <text x="150" y="43" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.6)">Market B</text>
+      <rect x="118" y="56" width="64" height="16" rx="3" fill="#0d3566" stroke="#1a5199" stroke-width="0.5"/>
+      <text x="150" y="67" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.5)">Claims sys B</text>
+      <rect x="118" y="78" width="64" height="16" rx="3" fill="#0d3566" stroke="#1a5199" stroke-width="0.5"/>
+      <text x="150" y="89" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.5)">Enroll sys B</text>
+      <rect x="118" y="100" width="64" height="16" rx="3" fill="#0d3566" stroke="#1a5199" stroke-width="0.5"/>
+      <text x="150" y="111" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.5)">Portal B</text>
+
+      <!-- Market C -->
+      <rect x="226" y="28" width="64" height="22" rx="4" fill="#0B2D50" stroke="#1a4a7a" stroke-width="0.5"/>
+      <text x="258" y="43" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.6)">Market C</text>
+      <rect x="226" y="56" width="64" height="16" rx="3" fill="#0d3566" stroke="#1a5199" stroke-width="0.5"/>
+      <text x="258" y="67" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.5)">Claims sys C</text>
+      <rect x="226" y="78" width="64" height="16" rx="3" fill="#0d3566" stroke="#1a5199" stroke-width="0.5"/>
+      <text x="258" y="89" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.5)">Enroll sys C</text>
+      <rect x="226" y="100" width="64" height="16" rx="3" fill="#0d3566" stroke="#1a5199" stroke-width="0.5"/>
+      <text x="258" y="111" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.5)">Portal C</text>
+    </svg>
+  </div>
+
+  <div class="ph-narrative">
+    <div class="ph-nar-title">Every market built its own stack — fast, but separately.</div>
+    <div class="ph-nar-text">New state contracts and regulatory mandates drove urgency. Teams moved quickly and built what worked — market by market. The instinct was right. The outcome was duplication: separate claims systems, separate enrollment platforms, separate portals — for each market. The foundation fractures here.</div>
+  </div>
+
+  <div class="ph-outcomes">
+    <span class="tag tag-g">✓ 12+ states served</span>
+    <span class="tag tag-g">✓ Contracts won</span>
+    <span class="tag tag-r">✗ No shared design</span>
+    <span class="tag tag-r">✗ Siloed by market</span>
+  </div>
+
+  <div class="ph-roots">
+    <div class="roots-lbl">Root cause planted</div>
+    <div class="rc" style="border-color:rgba(0,119,200,.3);">
+      <div class="rc-ico">🧩</div>
+      <div>
+        <div class="rc-t">Fragmented ecosystem begins</div>
+        <div class="rc-d">The same capability built 3× across markets. ~350 apps begin accumulating. No shared platform.</div>
+      </div>
+    </div>
+    <div class="rc" style="border-color:rgba(0,119,200,.3);">
+      <div class="rc-ico">📋</div>
+      <div>
+        <div class="rc-t">No unified operating model</div>
+        <div class="rc-d">Project-based funding with no shared product ownership. Teams optimize for their market, not the enterprise.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PHASE 2 ═══ -->
+<div class="phase">
+  <div class="ph-strip">
+    <div class="ph-num" style="background:rgba(232,119,34,.2);color:#FAC775;">2</div>
+    <div class="ph-strip-text">
+      <div class="ph-era">2023 – 2024</div>
+      <div class="ph-label">Complexity compounds</div>
+    </div>
+  </div>
+
+  <div class="ph-illo">
+    <!-- SVG: spaghetti integration web -->
+    <svg viewBox="0 0 300 160" width="300" height="160" style="display:block;">
+      <text x="150" y="16" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" font-weight="600" fill="rgba(255,255,255,.35)">Systems wired together under pressure</text>
+      <!-- Nodes -->
+      <circle cx="60" cy="55" r="22" fill="#2a1a00" stroke="#E87722" stroke-width="1"/>
+      <text x="60" y="51" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" font-weight="700" fill="#FAC775">Claims</text>
+      <text x="60" y="62" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(250,199,117,.7)">platform</text>
+
+      <circle cx="150" cy="40" r="22" fill="#2a1a00" stroke="#E87722" stroke-width="1"/>
+      <text x="150" y="36" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" font-weight="700" fill="#FAC775">Enroll</text>
+      <text x="150" y="47" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(250,199,117,.7)">platform</text>
+
+      <circle cx="240" cy="55" r="22" fill="#2a1a00" stroke="#E87722" stroke-width="1"/>
+      <text x="240" y="51" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" font-weight="700" fill="#FAC775">Provider</text>
+      <text x="240" y="62" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(250,199,117,.7)">directory</text>
+
+      <circle cx="90" cy="125" r="22" fill="#2a1a00" stroke="#E87722" stroke-width="1"/>
+      <text x="90" y="121" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" font-weight="700" fill="#FAC775">Clinical</text>
+      <text x="90" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(250,199,117,.7)">platform</text>
+
+      <circle cx="210" cy="125" r="22" fill="#2a1a00" stroke="#E87722" stroke-width="1"/>
+      <text x="210" y="121" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" font-weight="700" fill="#FAC775">Finance</text>
+      <text x="210" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(250,199,117,.7)">systems</text>
+
+      <!-- Spaghetti lines - many crossing integrations -->
+      <line x1="80" y1="65" x2="130" y2="52" stroke="#E87722" stroke-width="1" opacity=".4"/>
+      <line x1="170" y1="52" x2="218" y2="65" stroke="#E87722" stroke-width="1" opacity=".4"/>
+      <line x1="60" y1="77" x2="80" y2="105" stroke="#E87722" stroke-width="1" opacity=".35"/>
+      <line x1="240" y1="77" x2="220" y2="105" stroke="#E87722" stroke-width="1" opacity=".35"/>
+      <line x1="115" y1="118" x2="188" y2="118" stroke="#E87722" stroke-width="1" opacity=".3"/>
+      <line x1="80" y1="62" x2="210" y2="105" stroke="#E87722" stroke-width="0.7" opacity=".25" stroke-dasharray="3,2"/>
+      <line x1="150" y1="62" x2="90" y2="103" stroke="#E87722" stroke-width="0.7" opacity=".25" stroke-dasharray="3,2"/>
+      <line x1="150" y1="62" x2="210" y2="103" stroke="#E87722" stroke-width="0.7" opacity=".25" stroke-dasharray="3,2"/>
+      <line x1="68" y1="73" x2="190" y2="108" stroke="#E87722" stroke-width="0.5" opacity=".2" stroke-dasharray="2,3"/>
+    </svg>
+
+    <div class="callout">
+      <div class="callout-n" style="color:#FAC775;">40%</div>
+      <div class="callout-l">of changes touch 3+ systems</div>
+    </div>
+
+    <!-- SVG: tech debt meter -->
+    <svg viewBox="0 0 300 80" width="300" height="80" style="display:block;">
+      <text x="150" y="16" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" font-weight="600" fill="rgba(255,255,255,.35)">Technical debt accumulating every sprint</text>
+      <!-- Debt bar growing -->
+      <rect x="20" y="28" width="120" height="18" rx="3" fill="#1a1200" stroke="#E87722" stroke-width="0.5"/>
+      <rect x="20" y="28" width="100" height="18" rx="3" fill="#E87722" opacity=".8"/>
+      <text x="125" y="41" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" font-weight="700" fill="#FAC775">83%</text>
+      <text x="150" y="41" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.35)">run-the-business spend</text>
+
+      <rect x="20" y="54" width="120" height="18" rx="3" fill="#1a1200" stroke="#E87722" stroke-width="0.5"/>
+      <rect x="20" y="54" width="26" height="18" rx="3" fill="#FAC775" opacity=".5"/>
+      <text x="125" y="67" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" font-weight="700" fill="#FAC775">17%</text>
+      <text x="150" y="67" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.35)">left for innovation</text>
+    </svg>
+  </div>
+
+  <div class="ph-narrative">
+    <div class="ph-nar-title">More capability, but now everything is connected — badly.</div>
+    <div class="ph-nar-text">Expanding markets demanded more features across claims, enrollment, clinical, and provider platforms. The instinct was to integrate what existed. The result was a web of point-to-point connections that nobody fully understood. Every change needed to be tested in 6 places. Run-the-business spend crowded out innovation.</div>
+  </div>
+
+  <div class="ph-outcomes">
+    <span class="tag tag-g">✓ Capability breadth grew</span>
+    <span class="tag tag-g">✓ Digital work began</span>
+    <span class="tag tag-r">✗ Integration debt exploded</span>
+    <span class="tag tag-r">✗ Change became expensive</span>
+  </div>
+
+  <div class="ph-roots">
+    <div class="roots-lbl">Root causes compounding</div>
+    <div class="rc" style="border-color:rgba(232,119,34,.35);">
+      <div class="rc-ico">🧱</div>
+      <div>
+        <div class="rc-t">Technical debt accelerates</div>
+        <div class="rc-d">Legacy systems enhanced rather than replaced. Brittle integrations mean every release is a risk. Velocity drops year over year.</div>
+      </div>
+    </div>
+    <div class="rc" style="border-color:rgba(232,119,34,.35);">
+      <div class="rc-ico">🔁</div>
+      <div>
+        <div class="rc-t">Run-the-business dominates</div>
+        <div class="rc-d">83% of investment consumed by stability, resiliency, and compliance. Only 17 cents of every dollar can go toward what members actually need.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PHASE 3 ═══ -->
+<div class="phase">
+  <div class="ph-strip">
+    <div class="ph-num" style="background:rgba(200,16,46,.2);color:#ff8fa0;">3</div>
+    <div class="ph-strip-text">
+      <div class="ph-era">2024 – 2025</div>
+      <div class="ph-label">Complexity peaks</div>
+    </div>
+  </div>
+
+  <div class="ph-illo">
+    <!-- SVG: cost tower growing -->
+    <svg viewBox="0 0 300 160" width="300" height="160" style="display:block;">
+      <text x="150" y="16" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" font-weight="600" fill="rgba(255,255,255,.35)">Annual run cost trajectory</text>
+
+      <!-- Year labels -->
+      <text x="58" y="148" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.4)">2023</text>
+      <text x="118" y="148" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.4)">2024</text>
+      <text x="178" y="148" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.4)">2025</text>
+      <text x="240" y="148" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.4)">2026 budget</text>
+
+      <!-- Bars -->
+      <rect x="28" y="95" width="60" height="42" rx="3" fill="#7B0F1E"/>
+      <text x="58" y="88" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" font-weight="700" fill="#ff8fa0">$74M</text>
+
+      <rect x="88" y="78" width="60" height="60" rx="3" fill="#9B0D22"/>
+      <text x="118" y="71" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" font-weight="700" fill="#ff8fa0">$64M</text>
+
+      <rect x="148" y="55" width="60" height="82" rx="3" fill="#C8102E"/>
+      <text x="178" y="48" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" font-weight="700" fill="#ff8fa0">$82M</text>
+
+      <rect x="210" y="30" width="60" height="108" rx="3" fill="#E24B4A"/>
+      <text x="240" y="23" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" font-weight="700" fill="#ff4d4d">$105M</text>
+
+      <!-- Arrow trending up -->
+      <line x1="35" y1="95" x2="265" y2="32" stroke="rgba(255,100,100,.3)" stroke-width="1" stroke-dasharray="4,3"/>
+    </svg>
+
+    <div class="callout">
+      <div class="callout-n" style="color:#ff8fa0;">350</div>
+      <div class="callout-l">applications in the portfolio</div>
+    </div>
+
+    <!-- SVG: ownership chaos -->
+    <svg viewBox="0 0 300 90" width="300" height="90" style="display:block;">
+      <text x="150" y="16" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" font-weight="600" fill="rgba(255,255,255,.35)">Who owns this? Nobody knows.</text>
+      <!-- Apps with no owner -->
+      <rect x="16" y="26" width="62" height="20" rx="4" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.3)" stroke-width="0.5"/>
+      <text x="47" y="39" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,143,160,.8)">App #1 – ?</text>
+      <rect x="86" y="26" width="62" height="20" rx="4" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.3)" stroke-width="0.5"/>
+      <text x="117" y="39" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,143,160,.8)">App #2 – ?</text>
+      <rect x="156" y="26" width="62" height="20" rx="4" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.3)" stroke-width="0.5"/>
+      <text x="187" y="39" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,143,160,.8)">App #3 – ?</text>
+      <rect x="226" y="26" width="60" height="20" rx="4" fill="rgba(200,16,46,.15)" stroke="rgba(200,16,46,.3)" stroke-width="0.5"/>
+      <text x="256" y="39" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,143,160,.8)">App #4 – ?</text>
+
+      <rect x="51" y="56" width="62" height="20" rx="4" fill="rgba(200,16,46,.1)" stroke="rgba(200,16,46,.2)" stroke-width="0.5"/>
+      <text x="82" y="69" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,143,160,.6)">App #5 – ?</text>
+      <rect x="121" y="56" width="62" height="20" rx="4" fill="rgba(200,16,46,.1)" stroke="rgba(200,16,46,.2)" stroke-width="0.5"/>
+      <text x="152" y="69" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,143,160,.6)">App #6 – ?</text>
+      <rect x="191" y="56" width="62" height="20" rx="4" fill="rgba(200,16,46,.1)" stroke="rgba(200,16,46,.2)" stroke-width="0.5"/>
+      <text x="222" y="69" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,143,160,.6)">App #7 – ?</text>
+
+      <text x="150" y="88" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,143,160,.4)">... 343 more</text>
+    </svg>
+  </div>
+
+  <div class="ph-narrative">
+    <div class="ph-nar-title">High cost, low agility, and leadership in transition.</div>
+    <div class="ph-nar-text">Run cost reached $105M annually. The portfolio ballooned to ~350 applications. With every change touching dozens of systems, delivery slowed. Leadership transitions reset priorities mid-stream. Nobody had a clear view of what was delivering value versus what was just running.</div>
+  </div>
+
+  <div class="ph-outcomes">
+    <span class="tag tag-r">✗ $105M annual run cost</span>
+    <span class="tag tag-r">✗ ~350 apps, unclear ownership</span>
+    <span class="tag tag-r">✗ Slow delivery cycles</span>
+    <span class="tag tag-r">✗ Limited ROI visibility</span>
+  </div>
+
+  <div class="ph-roots">
+    <div class="roots-lbl">Root causes at peak</div>
+    <div class="rc" style="border-color:rgba(200,16,46,.35);">
+      <div class="rc-ico">💸</div>
+      <div>
+        <div class="rc-t">Cost structure out of control</div>
+        <div class="rc-d">Application sprawl and legacy maintenance alone consume ~$105M/year. The system is expensive to run and expensive to change.</div>
+      </div>
+    </div>
+    <div class="rc" style="border-color:rgba(200,16,46,.35);">
+      <div class="rc-ico">👥</div>
+      <div>
+        <div class="rc-t">Leadership instability</div>
+        <div class="rc-d">Frequent leadership transitions reset strategy mid-stream. Inconsistent decision rights mean the same conversations happen twice. Progress stalls.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TURNING POINT ═══ -->
+<div class="phase tp">
+  <div class="ph-strip">
+    <div class="ph-num" style="background:rgba(0,132,61,.3);color:#62e09a;">4</div>
+    <div class="ph-strip-text">
+      <div class="ph-era">2026 — Now</div>
+      <div class="ph-label">The turning point</div>
+    </div>
+    <span class="tp-badge">Now</span>
+  </div>
+
+  <div class="ph-illo" style="background:rgba(0,80,30,.07);">
+    <!-- SVG: unified platform vision -->
+    <svg viewBox="0 0 300 160" width="300" height="160" style="display:block;">
+      <text x="150" y="16" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" font-weight="600" fill="rgba(0,200,100,.4)">From fragmented silos to shared platforms</text>
+
+      <!-- Old state: 3 siloed towers (left) -->
+      <rect x="15" y="30" width="36" height="100" rx="4" fill="rgba(200,16,46,.12)" stroke="rgba(200,16,46,.25)" stroke-width="0.5"/>
+      <rect x="15" y="30" width="36" height="26" rx="4" fill="rgba(200,16,46,.2)" stroke="rgba(200,16,46,.3)" stroke-width="0.5"/>
+      <text x="33" y="48" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,143,160,.7)">Claims A</text>
+      <text x="33" y="70" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,143,160,.5)">Claims B</text>
+      <text x="33" y="88" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,143,160,.4)">Claims C</text>
+      <text x="33" y="106" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,143,160,.3)">Claims D</text>
+
+      <rect x="57" y="40" width="36" height="90" rx="4" fill="rgba(200,16,46,.12)" stroke="rgba(200,16,46,.25)" stroke-width="0.5"/>
+      <rect x="57" y="40" width="36" height="26" rx="4" fill="rgba(200,16,46,.2)" stroke="rgba(200,16,46,.3)" stroke-width="0.5"/>
+      <text x="75" y="58" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,143,160,.7)">Enroll A</text>
+      <text x="75" y="78" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,143,160,.5)">Enroll B</text>
+      <text x="75" y="96" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,143,160,.3)">Enroll C</text>
+
+      <rect x="99" y="50" width="36" height="80" rx="4" fill="rgba(200,16,46,.12)" stroke="rgba(200,16,46,.25)" stroke-width="0.5"/>
+      <rect x="99" y="50" width="36" height="26" rx="4" fill="rgba(200,16,46,.2)" stroke="rgba(200,16,46,.3)" stroke-width="0.5"/>
+      <text x="117" y="68" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,143,160,.7)">Portal A</text>
+      <text x="117" y="88" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,143,160,.5)">Portal B</text>
+      <text x="117" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,143,160,.3)">Portal C</text>
+
+      <!-- Arrow -->
+      <text x="157" y="86" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="20" fill="rgba(0,200,100,.5)">→</text>
+
+      <!-- New state: unified platform (right) -->
+      <rect x="176" y="30" width="110" height="100" rx="8" fill="rgba(0,80,30,.3)" stroke="rgba(0,200,100,.4)" stroke-width="1"/>
+      <rect x="176" y="30" width="110" height="22" rx="8" fill="rgba(0,132,61,.35)" stroke="rgba(0,200,100,.4)" stroke-width="0.5"/>
+      <text x="231" y="45" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" font-weight="700" fill="#62e09a">ONE platform</text>
+
+      <rect x="186" y="60" width="42" height="16" rx="3" fill="rgba(0,132,61,.25)" stroke="rgba(0,200,100,.3)" stroke-width="0.5"/>
+      <text x="207" y="71" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" font-weight="600" fill="#62e09a">Claims</text>
+      <rect x="234" y="60" width="42" height="16" rx="3" fill="rgba(0,132,61,.25)" stroke="rgba(0,200,100,.3)" stroke-width="0.5"/>
+      <text x="255" y="71" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" font-weight="600" fill="#62e09a">Enroll</text>
+      <rect x="186" y="82" width="42" height="16" rx="3" fill="rgba(0,132,61,.25)" stroke="rgba(0,200,100,.3)" stroke-width="0.5"/>
+      <text x="207" y="93" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" font-weight="600" fill="#62e09a">Clinical</text>
+      <rect x="234" y="82" width="42" height="16" rx="3" fill="rgba(0,132,61,.25)" stroke="rgba(0,200,100,.3)" stroke-width="0.5"/>
+      <text x="255" y="93" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" font-weight="600" fill="#62e09a">Portal</text>
+      <rect x="186" y="104" width="90" height="16" rx="3" fill="rgba(0,132,61,.2)" stroke="rgba(0,200,100,.25)" stroke-width="0.5"/>
+      <text x="231" y="115" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" font-weight="600" fill="rgba(98,224,154,.7)">Shared data platform</text>
+    </svg>
+
+    <div class="callout">
+      <div class="callout-n" style="color:#62e09a;">$677M</div>
+      <div class="callout-l">EBIT benefit over 5 years</div>
+    </div>
+
+    <!-- SVG: leadership alignment visual -->
+    <svg viewBox="0 0 300 80" width="300" height="80" style="display:block;">
+      <text x="150" y="16" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" font-weight="600" fill="rgba(0,200,100,.4)">One aligned leadership team</text>
+      <circle cx="70" cy="50" r="20" fill="rgba(0,80,30,.3)" stroke="rgba(0,200,100,.4)" stroke-width="1"/>
+      <text x="70" y="46" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" font-weight="700" fill="#62e09a">Katerina</text>
+      <text x="70" y="57" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="6" fill="rgba(98,224,154,.6)">President</text>
+
+      <circle cx="150" cy="50" r="20" fill="rgba(0,80,30,.3)" stroke="rgba(0,200,100,.4)" stroke-width="1"/>
+      <text x="150" y="46" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" font-weight="700" fill="#62e09a">Greg</text>
+      <text x="150" y="57" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="6" fill="rgba(98,224,154,.6)">AVP Eng</text>
+
+      <circle cx="230" cy="50" r="20" fill="rgba(0,80,30,.3)" stroke="rgba(0,200,100,.4)" stroke-width="1"/>
+      <text x="230" y="46" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" font-weight="700" fill="#62e09a">Jeff</text>
+      <text x="230" y="57" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="6" fill="rgba(98,224,154,.6)">Product</text>
+
+      <line x1="90" y1="50" x2="130" y2="50" stroke="rgba(0,200,100,.4)" stroke-width="1"/>
+      <line x1="170" y1="50" x2="210" y2="50" stroke="rgba(0,200,100,.4)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="ph-narrative">
+    <div class="ph-nar-title" style="color:#62e09a;">Aligned leaders. Clear strategy. Three years to get it right.</div>
+    <div class="ph-nar-text" style="color:rgba(255,255,255,.7);">Katerina Guerraz, Gregory Krause, and Jeffrey Krasner are aligned on a single direction: stop building for Medicaid individually, and start leveraging Aetna enterprise capabilities for Medicaid advantage. Eight product lines. Product-based funding. Cloud-native infrastructure. One trusted data platform. By 2029, a fundamentally different organization.</div>
+  </div>
+
+  <div class="ph-outcomes">
+    <span class="tag tag-g">✓ Leadership aligned</span>
+    <span class="tag tag-g">✓ Product model launching</span>
+    <span class="tag tag-g">✓ Cloud migration underway</span>
+    <span class="tag tag-g">✓ 8 product lines defined</span>
+    <span class="tag tag-g">✓ OKRs replacing output metrics</span>
+  </div>
+
+  <div class="ph-roots" style="background:rgba(0,80,30,.05);">
+    <div class="roots-lbl" style="color:rgba(0,200,100,.4);">How we solve each root cause</div>
+    <div class="rc" style="background:rgba(0,80,30,.1);border-color:rgba(0,200,100,.25);">
+      <div class="rc-ico">☁️</div>
+      <div>
+        <div class="rc-t" style="color:#62e09a;">Cloud + app rationalization</div>
+        <div class="rc-d">Azure cloud migration. Target 30%+ app reduction by 2028. $10.8M Cloud Optimization investment.</div>
+      </div>
+    </div>
+    <div class="rc" style="background:rgba(0,80,30,.1);border-color:rgba(0,200,100,.25);">
+      <div class="rc-ico">🏆</div>
+      <div>
+        <div class="rc-t" style="color:#62e09a;">Product operating model</div>
+        <div class="rc-d">8 product lines. Clear owners, north stars, OKRs. Products funded — not projects.</div>
+      </div>
+    </div>
+    <div class="rc" style="background:rgba(0,80,30,.1);border-color:rgba(0,200,100,.25);">
+      <div class="rc-ico">🔗</div>
+      <div>
+        <div class="rc-t" style="color:#62e09a;">Enterprise platforms replace silos</div>
+        <div class="rc-d">Aetna Health, GPS, OneCM, ATLAS, PRMS, GCP — one platform per domain, shared across all markets.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .sb -->
+</div><!-- end .sb-outer -->
+
+<!-- ═══ ROOT CAUSE SYNTHESIS ═══ -->
+<div class="synthesis">
+  <div class="syn-eyebrow">Root causes — synthesized</div>
+  <div class="syn-title">Five causes. One story. Every investment solves at least one.</div>
+  <div class="syn-sub">Each challenge we face today traces directly back to a decision made under pressure during rapid growth. Understanding the cause is understanding the cure.</div>
+  <div class="syn-cards">
+    <div class="sc c1">
+      <div class="sc-num">01</div>
+      <div class="sc-ico">🧩</div>
+      <div class="sc-name">Fragmented ecosystem</div>
+      <div class="sc-desc">~350 apps. Same capability built 3× per market. Overlapping tools, duplicate costs, unclear ownership. Nobody can see the whole picture.</div>
+      <div class="sc-solve">Platform consolidation + app rationalization. 30%+ reduction target by 2028.</div>
+    </div>
+    <div class="sc c2">
+      <div class="sc-num">02</div>
+      <div class="sc-ico">🔁</div>
+      <div class="sc-name">Run-the-business dominates</div>
+      <div class="sc-desc">83% of investment consumed by stability and compliance. Only 17 cents per dollar funds new capability. We maintain rather than build.</div>
+      <div class="sc-solve">Cloud reduces run cost. ABX program targets $60M+ cost structure improvement.</div>
+    </div>
+    <div class="sc c3">
+      <div class="sc-num">03</div>
+      <div class="sc-ico">🧱</div>
+      <div class="sc-name">Technical debt</div>
+      <div class="sc-desc">Years of enhancements layered onto legacy systems. Every change requires re-testing 6+ platforms. Delivery is slow, brittle, and risky.</div>
+      <div class="sc-solve">ATLAS replaces claims remedy. QNXT upgraded. Azure cloud migration. API-first design.</div>
+    </div>
+    <div class="sc c4">
+      <div class="sc-num">04</div>
+      <div class="sc-ico">📋</div>
+      <div class="sc-name">No operating model</div>
+      <div class="sc-desc">Project funding without product ownership. Opaque prioritization. Investment not connected to outcomes. Accountability is unclear.</div>
+      <div class="sc-solve">8 product lines with owners + OKRs. Outcome-based funding. Portfolio governance.</div>
+    </div>
+    <div class="sc c5">
+      <div class="sc-num">05</div>
+      <div class="sc-ico">👥</div>
+      <div class="sc-name">Leadership instability</div>
+      <div class="sc-desc">Frequent leadership transitions reset priorities mid-stream. The same decisions made repeatedly. Standardization never sticks.</div>
+      <div class="sc-solve">Stable aligned team under Greg Krause. 3-year horizon. Presidential alignment confirmed.</div>
+    </div>
+  </div>
+</div>
+
+<!-- QUOTE -->
+<div class="qwrap">
+  <div class="qblock">
+    <div class="qmark">"</div>
+    <div>
+      <div class="qtext">Over the past 5 years, Medicaid Technology grew rapidly to meet market and regulatory demand — but did so through fragmented systems, evolving leadership, and project-based execution. This enabled growth — but created complexity, cost, and inefficiency. Today marks a turning point. We are shifting to a unified, product-driven, platform-based model designed to reduce cost, improve agility, and deliver measurable outcomes for members and the business.</div>
+      <div class="qattr">— Aetna Medicaid Technology Leadership · 2026 Strategic Direction</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>Aetna Medicaid Technology · Our Story · 2026 · Confidential and Proprietary</span>
+  <span>©2026 CVS Health and/or one of its affiliates</span>
+</footer>
+
+</body>
+</html>
