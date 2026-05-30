@@ -1,190 +1,150 @@
-# CLAUDE.md — Aetna Medicaid Product Roadmap App
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## What This Is
 
-An interactive strategic roadmap application for Aetna Medicaid Technology. It combines a React SPA with embedded standalone HTML pages to present the 3-year technology strategy, Gantt-chart roadmap with 49 funded initiatives, storyboard narrative, and operational dashboards.
+An interactive strategic roadmap application for Aetna Medicaid Technology. Combines a React SPA shell with embedded standalone HTML pages to present the 3-year technology strategy, Gantt-chart roadmap (69 initiatives across 12 product lines), storyboard narrative, and operational dashboards.
 
 **Live URL:** https://mlchiongcvs.github.io/aetna-product-roadmap-app/
 **Repo:** https://github.com/mlchiongcvs/aetna-product-roadmap-app
 
 ---
 
-## Tech Stack
+## Commands
 
-- **Frontend:** React 18 + Vite (SPA)
-- **Server:** Express (Node.js) on port 8080
-- **Deployment:** GitHub Pages (gh-pages branch) for sharing; CAP (CVS container platform) for internal hosting
-- **Build:** `npm run build` → outputs to `dist/`
-- **Dev:** `npm run dev` (Vite HMR)
-- **Prod:** `npm start` (Express serves `dist/` + proxies Rally API)
-
----
-
-## Project Structure
-
-```
-src/
-  AetnaMedicaidRoadmap.jsx   — Main React app (nav, dashboard, ingest, Rally, timeline, investments, team views)
-  main.jsx                   — React entry point
-
-public/
-  strategy-overview.html     — Standalone strategy site (4 internal pages: overview, story, roadmap, assumptions)
-  storyboard.html            — Horizontal scrolling narrative for leader onboarding
-
-server/
-  index.js                   — Express server (static files + Rally API proxy + /health endpoint)
-  features.json              — Feature flags
-
-.github/workflows/
-  build-and-push.yml         — CI: build Docker image → push to JFrog
+```bash
+npm run dev       # Vite dev server with HMR
+npm run build     # Production build → dist/
+npm run preview   # Preview production build locally
+npm start         # Express server (serves dist/ + Rally API proxy) on port 8080
 ```
 
----
-
-## Architecture: Embedded HTML Pages
-
-The strategy pages (`strategy-overview.html`, `storyboard.html`) are complex standalone apps (2000+ lines each) with their own CSS, JS, SVGs, and interactive features. They are NOT React components — they're embedded via iframes in the React shell:
-
-- `strategy-overview.html?page=overview|story|roadmap|assumptions` — URL param selects which internal page to show and hides the internal nav
-- `storyboard.html` — hides internal nav when `window.self !== window.top` (iframe detection)
-
-The React app provides the left nav and routes each tab to the correct iframe URL.
+No test suite exists. No linter configured.
 
 ---
 
-## Navigation Structure
+## Architecture
 
-| Nav Tab | View ID | What It Shows |
-|---------|---------|---------------|
-| 3-Year Overview | strat-overview | Strategy hero + 5 dials + investment breakdown |
-| Story Arc | strat-story | 5-year evolution narrative |
-| Roadmap | strat-roadmap | Interactive Gantt chart (49 initiatives, filterable) |
-| Context & Assumptions | strat-context | Planning assumptions + risk register |
-| Storyboard | storyboard | Horizontal scrolling onboarding narrative |
-| Dashboard | dashboard | AI-powered roadmap management |
-| Ingest | ingest | Document upload/analysis |
-| Rally | rally | Rally API integration |
-| Timeline | timeline | Visual timeline |
-| Investments | investments | Capital portfolio view |
-| Team | team | Team structure |
+### React Shell + Embedded HTML Pages
 
-Default landing: **3-Year Overview** (`strat-overview`)
+The app has two layers:
+
+1. **React SPA** (`src/AetnaMedicaidRoadmap.jsx`) — Provides the collapsible left sidebar nav, routing between views, and renders server-dependent features (Dashboard, Ingest, Rally).
+
+2. **Standalone HTML pages** (`public/strategy-overview.html`, `public/storyboard.html`) — Complex self-contained apps (2000+ lines each) with their own CSS, JS, SVGs, and interactivity. Embedded via iframes in the React shell.
+
+The iframe `src` attributes MUST use `import.meta.env.BASE_URL` (not absolute `/` paths) to work on GitHub Pages:
+```jsx
+<iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=roadmap`} />
+```
+
+### URL-Based Page Routing in strategy-overview.html
+
+`strategy-overview.html?page=overview|story|roadmap|assumptions` — the `?page=` param selects which internal page to show and hides the built-in nav when embedded in an iframe.
+
+### Server
+
+`server/index.js` — Express on port 8080. Serves `dist/` static files, proxies `/api/rally/*` to Rally, exposes `/health` for container health checks.
 
 ---
 
-## Roadmap Gantt Chart (strategy-overview.html)
-
-### Data Model
+## Roadmap Gantt Chart Data Model (strategy-overview.html)
 
 ```javascript
 const PLs = [
-  { name, icon, color, ns (north star), pl (filter key "pl0"-"pl7"),
+  { name, icon, color, ns, pl: "pl0"-"pl11",
     products: [
       { name, initiatives: [
         { id, name, funded, src, desc, outcomes, users,
           capex26, capex27, ebit, nonEbit, roi, benefits, measures,
-          priority: ["ef-cost", "bd-member", ...],  // 1-3 priority codes
-          now, next, future }  // quarter ranges for Gantt positioning
+          priority: ["ef-cost", ...],   // 1-3 priority codes
+          category: "cat-ai",           // single category code
+          now, next, future }           // quarter ranges for Gantt bar positioning
       ]}
     ]
   }
 ]
 ```
 
-### 10 Priorities (from Medicaid Priorities document)
+### 12 Product Lines (pl0–pl11)
 
-**Excel at the Fundamentals:**
-- `ef-footprint` — Expand Strategic Footprint
-- `ef-cost` — Best-in-Class Cost Structure
-- `ef-tcoc` — Total Cost of Care Solutions
-- `ef-community` — Community-Integrated Support
-
-**Be Truly Distinctive:**
-- `bd-provider` — Improve Provider Experience
-- `bd-member` — Enhance Member Experience
-- `bd-state` — Advance State Partnerships
-
-**Build a Winning Culture:**
-- `wc-performance` — High-Performance Culture
-- `wc-talent` — Modernize Talent Capabilities
-- `wc-colleague` — Best-in-Class Colleague Experience
+pl0 Member Access, pl1 Enrollment, pl2 Claims, pl3 Provider & Network, pl4 Clinical & Care Mgmt, pl5 Finance & Billing, pl6 Data & Analytics, pl7 Contract & Compliance, pl8 Security, pl9 Engineering Excellence, pl10 Clinical, pl11 Medicaid Quality
 
 ### Filter System
 
-Filters use prefix-based keys:
+Filters use prefix-based keys dispatched in `renderRM(filter)`:
 - `all` — show everything
-- `pl0`–`pl7` — by product line
-- `pr-ef-cost`, `pr-bd-member`, etc. — by priority
+- `pl0`–`pl11` — by product line
+- `cat-ai`, `cat-platform`, `cat-cost`, `cat-data`, `cat-exp`, `cat-security`, `cat-stability` — by category
+- `pr-ef-cost`, `pr-bd-member`, etc. — by priority (prefixed `pr-`)
 - `u-member`, `u-provider`, etc. — by user type
 
+### Gantt Bar Positioning
+
+`colsFor(init)` maps `now/next/future` strings to column indices:
+- now: Q1-Q4 2026 → cols 0-3
+- next: Q1-Q4 2027 → cols 4-7
+- future: H1/H2 2028 → cols 8-9, 2029+ → col 10
+
 ### Key Functions
-- `renderRM(filter)` — renders the full Gantt grid based on active filter
-- `openPanel(initId)` — opens right-side flyout with initiative detail
+- `renderRM(filter)` — renders full Gantt grid; handles all filter types
+- `openPanel(initId)` — opens flyout with initiative detail + category/priority badges
 - `toggleRmFilters()` — opens/closes filter panel
-- `showPage(name)` — switches internal pages (overview/story/roadmap/assumptions)
+- `showPage(name)` — switches internal pages
 
 ---
 
-## Deployment Workflows
+## Deployment
 
-### GitHub Pages (for colleague sharing)
+### GitHub Pages (for sharing)
 ```bash
 npm run build
 git checkout gh-pages
-rm -rf assets index.html storyboard.html strategy-overview.html
-cp dist/index.html . && cp -r dist/assets . && cp dist/storyboard.html . && cp dist/strategy-overview.html .
+rm -rf assets index.html storyboard.html strategy-overview.html aetna-logo.svg
+cp dist/index.html . && cp -r dist/assets . && cp dist/storyboard.html . && cp dist/strategy-overview.html . && cp dist/aetna-logo.svg .
 git add -A && git commit -m "Deploy: <description>"
 git -c http.sslVerify=false push origin gh-pages
 git checkout main
 ```
 
-### CAP (internal hosting) — IN PROGRESS
-- Docker image → JFrog (`cvsh.jfrog.io/cvsdigital-docker-local/`)
-- CI workflow: `.github/workflows/build-and-push.yml`
-- App name: `aiplatformclaudecode`
-- Env vars: `ANTHROPIC_API_KEY`, `ANTHROPIC_BASE_URL` (hyperion gateway)
-- Status: JFrog auth unresolved; service not yet created
+Always push both branches after changes. Use `git -c http.sslVerify=false push` (CVS proxy SSL cert issue).
+
+### CAP (container platform) — IN PROGRESS
+- Docker image pushed to JFrog: `cvsh.jfrog.io/cvsdigital-docker-local/aetna-medicaid-roadmap`
+- CI: `.github/workflows/build-and-push.yml` (triggered on push to main)
+- CAP app: `aetnamedicaidroadmap`
+- Status: JFrog credentials need regeneration
 
 ---
 
-## Environment Variables
+## Environment Variables (server-side only)
 
-| Variable | Value | Purpose |
-|----------|-------|---------|
-| ANTHROPIC_API_KEY | sk-aip-... | CVS Anthropic gateway auth |
-| ANTHROPIC_BASE_URL | https://hyperion-lms-api.prod.cvshealth.com | CVS gateway proxy |
-| PORT | 8080 | Express server port |
+| Variable | Purpose |
+|----------|---------|
+| ANTHROPIC_API_KEY | CVS Anthropic gateway auth (Hyperion) |
+| ANTHROPIC_BASE_URL | `https://hyperion-lms-api.prod.cvshealth.com` |
+| PORT | Express port (default 8080) |
 
----
-
-## Our Strategy (North Star)
-
-> Improve population health and program sustainability by advancing total cost of care, strengthening state and provider partnerships, and delivering simpler, more personalized member experiences.
-
-This statement appears on: Overview hero, Roadmap hero banner, Context/Assumptions page, Storyboard opener, and Investments view.
+These are only needed for the Dashboard/Ingest AI features. The strategy pages, roadmap, and storyboard work entirely client-side.
 
 ---
 
 ## Common Tasks
 
-**Add a new initiative to the Gantt chart:**
-Edit `public/strategy-overview.html` → find the `const PLs` array → add to the appropriate product line's `initiatives` array. Include `priority:["code"]` field.
+**Add a new initiative:** Edit `public/strategy-overview.html` → find `const PLs` array → add to the appropriate product line's `initiatives` array. Must include `priority`, `category`, `now/next/future` fields.
 
-**Change filter behavior:**
-Edit `renderRM()` function in `strategy-overview.html` script block.
+**Add a new filter dimension:** Add the constant, extend `renderRM()` with a new prefix check for `plSet` and `filteredInits`, add buttons to the filter panel HTML.
 
-**Modify React nav/views:**
-Edit `src/AetnaMedicaidRoadmap.jsx` → `NAV` array and corresponding render blocks.
-
-**SSL push issues:**
-Use `git -c http.sslVerify=false push origin <branch>` (CVS proxy cert issue).
+**Modify React nav/views:** Edit `src/AetnaMedicaidRoadmap.jsx` → `NAV` array and corresponding render blocks.
 
 ---
 
-## Key Decisions Made
+## Key Design Decisions
 
-- Standalone HTML pages embedded via iframe (not converted to React) — preserves 2000+ lines of complex interactive JS/CSS
-- Priority-based color coding replaced original "strategic alignment" categories
+- Standalone HTML pages embedded via iframe (not React) — preserves 2000+ lines of complex interactive JS/CSS per page
+- `vite.config.js` uses `base: './'` (relative paths) — required for GitHub Pages subdirectory hosting
+- Collapsible sidebar with `useState` toggle — shows icon-only nav when collapsed
 - Gantt bars show EBIT and ROI inline for quick scanning
-- Flyout panels (not tooltips) for both initiative detail and filters
-- `?page=` URL param routing for strategy pages when embedded
+- Flyout panels (not tooltips) for initiative detail and filters
+- Summary cards use colored top accent bars to differentiate metrics visually

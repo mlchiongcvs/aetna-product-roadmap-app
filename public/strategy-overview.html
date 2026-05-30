@@ -448,9 +448,11 @@ input, textarea, select { font-family: var(--font-body); }
 .assump-section { margin-bottom: 36px; }
 .assump-title {
   font-family: var(--font-display); font-size: 18px; font-weight: 700;
-  color: var(--aetna-navy); margin-bottom: 14px;
-  padding-bottom: 8px; border-bottom: 2px solid var(--aetna-navy);
-  display: inline-block;
+  color: var(--aetna-navy); margin-bottom: 4px;
+}
+.assump-subtitle {
+  font-size: 13px; color: var(--aetna-gray-500); font-weight: 400;
+  line-height: 1.5; margin-bottom: 16px;
 }
 .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .pl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
@@ -1057,6 +1059,7 @@ input, textarea, select { font-family: var(--font-body); }
     <!-- USER PERSONAS -->
     <div class="assump-section">
       <div class="assump-title">User Groups &amp; Platform Dependencies</div>
+      <div class="assump-subtitle">The five primary user groups served by Medicaid technology and the platform layers that support them.</div>
 
       <!-- Platform layer reference -->
       <div style="background:var(--aetna-navy);border-radius:var(--radius-lg);padding:18px 22px;margin-bottom:18px;color:white;">
@@ -1146,6 +1149,7 @@ input, textarea, select { font-family: var(--font-body); }
     <!-- PRODUCT LINE ALIGNMENT -->
     <div class="assump-section">
       <div class="assump-title">Future Product Line Alignment</div>
+      <div class="assump-subtitle">How each product line maps to strategic outcomes and the north star goals that guide investment decisions.</div>
       <div class="pl-grid">
         <div class="pl-assump-card" style="border-top:3px solid #378ADD;">
           <div class="pl-assump-name" style="color:#185FA5;">PL1 · Member Access &amp; Self-Service</div>
@@ -1193,6 +1197,7 @@ input, textarea, select { font-family: var(--font-body); }
     <!-- 2026 FINANCIALS -->
     <div class="assump-section">
       <div class="assump-title">2026 Program Financials</div>
+      <div class="assump-subtitle">Capital allocation and projected returns for the current fiscal year across all funded initiatives.</div>
       <div class="fin-row">
         <div class="fin-card"><div class="fin-val">$105.2M</div><div class="fin-lbl">Grand Total 2026 (CT077)</div><div class="fin-sub">Budget</div></div>
         <div class="fin-card"><div class="fin-val">$88.1M</div><div class="fin-lbl">Medicaid Delivery (13095)</div><div class="fin-sub">2026 Budget</div></div>
@@ -1216,6 +1221,7 @@ input, textarea, select { font-family: var(--font-body); }
     <!-- 2027 INVESTMENTS -->
     <div class="assump-section">
       <div class="assump-title">2027 Capital Investments</div>
+      <div class="assump-subtitle">Planned technology investment for the next fiscal year, reflecting growth commitments and modernization priorities.</div>
       <div style="background:white;border-radius:var(--radius-lg);border:1px solid #EBEBEB;overflow:hidden;margin-bottom:16px;">
         <table class="inv-table">
           <thead><tr><th>#</th><th>Initiative</th><th>Strategic Pillar</th><th>2026 CapEx</th><th>2027 CapEx</th><th>EBIT (5yr)</th><th>ROI</th><th>Status</th></tr></thead>
@@ -1240,6 +1246,7 @@ input, textarea, select { font-family: var(--font-body); }
     <!-- TECHNOLOGY NEEDS -->
     <div class="assump-section">
       <div class="assump-title">Technology Capabilities Needed to Advance Strategy</div>
+      <div class="assump-subtitle">The foundational capabilities required to execute the 3-year roadmap and achieve strategic differentiation.</div>
       <div class="tech-grid">
         <div class="tech-card">
           <div class="tech-icon">☁️</div>
@@ -1301,6 +1308,7 @@ input, textarea, select { font-family: var(--font-body); }
     <!-- FUNDED vs NOT FUNDED SUMMARY -->
     <div class="assump-section">
       <div class="assump-title">Funded vs. Not Funded Summary</div>
+      <div class="assump-subtitle">Current funding status across all initiatives, highlighting gaps between strategic ambition and approved capital.</div>
       <div class="funded-legend">
         <div class="funded-leg-item"><div class="funded-dot" style="background:#00843D;"></div>Funded (confirmed capital)</div>
         <div class="funded-leg-item"><div class="funded-dot" style="background:#E87722;"></div>Partially funded (design or partial capital)</div>
