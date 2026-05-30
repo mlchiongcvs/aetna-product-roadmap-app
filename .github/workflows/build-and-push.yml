@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: aetna-product-roadmap-app
+  IMAGE_NAME: aetna-medicaid-roadmap
   JFROG_REGISTRY: cvsh.jfrog.io
   JFROG_REPO: cvsdigital-docker-local
 
