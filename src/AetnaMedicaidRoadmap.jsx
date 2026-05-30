@@ -1461,23 +1461,23 @@ After creating, share the page URL.
           )}
 
           {view==="strat-overview" && (
-            <iframe src="/strategy-overview.html?page=overview" style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="3-Year Overview" />
+            <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=overview`} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="3-Year Overview" />
           )}
 
           {view==="strat-story" && (
-            <iframe src="/strategy-overview.html?page=story" style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Story Arc" />
+            <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=story`} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Story Arc" />
           )}
 
           {view==="strat-roadmap" && (
-            <iframe src="/strategy-overview.html?page=roadmap" style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Roadmap" />
+            <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=roadmap`} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Roadmap" />
           )}
 
           {view==="strat-context" && (
-            <iframe src="/strategy-overview.html?page=assumptions" style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Context & Assumptions" />
+            <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=assumptions`} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Context & Assumptions" />
           )}
 
           {view==="storyboard" && (
-            <iframe src="/storyboard.html" style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Storyboard" />
+            <iframe src={`${import.meta.env.BASE_URL || '/'}storyboard.html`} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Storyboard" />
           )}
         </div>
       </div>
