@@ -695,7 +695,6 @@ After creating, share the page URL.
             </div>
           )}
 
-          {/* + Add Items button hidden until ingest functionality is ready */}
         </div>
 
         {/* Content */}
