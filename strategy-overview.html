@@ -601,23 +601,9 @@ input, textarea, select { font-family: var(--font-body); }
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div id="page-overview" class="page active">
 
-  <div class="hero">
+  <div class="hero" style="padding:32px 48px 24px;">
     <div class="hero-eyebrow">Aetna Medicaid Technology · 3-Year Strategy 2026–2029</div>
-    <h1 contenteditable="false" style="margin-bottom:16px;">3-Year Strategic Overview</h1>
-    <div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:20px 28px;max-width:780px;backdrop-filter:blur(4px);margin-bottom:24px;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-        <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.85);">Our Northstar Strategy</span>
-      </div>
-      <p style="font-size:16px;color:rgba(255,255,255,0.95);margin:0;line-height:1.65;font-weight:500;">Improve population health and program sustainability by advancing total cost of care, strengthening state and provider partnerships, and delivering simpler, more personalized member experiences.</p>
-    </div>
-    <div class="hero-meta">
-      <div class="hero-stat"><div class="hero-stat-val">$109M</div><div class="hero-stat-lbl">Total 2026–2027 CapEx</div></div>
-      <div class="hero-stat"><div class="hero-stat-val">$677M</div><div class="hero-stat-lbl">EBIT benefit (5yr)</div></div>
-      <div class="hero-stat"><div class="hero-stat-val">$624M</div><div class="hero-stat-lbl">Non-EBIT benefit</div></div>
-      <div class="hero-stat"><div class="hero-stat-val">49</div><div class="hero-stat-lbl">Initiatives across 8 product lines</div></div>
-      <div class="hero-stat"><div class="hero-stat-val">2.4M</div><div class="hero-stat-lbl">Members served</div></div>
-    </div>
+    <h1 contenteditable="false" style="margin-bottom:0;">3-Year Strategic Overview</h1>
   </div>
 
   <!-- TAB BAR -->
@@ -628,14 +614,50 @@ input, textarea, select { font-family: var(--font-body); }
     <button class="ov-tab-btn" onclick="showOvTab('ov-investments')">Top Investments by Strategic Pillar</button>
   </div>
 
-  <!-- TAB: SUMMARY (hero stats already visible above, this is a placeholder for the default tab) -->
+  <!-- TAB: STRATEGIC OVERVIEW (default landing) -->
   <div class="ov-tab-content active" id="ov-summary">
-    <div class="section" style="text-align:center;padding:48px;">
-      <div style="max-width:680px;margin:0 auto;">
-        <div style="font-size:14px;color:var(--aetna-gray-600);line-height:1.8;">
-          This overview presents Aetna Medicaid Technology's 3-year strategic direction — $109M in 2026–2027 capital investment across 69 initiatives, 12 product lines, and 5 user groups. Use the tabs above to explore the key dimensions: what we're measuring, how users benefit, and where the dollars are allocated.
+    <div class="section" style="padding:40px 48px;">
+
+      <!-- Northstar Strategy — hero treatment -->
+      <div style="background:linear-gradient(135deg, var(--aetna-navy) 0%, #7D3F98 100%);border-radius:16px;padding:36px 40px;margin-bottom:32px;color:white;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.04);"></div>
+        <div style="position:absolute;bottom:-60px;left:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,0.03);"></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;position:relative;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <span style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);">Our Northstar Strategy</span>
+        </div>
+        <p style="font-size:22px;line-height:1.6;font-weight:600;margin:0;max-width:800px;position:relative;">Improve population health and program sustainability by advancing total cost of care, strengthening state and provider partnerships, and delivering simpler, more personalized member experiences.</p>
+      </div>
+
+      <!-- Key metrics -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:32px;">
+        <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.06);border:1px solid #F0F0F0;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:var(--aetna-navy);">$109M</div>
+          <div style="font-size:11px;color:var(--aetna-gray-500);margin-top:4px;">Total 2026–2027 CapEx</div>
+        </div>
+        <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.06);border:1px solid #F0F0F0;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:#00843D;">$677M</div>
+          <div style="font-size:11px;color:var(--aetna-gray-500);margin-top:4px;">EBIT benefit (5yr)</div>
+        </div>
+        <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.06);border:1px solid #F0F0F0;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:#0077C8;">$624M</div>
+          <div style="font-size:11px;color:var(--aetna-gray-500);margin-top:4px;">Non-EBIT benefit</div>
+        </div>
+        <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.06);border:1px solid #F0F0F0;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:var(--aetna-navy);">69</div>
+          <div style="font-size:11px;color:var(--aetna-gray-500);margin-top:4px;">Initiatives across 12 PLs</div>
+        </div>
+        <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.06);border:1px solid #F0F0F0;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:var(--aetna-navy);">2.4M</div>
+          <div style="font-size:11px;color:var(--aetna-gray-500);margin-top:4px;">Members served</div>
         </div>
       </div>
+
+      <!-- Context -->
+      <div style="max-width:780px;font-size:14px;color:var(--aetna-gray-600);line-height:1.8;">
+        This overview presents Aetna Medicaid Technology's 3-year strategic direction — transforming from a fragmented, high-cost ecosystem into a unified, product-driven platform. Explore the tabs above to see what we're measuring, how users benefit, and where the dollars are allocated.
+      </div>
+
     </div>
   </div>
 
