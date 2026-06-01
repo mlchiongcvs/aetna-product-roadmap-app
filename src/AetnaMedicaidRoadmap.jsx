@@ -695,10 +695,7 @@ After creating, share the page URL.
             </div>
           )}
 
-          <button onClick={() => setView("ingest")}
-            style={{ background:"#7D3F98", color:"#FFF", border:"none", borderRadius:9999, padding:"7px 16px", fontSize:12, fontWeight:600, cursor:"pointer" }}>
-            + Add Items
-          </button>
+          {/* + Add Items button hidden until ingest functionality is ready */}
         </div>
 
         {/* Content */}
