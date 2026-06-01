@@ -274,11 +274,12 @@ input, textarea, select { font-family: var(--font-body); }
 .filter-btn:hover { border-color: var(--aetna-blue); color: var(--aetna-blue); }
 .filter-btn.active { background: var(--aetna-navy); color: white; border-color: var(--aetna-navy); }
 .filter-sep { width: 1px; height: 24px; background: var(--aetna-gray-300); }
-.rm-wrap { overflow-x: auto; overflow-y: visible; border-radius: var(--radius-lg); border: 1px solid var(--aetna-gray-200); background: white; }
-.rm-grid { min-width: 980px; }
+.rm-wrap { overflow-x: auto; overflow-y: auto; max-height: calc(100vh - 180px); border-radius: var(--radius-lg); border: 1px solid var(--aetna-gray-200); background: white; position: relative; }
+.rm-grid { min-width: 980px; width: 100%; }
 .rm-phase-row {
   display: grid;
   grid-template-columns: 200px 22px repeat(4,1fr) repeat(4,1fr) 1fr 1fr 1fr;
+  position: sticky; top: 0; z-index: 10;
 }
 .rm-phase-hdr { text-align: center; font-size: 10px; font-weight: 700; padding: 5px 4px; letter-spacing: 0.05em; text-transform: uppercase; }
 .rm-phase-now    { background: #E6F2FB; color: #0C5FA5; }
@@ -288,6 +289,7 @@ input, textarea, select { font-family: var(--font-body); }
   display: grid;
   grid-template-columns: 200px 22px repeat(4,1fr) repeat(4,1fr) 1fr 1fr 1fr;
   border-bottom: 2px solid var(--aetna-gray-200);
+  position: sticky; top: 26px; z-index: 10; background: var(--aetna-gray-100);
 }
 .rm-col-hdr {
   font-size: 10px; color: var(--aetna-gray-500); text-align: center;
@@ -1926,8 +1928,8 @@ function renderRM(filter){
     </div>`;
 
   let h=`<div class="rm-phase-row">
-    <div style="background:#F5F5F5;border-right:1px solid #EBEBEB;"></div>
-    <div style="background:#F5F5F5;border-right:1px solid #EBEBEB;"></div>
+    <div style="background:#F5F5F5;border-right:1px solid #EBEBEB;border-bottom:1px solid #EBEBEB;"></div>
+    <div style="background:#F5F5F5;border-right:1px solid #EBEBEB;border-bottom:1px solid #EBEBEB;"></div>
     <div class="rm-phase-hdr rm-phase-now" style="grid-column:span 4;">Now — 2026</div>
     <div class="rm-phase-hdr rm-phase-next" style="grid-column:span 4;">Next — 2027</div>
     <div class="rm-phase-hdr rm-phase-future" style="grid-column:span 3;">Future — 2028–2029+</div>
