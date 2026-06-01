@@ -260,7 +260,8 @@ input, textarea, select { font-family: var(--font-body); }
 .pillar-ebit   { font-size: 12px; color: var(--aetna-green); font-weight: 600; margin-top: 2px; }
 .pillar-initiatives { font-size: 11px; color: var(--aetna-gray-500); margin-top: 6px; }
 .pillar-items { margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
-.pillar-item { font-size: 12px; color: var(--aetna-gray-700); display: flex; align-items: flex-start; gap: 5px; line-height: 1.4; }
+.pillar-item { font-size: 12px; color: var(--aetna-gray-700); display: flex; align-items: flex-start; gap: 5px; line-height: 1.4; cursor:pointer; padding:3px 4px; border-radius:4px; transition:background 0.1s; }
+.pillar-item:hover { background:var(--aetna-gray-100); }
 .pillar-item::before { content: '→'; color: var(--aetna-blue); flex-shrink: 0; margin-top: 1px; }
 
 /* ── PAGE 2 ROADMAP ─────────────────────────────────────────────── */
@@ -509,6 +510,57 @@ input, textarea, select { font-family: var(--font-body); }
 .mt8  { margin-top: 8px; }
 .mt16 { margin-top: 16px; }
 .flex-between { display: flex; justify-content: space-between; align-items: center; }
+
+/* ── OVERVIEW TABS ─────────────────────────────────────────── */
+.ov-tabs {
+  display:flex; gap:4px; padding:12px 48px;
+  background:white; border-bottom:1px solid var(--aetna-gray-200);
+  position:sticky; top:0; z-index:10;
+}
+.ov-tab-btn {
+  padding:8px 16px; border-radius:var(--radius-md); border:1px solid var(--aetna-gray-200);
+  background:white; font-size:12px; font-weight:600; color:var(--aetna-gray-600);
+  cursor:pointer; transition:all 0.15s; white-space:nowrap;
+}
+.ov-tab-btn:hover { background:var(--aetna-gray-100); color:var(--aetna-navy); }
+.ov-tab-btn.active { background:var(--aetna-navy); color:white; border-color:var(--aetna-navy); }
+.ov-tab-content { display:none; }
+.ov-tab-content.active { display:block; }
+
+/* ── STORY LEFT-NAV PANELS ─────────────────────────────────── */
+.story-layout { display:grid; grid-template-columns:280px 1fr; gap:0; min-height:500px; border:1px solid var(--aetna-gray-200); border-radius:var(--radius-lg); overflow:hidden; }
+.story-nav { background:var(--aetna-gray-100); border-right:1px solid var(--aetna-gray-200); padding:16px 0; }
+.story-nav-item {
+  display:flex; align-items:flex-start; gap:12px; padding:14px 20px; cursor:pointer;
+  border-left:3px solid transparent; transition:all 0.15s;
+}
+.story-nav-item:hover { background:rgba(125,63,152,0.04); }
+.story-nav-item.active { background:white; border-left-color:var(--aetna-navy); }
+.story-nav-num { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; background:var(--aetna-gray-200); color:var(--aetna-gray-600); flex-shrink:0; }
+.story-nav-item.active .story-nav-num { background:var(--aetna-navy); color:white; }
+.story-nav-text { font-size:11px; font-weight:600; color:var(--aetna-gray-600); line-height:1.4; }
+.story-nav-item.active .story-nav-text { color:var(--aetna-navy); font-weight:700; }
+.story-panel { display:none; padding:32px; overflow-y:auto; }
+.story-panel.active { display:block; }
+.story-panel-title { font-size:20px; font-weight:700; color:var(--aetna-navy); margin-bottom:8px; }
+.story-panel-text { font-size:14px; color:var(--aetna-gray-600); line-height:1.7; margin-bottom:20px; }
+.story-callout { display:inline-flex; align-items:center; gap:8px; background:var(--aetna-gray-100); border-radius:var(--radius-md); padding:8px 16px; margin-bottom:20px; }
+.story-callout-n { font-size:22px; font-weight:700; color:var(--aetna-navy); }
+.story-callout-l { font-size:11px; color:var(--aetna-gray-500); }
+.story-outcomes { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; }
+
+/* ── PILLAR DETAIL FLYOUT ──────────────────────────────────── */
+#pillarDetailPanel {
+  position:fixed; top:0; right:-420px; width:420px; height:100vh;
+  background:white; box-shadow:-4px 0 24px rgba(0,0,0,0.12);
+  z-index:1000; transition:right 0.25s ease; overflow-y:auto; padding:32px 28px;
+}
+#pillarDetailPanel.open { right:0; }
+#pillarDetailOverlay {
+  position:fixed; inset:0; background:rgba(0,0,0,0.3); z-index:999;
+  display:none; opacity:0; transition:opacity 0.2s;
+}
+#pillarDetailOverlay.open { display:block; opacity:1; }
 </style>
 </head>
 <body>
@@ -568,7 +620,27 @@ input, textarea, select { font-family: var(--font-body); }
     </div>
   </div>
 
-  <!-- TOP 5 DIALS -->
+  <!-- TAB BAR -->
+  <div class="ov-tabs">
+    <button class="ov-tab-btn active" onclick="showOvTab('ov-summary')">3-Year Strategic Overview</button>
+    <button class="ov-tab-btn" onclick="showOvTab('ov-dials')">The 5 Dials We Are Moving</button>
+    <button class="ov-tab-btn" onclick="showOvTab('ov-experience')">How Their Experience Will Change</button>
+    <button class="ov-tab-btn" onclick="showOvTab('ov-investments')">Top Investments by Strategic Pillar</button>
+  </div>
+
+  <!-- TAB: SUMMARY (hero stats already visible above, this is a placeholder for the default tab) -->
+  <div class="ov-tab-content active" id="ov-summary">
+    <div class="section" style="text-align:center;padding:48px;">
+      <div style="max-width:680px;margin:0 auto;">
+        <div style="font-size:14px;color:var(--aetna-gray-600);line-height:1.8;">
+          This overview presents Aetna Medicaid Technology's 3-year strategic direction — $109M in 2026–2027 capital investment across 69 initiatives, 12 product lines, and 5 user groups. Use the tabs above to explore the key dimensions: what we're measuring, how users benefit, and where the dollars are allocated.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: 5 DIALS -->
+  <div class="ov-tab-content" id="ov-dials">
   <div class="section">
     <div class="section-header">
       <div>
@@ -625,10 +697,10 @@ input, textarea, select { font-family: var(--font-body); }
 
     </div>
   </div>
+  </div><!-- end ov-dials tab -->
 
-  <div class="divider"></div>
-
-  <!-- USER PERSONAS -->
+  <!-- TAB: EXPERIENCE -->
+  <div class="ov-tab-content" id="ov-experience">
   <div class="section">
     <div class="section-header">
       <div>
@@ -756,16 +828,20 @@ input, textarea, select { font-family: var(--font-body); }
 
     </div>
   </div>
+  </div><!-- end ov-experience tab -->
 
-  <div class="divider"></div>
-
-  <!-- INVESTMENTS BY PILLAR -->
+  <!-- TAB: INVESTMENTS -->
+  <div class="ov-tab-content" id="ov-investments">
   <div class="section">
     <div class="section-header">
       <div>
         <div class="section-title">Top Investments by Strategic Pillar</div>
-        <div class="section-sub">2026–2027 capital aligned to Medicaid strategy priorities, with quantified business impact</div>
+        <div class="section-sub">Figures represent 2026–2027 approved capital expenditure. EBIT and Non-EBIT are projected 5-year cumulative benefits.</div>
       </div>
+    </div>
+    <div style="background:var(--aetna-gray-100);border-radius:var(--radius-md);padding:14px 20px;margin-bottom:20px;font-size:13px;color:var(--aetna-gray-600);line-height:1.7;">
+      <strong style="color:var(--aetna-navy);">Why Pillars?</strong> We organize investments into 6 strategic pillars — high-level outcome areas that group related initiatives. Each pillar represents a business priority with measurable 3-year targets. Click any investment line item for detail.
+      <div style="margin-top:6px;font-size:11px;color:var(--aetna-gray-500);">Source: 2026 Program Financials · 2027 Investment Submission</div>
     </div>
     <div class="pillar-grid">
 
@@ -850,6 +926,11 @@ input, textarea, select { font-family: var(--font-body); }
 
     </div>
   </div>
+  </div><!-- end ov-investments tab -->
+
+  <!-- PILLAR DETAIL FLYOUT -->
+  <div id="pillarDetailOverlay" onclick="closePillarDetail()"></div>
+  <div id="pillarDetailPanel"></div>
 
   <!-- FOOTER -->
   <div class="page-footer">
@@ -866,109 +947,182 @@ input, textarea, select { font-family: var(--font-body); }
   <div class="hero">
     <div class="hero-eyebrow">Our Story · Why We Must Change</div>
     <h1 contenteditable="false">5 Years of Growth Built on Fragile Foundations</h1>
-    <p class="hero-sub" contenteditable="false">Understanding how we got here is essential to understanding where we must go. This is the honest account of our evolution, the complexity we created, and the turning point we now stand at.</p>
+    <p class="hero-sub" contenteditable="false">Understanding how we got here is essential to understanding where we must go — and why 2026 is the moment we finally fix it from the ground up.</p>
   </div>
 
+  <!-- ROOT CAUSES (TOP) -->
   <div class="section">
-    <div class="section-header"><div class="section-title">The Evolution Timeline</div></div>
-
-    <div class="timeline-item">
-      <div class="tl-dot-col"><div class="tl-dot" style="background:#0077C8;"></div><div class="tl-line"></div></div>
-      <div class="tl-content">
-        <div class="tl-phase" style="color:#0077C8;">Phase 1 · 2021–2022 · Growth &amp; Fragmentation</div>
-        <div class="tl-title" contenteditable="false">We grew fast — and grew apart</div>
-        <div class="tl-text" contenteditable="false">Medicaid expansion, new state contracts, and regulatory mandates drove rapid technology investment. Systems grew organically, market-by-market, to meet urgent needs. QNXT became the core platform but was surrounded by a growing ecosystem of point solutions and market-specific applications.</div>
-        <div class="outcome-row">
-          <span class="outcome-tag outcome-good" contenteditable="false">✓ Fast market growth enabled</span>
-          <span class="outcome-tag outcome-bad" contenteditable="false">✗ Fragmented architecture emerged</span>
-          <span class="outcome-tag outcome-bad" contenteditable="false">✗ Duplicate capabilities across markets</span>
-        </div>
+    <div class="section-header"><div class="section-title">The 5 Root Causes We Are Solving For</div></div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+      <div style="border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid #7D3F98;background:var(--aetna-gray-100);">
+        <div style="font-size:18px;font-weight:700;color:#7D3F98;margin-bottom:4px;">01</div>
+        <div style="font-size:12px;font-weight:700;color:var(--aetna-navy);margin-bottom:4px;">Fragmented Ecosystem</div>
+        <div style="font-size:11px;color:var(--aetna-gray-600);line-height:1.5;">~350 apps. Platform consolidation + app rationalization. 30%+ reduction by 2028.</div>
       </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-dot-col"><div class="tl-dot" style="background:#E87722;"></div><div class="tl-line"></div></div>
-      <div class="tl-content">
-        <div class="tl-phase" style="color:#E87722;">Phase 2 · 2023–2024 · Scale Without Integration</div>
-        <div class="tl-title" contenteditable="false">Capability breadth grew — but complexity exploded</div>
-        <div class="tl-text" contenteditable="false">Continued expansion and retention focus drove more enhancements layered onto existing systems. Integration overhead increased as claims, enrollment, clinical, and provider platforms needed to talk to each other — but were never designed to. Early digital and experience investments began, but on top of an already fragmented base.</div>
-        <div class="outcome-row">
-          <span class="outcome-tag outcome-good" contenteditable="false">✓ Capability breadth increased</span>
-          <span class="outcome-tag outcome-bad" contenteditable="false">✗ Complexity exploded</span>
-          <span class="outcome-tag outcome-bad" contenteditable="false">✗ Technical debt accelerated</span>
-        </div>
+      <div style="border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid #E87722;background:var(--aetna-gray-100);">
+        <div style="font-size:18px;font-weight:700;color:#E87722;margin-bottom:4px;">02</div>
+        <div style="font-size:12px;font-weight:700;color:var(--aetna-navy);margin-bottom:4px;">Run-the-Business Dominates</div>
+        <div style="font-size:11px;color:var(--aetna-gray-600);line-height:1.5;">Cloud reduces run cost. ABX program targets $60M+ improvement.</div>
       </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-dot-col"><div class="tl-dot" style="background:#C8102E;"></div><div class="tl-line"></div></div>
-      <div class="tl-content">
-        <div class="tl-phase" style="color:#C8102E;">Phase 3 · 2024–2025 · Complexity Peaks</div>
-        <div class="tl-title" contenteditable="false">High cost, low agility, and leadership transition</div>
-        <div class="tl-text" contenteditable="false">Significant business and technology leadership changes compounded the challenge. Teams experienced frequent shifts in direction and priorities. The portfolio ballooned to ~350 applications with overlapping, redundant capabilities. Run-the-business spend crowded out innovation. Systems became tightly coupled and harder to change. Cost structure deteriorated without a clear line of sight to ROI.</div>
-        <div class="outcome-row">
-          <span class="outcome-tag outcome-bad" contenteditable="false">✗ ~350 apps, high maintenance cost</span>
-          <span class="outcome-tag outcome-bad" contenteditable="false">✗ Low delivery agility</span>
-          <span class="outcome-tag outcome-bad" contenteditable="false">✗ Limited ROI transparency</span>
-          <span class="outcome-tag outcome-bad" contenteditable="false">✗ Inconsistent ownership &amp; decision rights</span>
-        </div>
+      <div style="border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid #C8102E;background:var(--aetna-gray-100);">
+        <div style="font-size:18px;font-weight:700;color:#C8102E;margin-bottom:4px;">03</div>
+        <div style="font-size:12px;font-weight:700;color:var(--aetna-navy);margin-bottom:4px;">Technical Debt</div>
+        <div style="font-size:11px;color:var(--aetna-gray-600);line-height:1.5;">ATLAS, QNXT upgrade, Azure cloud, API-first design.</div>
       </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="tl-dot-col"><div class="tl-dot" style="background:#00843D;"></div></div>
-      <div class="tl-content">
-        <div class="tl-phase" style="color:#00843D;">Phase 4 · Now · Turning Point</div>
-        <div class="tl-title" contenteditable="false">Leadership alignment. A clear direction. The moment to move.</div>
-        <div class="tl-text" contenteditable="false">With Katerina Guerraz, Gregory Krause, and Jeffrey Krasner aligned on direction, we are shifting from building for Medicaid individually to leveraging Aetna enterprise capabilities for Medicaid advantage. Strategic platforms — Aetna Health, OneCM, QNXT modernization, GCP data — are now the path forward.</div>
-        <div class="outcome-row">
-          <span class="outcome-tag outcome-good" contenteditable="false">✓ Leadership aligned on direction</span>
-          <span class="outcome-tag outcome-good" contenteditable="false">✓ Product operating model launching</span>
-          <span class="outcome-tag outcome-good" contenteditable="false">✓ Enterprise platform migration underway</span>
-        </div>
+      <div style="border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid #00A3A1;background:var(--aetna-gray-100);">
+        <div style="font-size:18px;font-weight:700;color:#00A3A1;margin-bottom:4px;">04</div>
+        <div style="font-size:12px;font-weight:700;color:var(--aetna-navy);margin-bottom:4px;">No Operating Model</div>
+        <div style="font-size:11px;color:var(--aetna-gray-600);line-height:1.5;">8 product lines with owners + OKRs, outcome-based funding.</div>
+      </div>
+      <div style="border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid #00843D;background:var(--aetna-gray-100);">
+        <div style="font-size:18px;font-weight:700;color:#00843D;margin-bottom:4px;">05</div>
+        <div style="font-size:12px;font-weight:700;color:var(--aetna-navy);margin-bottom:4px;">Leadership Instability</div>
+        <div style="font-size:11px;color:var(--aetna-gray-600);line-height:1.5;">Stable aligned team under Greg Krause, 3-year horizon.</div>
       </div>
     </div>
   </div>
-
-  <div class="divider"></div>
 
   <!-- QUOTE -->
-  <div class="section">
+  <div class="section" style="padding-top:0;">
     <div class="quote-block">
       <div class="quote-text" contenteditable="false">"Over the past 5 years, Medicaid Technology grew rapidly to meet market and regulatory demand — but did so through fragmented systems, evolving leadership, and project-based execution. This enabled growth — but created complexity, cost, and inefficiency. Today marks a turning point. We are shifting to a unified, product-driven, platform-based model designed to reduce cost, improve agility, and deliver measurable outcomes for members and the business."</div>
       <div class="quote-attr" contenteditable="false">— Aetna Medicaid Technology Leadership · 2026 Strategic Direction</div>
     </div>
   </div>
 
-  <div class="divider"></div>
-
-  <!-- KEY TENANTS -->
+  <!-- STORY PANELS — LEFT NAV + RIGHT CONTENT -->
   <div class="section">
-    <div class="section-header"><div class="section-title">The 5 Root Causes We Are Solving For</div></div>
-    <div class="tenant-grid">
-      <div class="tenant-card red-l">
-        <div class="tenant-title" contenteditable="false">1. Fragmented Ecosystem</div>
-        <div class="tenant-text" contenteditable="false">~350 applications with duplicate capabilities driving maintenance cost. Solution: platform consolidation, app rationalization, shared enterprise services replacing point solutions.</div>
+    <div class="section-header"><div class="section-title">The Evolution</div></div>
+    <div class="story-layout">
+      <!-- Left Nav -->
+      <div class="story-nav">
+        <div class="story-nav-item" onclick="showStoryPanel(1)" data-panel="1">
+          <div class="story-nav-num">1</div>
+          <div class="story-nav-text">2021–2022<br>Growth at all costs</div>
+        </div>
+        <div class="story-nav-item" onclick="showStoryPanel(2)" data-panel="2">
+          <div class="story-nav-num">2</div>
+          <div class="story-nav-text">2023–2024<br>Complexity compounds</div>
+        </div>
+        <div class="story-nav-item" onclick="showStoryPanel(3)" data-panel="3">
+          <div class="story-nav-num">3</div>
+          <div class="story-nav-text">2024–2025<br>Complexity peaks</div>
+        </div>
+        <div class="story-nav-item active" onclick="showStoryPanel(4)" data-panel="4">
+          <div class="story-nav-num">4</div>
+          <div class="story-nav-text">2026 — Now<br>The turning point</div>
+        </div>
       </div>
-      <div class="tenant-card amber-l">
-        <div class="tenant-title" contenteditable="false">2. Run-the-Business Dominance</div>
-        <div class="tenant-text" contenteditable="false">Large investments locked in stability and compliance, crowding out innovation. Solution: cloud-native infrastructure to reduce run cost; free investment capacity for product advancement.</div>
-      </div>
-      <div class="tenant-card teal-l">
-        <div class="tenant-title" contenteditable="false">3. Technical Debt &amp; Legacy Architecture</div>
-        <div class="tenant-text" contenteditable="false">Years of layered enhancements on legacy systems. Integration-heavy, brittle architecture. Solution: ATLAS remedy replacement, QNXT modernization, Azure cloud migration, API-first design.</div>
-      </div>
-      <div class="tenant-card green-l">
-        <div class="tenant-title" contenteditable="false">4. Lack of Unified Operating Model</div>
-        <div class="tenant-text" contenteditable="false">Project-based funding without product ownership. Opaque intake and prioritization. Solution: product operating model with OKRs, outcome-based funding, value streams, clear decision rights.</div>
-      </div>
-      <div class="tenant-card">
-        <div class="tenant-title" contenteditable="false">5. Leadership &amp; Org Instability (Historical)</div>
-        <div class="tenant-text" contenteditable="false">Frequent shifts in direction slowed standardization. Inconsistent decision rights. Solution: aligned leadership team under Greg Krause, clear product ownership, stable strategic direction for 3-year horizon.</div>
-      </div>
-      <div class="tenant-card red-l">
-        <div class="tenant-title" contenteditable="false">The Vision: From Cost Center → Value Engine</div>
-        <div class="tenant-text" contenteditable="false">Projects → Products. Fragmentation → Platforms. Manual → Automated. On-prem → Cloud. Reactive → Proactive. A unified, product-based, cloud-native Medicaid platform delivering measurable outcomes by 2029.</div>
+
+      <!-- Right Content Panels -->
+      <div style="position:relative;">
+        <div class="story-panel" id="story-panel-1">
+          <div class="story-callout"><div class="story-callout-n">+12</div><div class="story-callout-l">states added</div></div>
+          <div class="story-panel-title">We grew fast — and grew apart</div>
+          <div class="story-panel-text">Medicaid expansion, new state contracts, and regulatory mandates drove rapid technology investment. Systems grew organically, market-by-market, to meet urgent needs. QNXT became the core platform but was surrounded by a growing ecosystem of point solutions and market-specific applications. Every market built its own stack — fast, but separately.</div>
+          <svg viewBox="0 0 400 120" width="400" height="120" style="display:block;margin-bottom:16px;">
+            <rect x="10" y="20" width="80" height="80" rx="6" fill="rgba(0,119,200,0.08)" stroke="rgba(0,119,200,0.3)" stroke-width="1"/>
+            <text x="50" y="46" text-anchor="middle" font-size="9" font-weight="600" fill="#0077C8">Market A</text>
+            <text x="50" y="62" text-anchor="middle" font-size="8" fill="#767676">Claims · Enroll</text>
+            <text x="50" y="76" text-anchor="middle" font-size="8" fill="#767676">Portal · Auth</text>
+            <rect x="110" y="20" width="80" height="80" rx="6" fill="rgba(0,119,200,0.08)" stroke="rgba(0,119,200,0.3)" stroke-width="1"/>
+            <text x="150" y="46" text-anchor="middle" font-size="9" font-weight="600" fill="#0077C8">Market B</text>
+            <text x="150" y="62" text-anchor="middle" font-size="8" fill="#767676">Claims · Enroll</text>
+            <text x="150" y="76" text-anchor="middle" font-size="8" fill="#767676">Portal · Auth</text>
+            <rect x="210" y="20" width="80" height="80" rx="6" fill="rgba(0,119,200,0.08)" stroke="rgba(0,119,200,0.3)" stroke-width="1"/>
+            <text x="250" y="46" text-anchor="middle" font-size="9" font-weight="600" fill="#0077C8">Market C</text>
+            <text x="250" y="62" text-anchor="middle" font-size="8" fill="#767676">Claims · Enroll</text>
+            <text x="250" y="76" text-anchor="middle" font-size="8" fill="#767676">Portal · Auth</text>
+            <text x="200" y="112" text-anchor="middle" font-size="9" fill="#767676">Each market builds its own stack — siloed by design</text>
+          </svg>
+          <div class="story-outcomes">
+            <span class="outcome-tag outcome-good">✓ 12+ states served</span>
+            <span class="outcome-tag outcome-good">✓ Contracts won</span>
+            <span class="outcome-tag outcome-bad">✗ No shared design</span>
+            <span class="outcome-tag outcome-bad">✗ Siloed by market</span>
+          </div>
+        </div>
+
+        <div class="story-panel" id="story-panel-2">
+          <div class="story-callout"><div class="story-callout-n">40%</div><div class="story-callout-l">of changes touch 3+ systems</div></div>
+          <div class="story-panel-title">Capability breadth grew — but complexity exploded</div>
+          <div class="story-panel-text">Expanding markets demanded more features across claims, enrollment, clinical, and provider platforms. The instinct was to integrate what existed. The result was a web of point-to-point connections that nobody fully understood. Every change needed to be tested in 6 places. Run-the-business spend crowded out innovation.</div>
+          <svg viewBox="0 0 400 120" width="400" height="120" style="display:block;margin-bottom:16px;">
+            <circle cx="80" cy="50" r="24" fill="rgba(232,119,34,0.1)" stroke="#E87722" stroke-width="1"/>
+            <text x="80" y="53" text-anchor="middle" font-size="8" font-weight="600" fill="#E87722">Claims</text>
+            <circle cx="180" cy="30" r="24" fill="rgba(232,119,34,0.1)" stroke="#E87722" stroke-width="1"/>
+            <text x="180" y="33" text-anchor="middle" font-size="8" font-weight="600" fill="#E87722">Enroll</text>
+            <circle cx="280" cy="50" r="24" fill="rgba(232,119,34,0.1)" stroke="#E87722" stroke-width="1"/>
+            <text x="280" y="53" text-anchor="middle" font-size="8" font-weight="600" fill="#E87722">Provider</text>
+            <circle cx="180" cy="90" r="24" fill="rgba(232,119,34,0.1)" stroke="#E87722" stroke-width="1"/>
+            <text x="180" y="93" text-anchor="middle" font-size="8" font-weight="600" fill="#E87722">Clinical</text>
+            <line x1="104" y1="50" x2="156" y2="30" stroke="#E87722" stroke-width="0.5" stroke-dasharray="3"/>
+            <line x1="204" y1="30" x2="256" y2="50" stroke="#E87722" stroke-width="0.5" stroke-dasharray="3"/>
+            <line x1="104" y1="50" x2="156" y2="90" stroke="#E87722" stroke-width="0.5" stroke-dasharray="3"/>
+            <line x1="204" y1="90" x2="256" y2="50" stroke="#E87722" stroke-width="0.5" stroke-dasharray="3"/>
+            <line x1="180" y1="54" x2="180" y2="66" stroke="#E87722" stroke-width="0.5" stroke-dasharray="3"/>
+            <text x="200" y="115" text-anchor="middle" font-size="9" fill="#767676">Integration spaghetti — every system connected to every other</text>
+          </svg>
+          <div class="story-outcomes">
+            <span class="outcome-tag outcome-good">✓ Capability breadth grew</span>
+            <span class="outcome-tag outcome-good">✓ Digital work began</span>
+            <span class="outcome-tag outcome-bad">✗ Integration debt exploded</span>
+            <span class="outcome-tag outcome-bad">✗ Change became expensive</span>
+          </div>
+        </div>
+
+        <div class="story-panel" id="story-panel-3">
+          <div class="story-callout"><div class="story-callout-n">350</div><div class="story-callout-l">applications</div></div>
+          <div class="story-panel-title">High cost, low agility, and leadership transition</div>
+          <div class="story-panel-text">The portfolio ballooned to ~350 applications with overlapping, redundant capabilities. Run-the-business spend crowded out innovation. Systems became tightly coupled and harder to change. Cost structure deteriorated without a clear line of sight to ROI. Significant leadership changes compounded the challenge.</div>
+          <svg viewBox="0 0 400 100" width="400" height="100" style="display:block;margin-bottom:16px;">
+            <rect x="20" y="70" width="60" height="20" rx="3" fill="rgba(200,16,46,0.15)" stroke="#C8102E" stroke-width="0.5"/>
+            <text x="50" y="83" text-anchor="middle" font-size="8" fill="#C8102E">$74M</text>
+            <rect x="100" y="60" width="60" height="30" rx="3" fill="rgba(200,16,46,0.2)" stroke="#C8102E" stroke-width="0.5"/>
+            <text x="130" y="78" text-anchor="middle" font-size="8" fill="#C8102E">$82M</text>
+            <rect x="180" y="45" width="60" height="45" rx="3" fill="rgba(200,16,46,0.25)" stroke="#C8102E" stroke-width="0.5"/>
+            <text x="210" y="70" text-anchor="middle" font-size="8" fill="#C8102E">$95M</text>
+            <rect x="260" y="25" width="60" height="65" rx="3" fill="rgba(200,16,46,0.35)" stroke="#C8102E" stroke-width="0.5"/>
+            <text x="290" y="60" text-anchor="middle" font-size="9" font-weight="700" fill="#C8102E">$105M</text>
+            <text x="50" y="96" text-anchor="middle" font-size="7" fill="#767676">2022</text>
+            <text x="130" y="96" text-anchor="middle" font-size="7" fill="#767676">2023</text>
+            <text x="210" y="96" text-anchor="middle" font-size="7" fill="#767676">2024</text>
+            <text x="290" y="96" text-anchor="middle" font-size="7" fill="#767676">2025</text>
+            <text x="200" y="16" text-anchor="middle" font-size="9" fill="#767676">Annual run cost trajectory</text>
+          </svg>
+          <div class="story-outcomes">
+            <span class="outcome-tag outcome-bad">✗ $105M annual run cost</span>
+            <span class="outcome-tag outcome-bad">✗ ~350 apps, unclear ownership</span>
+            <span class="outcome-tag outcome-bad">✗ Slow delivery</span>
+            <span class="outcome-tag outcome-bad">✗ Limited ROI visibility</span>
+          </div>
+        </div>
+
+        <div class="story-panel active" id="story-panel-4">
+          <div class="story-callout"><div class="story-callout-n" style="color:#00843D;">$677M</div><div class="story-callout-l">EBIT benefit over 5 years</div></div>
+          <div class="story-panel-title">Leadership alignment. A clear direction. The moment to move.</div>
+          <div class="story-panel-text">With Katerina Guerraz, Gregory Krause, and Jeffrey Krasner aligned on direction, we are shifting from building for Medicaid individually to leveraging Aetna enterprise capabilities for Medicaid advantage. Strategic platforms — Aetna Health, OneCM, QNXT modernization, GCP data — are now the path forward.</div>
+          <svg viewBox="0 0 400 100" width="400" height="100" style="display:block;margin-bottom:16px;">
+            <rect x="20" y="20" width="160" height="65" rx="6" fill="rgba(0,132,61,0.06)" stroke="rgba(0,132,61,0.3)" stroke-width="1"/>
+            <text x="100" y="38" text-anchor="middle" font-size="9" font-weight="600" fill="#00843D">ONE Platform</text>
+            <text x="100" y="52" text-anchor="middle" font-size="8" fill="#767676">Claims · Enroll · Clinical · Portal</text>
+            <text x="100" y="65" text-anchor="middle" font-size="8" fill="#767676">Provider · Finance · Data</text>
+            <rect x="30" y="72" width="140" height="8" rx="3" fill="rgba(0,132,61,0.15)"/>
+            <text x="100" y="79" text-anchor="middle" font-size="6" fill="#00843D">Shared Data Platform (GCP)</text>
+            <circle cx="260" cy="32" r="16" fill="rgba(92,46,114,0.08)" stroke="var(--aetna-navy)" stroke-width="0.5"/>
+            <text x="260" y="35" text-anchor="middle" font-size="6" font-weight="600" fill="var(--aetna-navy)">Katerina</text>
+            <circle cx="310" cy="52" r="16" fill="rgba(92,46,114,0.08)" stroke="var(--aetna-navy)" stroke-width="0.5"/>
+            <text x="310" y="55" text-anchor="middle" font-size="6" font-weight="600" fill="var(--aetna-navy)">Greg</text>
+            <circle cx="280" cy="72" r="16" fill="rgba(92,46,114,0.08)" stroke="var(--aetna-navy)" stroke-width="0.5"/>
+            <text x="280" y="75" text-anchor="middle" font-size="6" font-weight="600" fill="var(--aetna-navy)">Jeff</text>
+          </svg>
+          <div class="story-outcomes">
+            <span class="outcome-tag outcome-good">✓ Leadership aligned</span>
+            <span class="outcome-tag outcome-good">✓ Product model launching</span>
+            <span class="outcome-tag outcome-good">✓ Cloud migration underway</span>
+            <span class="outcome-tag outcome-good">✓ 8 product lines defined</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -989,42 +1143,35 @@ input, textarea, select { font-family: var(--font-body); }
     <div class="hero-eyebrow">Roadmap · 2026–2029</div>
     <h1 contenteditable="false">Initiatives Mapped Across 8 Product Lines</h1>
     <p class="hero-sub" contenteditable="false">Filter by product line, priority, or user. Click any initiative bar for full detail including description, outcomes, cost, benefits, and key measures.</p>
-    <div style="margin-top:20px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:20px 28px;max-width:780px;backdrop-filter:blur(4px);">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-        <span style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.85);">Our Northstar Strategy</span>
-      </div>
-      <p style="font-size:16px;color:rgba(255,255,255,0.95);margin:0;line-height:1.65;font-weight:500;">Improve population health and program sustainability by advancing total cost of care, strengthening state and provider partnerships, and delivering simpler, more personalized member experiences.</p>
-    </div>
   </div>
 
   <div class="section">
-    <!-- Filter toggle button -->
-    <div style="margin-bottom:12px;">
-      <button id="rmFilterToggle" onclick="toggleRmFilters()" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-md);border:1px solid var(--aetna-gray-300);background:white;font-size:12px;font-weight:600;color:var(--aetna-navy);cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow-sm);">
+    <!-- Filter + Legend row -->
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap;">
+      <button id="rmFilterToggle" onclick="toggleRmFilters()" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-md);border:1px solid var(--aetna-gray-300);background:white;font-size:12px;font-weight:600;color:var(--aetna-navy);cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow-sm);flex-shrink:0;">
         <span style="font-size:14px;">☰</span> Filters
         <span id="rmFilterCount" style="display:none;background:var(--aetna-navy);color:white;font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700;"></span>
       </button>
+      <span style="width:1px;height:16px;background:#D4D4D4;flex-shrink:0;"></span>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:10px;color:#767676;">
+        <span style="display:flex;align-items:center;gap:3px;"><span style="width:10px;height:10px;border-radius:2px;background:#0077C8;display:inline-block;"></span>Expand Footprint</span>
+        <span style="display:flex;align-items:center;gap:3px;"><span style="width:10px;height:10px;border-radius:2px;background:#005A94;display:inline-block;"></span>Cost Structure</span>
+        <span style="display:flex;align-items:center;gap:3px;"><span style="width:10px;height:10px;border-radius:2px;background:#00843D;display:inline-block;"></span>Total Cost of Care</span>
+        <span style="display:flex;align-items:center;gap:3px;"><span style="width:10px;height:10px;border-radius:2px;background:#2E8B57;display:inline-block;"></span>Community Support</span>
+        <span style="display:flex;align-items:center;gap:3px;"><span style="width:10px;height:10px;border-radius:2px;background:#7D3F98;display:inline-block;"></span>Provider Experience</span>
+        <span style="display:flex;align-items:center;gap:3px;"><span style="width:10px;height:10px;border-radius:2px;background:#C8102E;display:inline-block;"></span>Member Experience</span>
+        <span style="display:flex;align-items:center;gap:3px;"><span style="width:10px;height:10px;border-radius:2px;background:#B35B00;display:inline-block;"></span>State Partnerships</span>
+        <span style="display:flex;align-items:center;gap:3px;"><span style="width:10px;height:10px;border-radius:2px;background:#4A4A6A;display:inline-block;"></span>Performance Culture</span>
+        <span style="width:1px;height:12px;background:#D4D4D4;"></span>
+        <span style="display:flex;align-items:center;gap:3px;">● Funded</span>
+        <span style="display:flex;align-items:center;gap:3px;opacity:0.5;">◌ Not funded / TBD</span>
+      </div>
     </div>
 
     <div id="rmSummary" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;"></div>
 
     <div class="rm-wrap">
       <div class="rm-grid" id="rmGrid"></div>
-    </div>
-
-    <div style="margin-top:12px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:11px;color:#767676;">
-      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#0077C8;display:inline-block;"></span>Expand Footprint</span>
-      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#005A94;display:inline-block;"></span>Cost Structure</span>
-      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#00843D;display:inline-block;"></span>Total Cost of Care</span>
-      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#2E8B57;display:inline-block;"></span>Community Support</span>
-      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#7D3F98;display:inline-block;"></span>Provider Experience</span>
-      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#C8102E;display:inline-block;"></span>Member Experience</span>
-      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#B35B00;display:inline-block;"></span>State Partnerships</span>
-      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#4A4A6A;display:inline-block;"></span>Performance Culture</span>
-      <span style="width:1px;height:14px;background:#D4D4D4;"></span>
-      <span style="display:flex;align-items:center;gap:4px;">● Funded</span>
-      <span style="display:flex;align-items:center;gap:4px;opacity:0.5;">◌ Not funded / TBD</span>
     </div>
   </div>
 
@@ -1336,6 +1483,49 @@ input, textarea, select { font-family: var(--font-body); }
 
   </div>
 
+  <!-- SOURCE DOCUMENTS -->
+  <div class="section">
+    <div class="assump-section">
+      <div class="assump-title">Source Documents &amp; References</div>
+      <div class="assump-subtitle">The documents and systems that inform this roadmap. Dates indicate when data was last incorporated.</div>
+      <div style="display:grid;grid-template-columns:repeat(1,1fr);gap:8px;margin-top:12px;">
+        <div style="display:grid;grid-template-columns:2fr 3fr 120px 80px;gap:12px;padding:10px 16px;background:var(--aetna-navy);border-radius:var(--radius-md) var(--radius-md) 0 0;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:rgba(255,255,255,0.7);">
+          <div>Document</div><div>Purpose</div><div>Last Updated</div><div>Status</div>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 3fr 120px 80px;gap:12px;padding:12px 16px;background:white;border:1px solid var(--aetna-gray-200);border-radius:0;align-items:center;">
+          <div style="font-size:12px;font-weight:600;color:var(--aetna-navy);">2026 Program Financials</div>
+          <div style="font-size:11px;color:var(--aetna-gray-600);">CapEx allocations, EBIT/Non-EBIT projections, initiative-level funding</div>
+          <div style="font-size:11px;color:var(--aetna-gray-500);">May 2026</div>
+          <div><span style="font-size:10px;padding:2px 8px;border-radius:10px;background:#E0F5E0;color:#00843D;font-weight:600;">Current</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 3fr 120px 80px;gap:12px;padding:12px 16px;background:white;border:1px solid var(--aetna-gray-200);border-top:none;align-items:center;">
+          <div style="font-size:12px;font-weight:600;color:var(--aetna-navy);">2027 Investment Submission</div>
+          <div style="font-size:11px;color:var(--aetna-gray-600);">Forward-year investment planning and prioritization</div>
+          <div style="font-size:11px;color:var(--aetna-gray-500);">April 2026</div>
+          <div><span style="font-size:10px;padding:2px 8px;border-radius:10px;background:#E0F5E0;color:#00843D;font-weight:600;">Current</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 3fr 120px 80px;gap:12px;padding:12px 16px;background:white;border:1px solid var(--aetna-gray-200);border-top:none;align-items:center;">
+          <div style="font-size:12px;font-weight:600;color:var(--aetna-navy);">Medicaid Technology Objectives 2026</div>
+          <div style="font-size:11px;color:var(--aetna-gray-600);">56 strategic technology objectives across all product lines</div>
+          <div style="font-size:11px;color:var(--aetna-gray-500);">March 2026</div>
+          <div><span style="font-size:10px;padding:2px 8px;border-radius:10px;background:#E0F5E0;color:#00843D;font-weight:600;">Current</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 3fr 120px 80px;gap:12px;padding:12px 16px;background:white;border:1px solid var(--aetna-gray-200);border-top:none;align-items:center;">
+          <div style="font-size:12px;font-weight:600;color:var(--aetna-navy);">Product Line OKR Tracker</div>
+          <div style="font-size:11px;color:var(--aetna-gray-600);">Quarterly OKR progress by product line</div>
+          <div style="font-size:11px;color:var(--aetna-gray-500);">Ongoing</div>
+          <div><span style="font-size:10px;padding:2px 8px;border-radius:10px;background:#FFF3E0;color:#B35B00;font-weight:600;">Ongoing</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 3fr 120px 80px;gap:12px;padding:12px 16px;background:white;border:1px solid var(--aetna-gray-200);border-top:none;border-radius:0 0 var(--radius-md) var(--radius-md);align-items:center;">
+          <div style="font-size:12px;font-weight:600;color:var(--aetna-navy);">Rally Feature Backlog</div>
+          <div style="font-size:11px;color:var(--aetna-gray-600);">Development execution tracking and sprint-level delivery</div>
+          <div style="font-size:11px;color:var(--aetna-gray-500);">Live</div>
+          <div><span style="font-size:10px;padding:2px 8px;border-radius:10px;background:#E6F2FB;color:#0077C8;font-weight:600;">Live</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="page-footer">
     <div>Aetna Medicaid Technology · 3-Year Strategy 2026–2029 · Confidential and Proprietary</div>
     <span>©2026 CVS Health and/or one of its affiliates</span>
@@ -1356,6 +1546,67 @@ function showPage(name){
   document.querySelectorAll('.nav-link')[idx]?.classList.add('active');
   window.scrollTo(0,0);
   if(name==='roadmap') renderRM('all');
+}
+
+/* ── OVERVIEW TABS ─────────────────────────────────────────── */
+function showOvTab(tabId){
+  document.querySelectorAll('.ov-tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.ov-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+/* ── PILLAR DETAIL FLYOUT ──────────────────────────────────── */
+function openPillarDetail(name){
+  const panel=document.getElementById('pillarDetailPanel');
+  const overlay=document.getElementById('pillarDetailOverlay');
+  // Find matching initiatives from PLs data
+  const keyword=name.split('—')[0].trim().split('(')[0].trim().toLowerCase();
+  const matches=[];
+  PLs.forEach(pl=>pl.products.forEach(pr=>pr.initiatives.forEach(i=>{
+    if(i.name.toLowerCase().includes(keyword)||keyword.includes(i.name.toLowerCase().substring(0,12)))
+      matches.push({...i,plName:pl.name,plColor:pl.color});
+  })));
+  panel.innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--aetna-gray-500);font-weight:700;">Investment Detail</div>
+      <button onclick="closePillarDetail()" style="border:none;background:none;font-size:20px;cursor:pointer;color:var(--aetna-gray-500);">×</button>
+    </div>
+    <div style="font-size:16px;font-weight:700;color:var(--aetna-navy);margin-bottom:16px;">${name}</div>
+    ${matches.length?`
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--aetna-gray-500);font-weight:600;margin-bottom:8px;">Related Roadmap Initiatives</div>
+      ${matches.map(m=>`
+        <div style="padding:12px;border:1px solid var(--aetna-gray-200);border-radius:var(--radius-md);margin-bottom:8px;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+            <span style="width:8px;height:8px;border-radius:2px;background:${m.plColor};display:inline-block;"></span>
+            <span style="font-size:12px;font-weight:600;color:var(--aetna-navy);">${m.name}</span>
+          </div>
+          <div style="font-size:11px;color:var(--aetna-gray-500);">${m.plName}</div>
+          ${m.desc?`<div style="font-size:11px;color:var(--aetna-gray-600);margin-top:4px;line-height:1.5;">${m.desc}</div>`:''}
+          <div style="display:flex;gap:12px;margin-top:6px;font-size:11px;">
+            ${m.capex26?`<span style="color:var(--aetna-gray-500);">2026: $${m.capex26}M</span>`:''}
+            ${m.capex27?`<span style="color:var(--aetna-gray-500);">2027: $${m.capex27}M</span>`:''}
+            ${m.ebit?`<span style="color:#00843D;">EBIT: $${m.ebit}M</span>`:''}
+          </div>
+        </div>
+      `).join('')}
+    `:`<div style="font-size:13px;color:var(--aetna-gray-500);padding:20px 0;">No direct roadmap initiative match found. This investment may span multiple initiatives.</div>`}
+    <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--aetna-gray-200);font-size:10px;color:var(--aetna-gray-400);">Source: 2026 Program Financials · 2027 Investment Submission</div>
+  `;
+  panel.classList.add('open');
+  overlay.classList.add('open');
+}
+function closePillarDetail(){
+  document.getElementById('pillarDetailPanel').classList.remove('open');
+  document.getElementById('pillarDetailOverlay').classList.remove('open');
+}
+
+/* ── STORY PANELS ──────────────────────────────────────────── */
+function showStoryPanel(n){
+  document.querySelectorAll('.story-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.story-nav-item').forEach(i=>i.classList.remove('active'));
+  document.getElementById('story-panel-'+n).classList.add('active');
+  document.querySelector('.story-nav-item[data-panel="'+n+'"]').classList.add('active');
 }
 
 /* Deep-link moved to end of script (after renderRM is defined) */
@@ -1592,7 +1843,6 @@ function renderRM(filter){
   const userTokens={'u-member':'M','u-caregiver':'CG','u-provider':'Pr','u-casemanager':'CM','u-clinician':'Cl'};
   const isUserFilter=filter.startsWith('u-');
   const isPriorityFilter=filter.startsWith('pr-');
-  const isCategoryFilter=filter.startsWith('cat-');
   const prCode=isPriorityFilter?filter.replace('pr-',''):'';
 
   let t26=0,t27=0,tE=0,tN=0,tCt=0;
@@ -1600,13 +1850,11 @@ function renderRM(filter){
     filter.startsWith('pl')?PLs.filter(p=>p.pl===filter):
     isUserFilter?PLs.filter(p=>p.products.some(pr=>pr.initiatives.some(i=>i.users.includes(userTokens[filter])))):
     isPriorityFilter?PLs.filter(p=>p.products.some(pr=>pr.initiatives.some(i=>i.priority&&i.priority.includes(prCode)))):
-    isCategoryFilter?PLs.filter(p=>p.products.some(pr=>pr.initiatives.some(i=>i.category===filter))):
     PLs.filter(()=>true);
 
   plSet.forEach(pl=>pl.products.forEach(p=>p.initiatives.forEach(i=>{
     if(isUserFilter&&!i.users.includes(userTokens[filter]))return;
     if(isPriorityFilter&&!(i.priority&&i.priority.includes(prCode)))return;
-    if(isCategoryFilter&&i.category!==filter)return;
     t26+=i.capex26||0;t27+=i.capex27||0;tE+=i.ebit||0;tN+=i.nonEbit||0;tCt++;
   })));
 
@@ -1667,7 +1915,6 @@ function renderRM(filter){
       pl.products.forEach(prod=>{
         const filteredInits=isUserFilter?prod.initiatives.filter(i=>i.users.includes(userTokens[filter])):
           isPriorityFilter?prod.initiatives.filter(i=>i.priority&&i.priority.includes(prCode)):
-          isCategoryFilter?prod.initiatives.filter(i=>i.category===filter):
           prod.initiatives;
         if(!filteredInits.length)return;
         let ganttRows='';
@@ -1775,6 +2022,11 @@ function closePanel(){
     const goto=sessionStorage.getItem('gotoPage');
     if(goto){sessionStorage.removeItem('gotoPage');showPage(goto);}
   }
+
+  // Pillar item click delegation
+  document.querySelectorAll('.pillar-item').forEach(el=>{
+    el.addEventListener('click',()=>openPillarDetail(el.textContent.trim()));
+  });
 })();
 </script>
 
@@ -1784,54 +2036,18 @@ function closePanel(){
   <div class="flyout-header" style="border-left:none;padding:18px 22px 14px;">
     <div style="flex:1;">
       <div class="flyout-title" style="font-size:14px;">Filters</div>
-      <div style="font-size:11px;color:var(--aetna-gray-500);margin-top:2px;">Filter initiatives by product line, category, user, or priority</div>
+      <div style="font-size:11px;color:var(--aetna-gray-500);margin-top:2px;">Filter initiatives by pillar, user, or product line</div>
     </div>
     <button class="flyout-close" onclick="toggleRmFilters()">✕</button>
   </div>
   <div class="flyout-body" style="padding:18px 22px;">
+    <!-- 1. By Pillar / Business Priority -->
     <div style="margin-bottom:18px;">
-      <div class="flyout-lbl" style="margin-bottom:8px;">Product Line</div>
+      <div class="flyout-lbl" style="margin-bottom:8px;">By Pillar / Business Priority</div>
       <div class="roadmap-filters" id="rmFilters" style="flex-direction:column;align-items:stretch;gap:6px;">
-        <button class="filter-btn active" onclick="rmFilter('all',this)" style="text-align:left;">All product lines</button>
-        <button class="filter-btn" onclick="rmFilter('pl0',this)" style="text-align:left;border-color:#378ADD;color:#185FA5;">Member Access</button>
-        <button class="filter-btn" onclick="rmFilter('pl1',this)" style="text-align:left;border-color:#1D9E75;color:#0F6E56;">Enrollment &amp; Eligibility</button>
-        <button class="filter-btn" onclick="rmFilter('pl2',this)" style="text-align:left;border-color:#BA7517;color:#854F0B;">Claims &amp; Encounters</button>
-        <button class="filter-btn" onclick="rmFilter('pl3',this)" style="text-align:left;border-color:#639922;color:#3B6D11;">Provider &amp; Network</button>
-        <button class="filter-btn" onclick="rmFilter('pl4',this)" style="text-align:left;border-color:#7F77DD;color:#534AB7;">Clinical &amp; Care Mgmt</button>
-        <button class="filter-btn" onclick="rmFilter('pl5',this)" style="text-align:left;border-color:#D85A30;color:#993C1D;">Finance &amp; Billing</button>
-        <button class="filter-btn" onclick="rmFilter('pl6',this)" style="text-align:left;border-color:#D4537E;color:#993556;">Data &amp; Analytics</button>
-        <button class="filter-btn" onclick="rmFilter('pl7',this)" style="text-align:left;border-color:#888780;color:#5F5E5A;">Contract &amp; Compliance</button>
-        <button class="filter-btn" onclick="rmFilter('pl8',this)" style="text-align:left;border-color:#4A6741;color:#4A6741;">Security</button>
-        <button class="filter-btn" onclick="rmFilter('pl9',this)" style="text-align:left;border-color:#2C5282;color:#2C5282;">Engineering Excellence</button>
-        <button class="filter-btn" onclick="rmFilter('pl10',this)" style="text-align:left;border-color:#9B2C6B;color:#9B2C6B;">Clinical</button>
-        <button class="filter-btn" onclick="rmFilter('pl11',this)" style="text-align:left;border-color:#B7791F;color:#B7791F;">Medicaid Quality</button>
+        <button class="filter-btn active" onclick="rmFilter('all',this)" style="text-align:left;">All initiatives</button>
       </div>
-    </div>
-    <div style="border-top:1px solid #EBEBEB;padding-top:14px;margin-top:14px;">
-      <div class="flyout-lbl" style="margin-bottom:8px;">By Category</div>
-      <div style="display:flex;flex-direction:column;gap:6px;">
-        <button class="filter-btn" onclick="rmFilter('cat-ai',this)" style="text-align:left;border-color:#7D3F98;color:#7D3F98;">AI &amp; Automation</button>
-        <button class="filter-btn" onclick="rmFilter('cat-platform',this)" style="text-align:left;border-color:#005A94;color:#005A94;">Platform Modernization</button>
-        <button class="filter-btn" onclick="rmFilter('cat-cost',this)" style="text-align:left;border-color:#00843D;color:#00843D;">Cost &amp; Efficiency</button>
-        <button class="filter-btn" onclick="rmFilter('cat-data',this)" style="text-align:left;border-color:#B35B00;color:#B35B00;">Data &amp; Insights</button>
-        <button class="filter-btn" onclick="rmFilter('cat-exp',this)" style="text-align:left;border-color:#C8102E;color:#C8102E;">Experience</button>
-        <button class="filter-btn" onclick="rmFilter('cat-security',this)" style="text-align:left;border-color:#4A6741;color:#4A6741;">Security Enhancement</button>
-        <button class="filter-btn" onclick="rmFilter('cat-stability',this)" style="text-align:left;border-color:#4A4A6A;color:#4A4A6A;">Stability &amp; Resiliency</button>
-      </div>
-    </div>
-    <div style="border-top:1px solid #EBEBEB;padding-top:14px;margin-top:14px;">
-      <div class="flyout-lbl" style="margin-bottom:8px;">By User</div>
-      <div style="display:flex;flex-direction:column;gap:6px;">
-        <button class="filter-btn" onclick="rmFilter('u-member',this)" style="text-align:left;border-color:#0077C8;color:#0077C8;">Member</button>
-        <button class="filter-btn" onclick="rmFilter('u-caregiver',this)" style="text-align:left;border-color:#C8102E;color:#C8102E;">Caregiver</button>
-        <button class="filter-btn" onclick="rmFilter('u-provider',this)" style="text-align:left;border-color:#00A3A1;color:#007A79;">Provider</button>
-        <button class="filter-btn" onclick="rmFilter('u-casemanager',this)" style="text-align:left;border-color:#7F77DD;color:#534AB7;">Case Manager</button>
-        <button class="filter-btn" onclick="rmFilter('u-clinician',this)" style="text-align:left;border-color:#00843D;color:#00612D;">Clinician</button>
-      </div>
-    </div>
-    <div style="border-top:1px solid #EBEBEB;padding-top:14px;">
-      <div class="flyout-lbl" style="margin-bottom:8px;">By Priority</div>
-      <div style="margin-bottom:6px;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#0077C8;">Excel at the Fundamentals</div>
+      <div style="margin-top:10px;margin-bottom:6px;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#0077C8;">Excel at the Fundamentals</div>
       <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px;">
         <button class="filter-btn" onclick="rmFilter('pr-ef-footprint',this)" style="text-align:left;border-color:#0077C8;color:#0077C8;">Expand Strategic Footprint</button>
         <button class="filter-btn" onclick="rmFilter('pr-ef-cost',this)" style="text-align:left;border-color:#005A94;color:#005A94;">Best-in-Class Cost Structure</button>
@@ -1849,6 +2065,35 @@ function closePanel(){
         <button class="filter-btn" onclick="rmFilter('pr-wc-performance',this)" style="text-align:left;border-color:#4A4A6A;color:#4A4A6A;">High-Performance Culture</button>
         <button class="filter-btn" onclick="rmFilter('pr-wc-talent',this)" style="text-align:left;border-color:#6B5B95;color:#6B5B95;">Modernize Talent Capabilities</button>
         <button class="filter-btn" onclick="rmFilter('pr-wc-colleague',this)" style="text-align:left;border-color:#8B6914;color:#8B6914;">Best-in-Class Colleague Experience</button>
+      </div>
+    </div>
+    <!-- 2. By User -->
+    <div style="border-top:1px solid #EBEBEB;padding-top:14px;margin-top:14px;">
+      <div class="flyout-lbl" style="margin-bottom:8px;">By User</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <button class="filter-btn" onclick="rmFilter('u-member',this)" style="text-align:left;border-color:#0077C8;color:#0077C8;">Member</button>
+        <button class="filter-btn" onclick="rmFilter('u-caregiver',this)" style="text-align:left;border-color:#C8102E;color:#C8102E;">Caregiver</button>
+        <button class="filter-btn" onclick="rmFilter('u-provider',this)" style="text-align:left;border-color:#00A3A1;color:#007A79;">Provider</button>
+        <button class="filter-btn" onclick="rmFilter('u-casemanager',this)" style="text-align:left;border-color:#7F77DD;color:#534AB7;">Case Manager</button>
+        <button class="filter-btn" onclick="rmFilter('u-clinician',this)" style="text-align:left;border-color:#00843D;color:#00612D;">Clinician</button>
+      </div>
+    </div>
+    <!-- 3. By Product Line -->
+    <div style="border-top:1px solid #EBEBEB;padding-top:14px;margin-top:14px;">
+      <div class="flyout-lbl" style="margin-bottom:8px;">By Product Line</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <button class="filter-btn" onclick="rmFilter('pl0',this)" style="text-align:left;border-color:#378ADD;color:#185FA5;">Member Access</button>
+        <button class="filter-btn" onclick="rmFilter('pl1',this)" style="text-align:left;border-color:#1D9E75;color:#0F6E56;">Enrollment &amp; Eligibility</button>
+        <button class="filter-btn" onclick="rmFilter('pl2',this)" style="text-align:left;border-color:#BA7517;color:#854F0B;">Claims &amp; Encounters</button>
+        <button class="filter-btn" onclick="rmFilter('pl3',this)" style="text-align:left;border-color:#639922;color:#3B6D11;">Provider &amp; Network</button>
+        <button class="filter-btn" onclick="rmFilter('pl4',this)" style="text-align:left;border-color:#7F77DD;color:#534AB7;">Clinical &amp; Care Mgmt</button>
+        <button class="filter-btn" onclick="rmFilter('pl5',this)" style="text-align:left;border-color:#D85A30;color:#993C1D;">Finance &amp; Billing</button>
+        <button class="filter-btn" onclick="rmFilter('pl6',this)" style="text-align:left;border-color:#D4537E;color:#993556;">Data &amp; Analytics</button>
+        <button class="filter-btn" onclick="rmFilter('pl7',this)" style="text-align:left;border-color:#888780;color:#5F5E5A;">Contract &amp; Compliance</button>
+        <button class="filter-btn" onclick="rmFilter('pl8',this)" style="text-align:left;border-color:#4A6741;color:#4A6741;">Security</button>
+        <button class="filter-btn" onclick="rmFilter('pl9',this)" style="text-align:left;border-color:#2C5282;color:#2C5282;">Engineering Excellence</button>
+        <button class="filter-btn" onclick="rmFilter('pl10',this)" style="text-align:left;border-color:#9B2C6B;color:#9B2C6B;">Clinical</button>
+        <button class="filter-btn" onclick="rmFilter('pl11',this)" style="text-align:left;border-color:#B7791F;color:#B7791F;">Medicaid Quality</button>
       </div>
     </div>
   </div>

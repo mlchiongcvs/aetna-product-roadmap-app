@@ -580,11 +580,11 @@ After creating, share the page URL.
     { id:"strat-story",    icon:"story",       label:"Our Story" },
     { id:"strat-roadmap",  icon:"roadmap",     label:"Roadmap" },
     { id:"strat-context",  icon:"context",     label:"Context & Assumptions" },
-    { id:"storyboard",     icon:"northstar",   label:"Northstar Strategy" },
-    { id:"dashboard",      icon:"dashboard",   label:"Dashboard" },
-    // { id:"rally",       icon:"rally",       label:"Rally Roadmap" },  // hidden — not ready for users
-    { id:"investments",    icon:"investments", label:"Investments" },
-    { id:"team",           icon:"team",        label:"Team & Reviews" },
+    // { id:"storyboard",  icon:"northstar",   label:"Northstar Strategy" },  // merged into Our Story
+    // { id:"dashboard",   icon:"dashboard",   label:"Dashboard" },           // reuse later
+    // { id:"rally",       icon:"rally",       label:"Rally Roadmap" },       // not ready for users
+    // { id:"investments", icon:"investments", label:"Investments" },          // reuse later
+    // { id:"team",        icon:"team",        label:"Team & Reviews" },      // reuse later
   ];
 
   // ── RENDER ────────────────────────────────────────────────────────────────
