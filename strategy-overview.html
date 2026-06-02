@@ -2599,17 +2599,49 @@ function closePanel(){
   <div class="flyout-header" style="border-left:none;padding:18px 22px 14px;">
     <div style="flex:1;">
       <div class="flyout-title" style="font-size:14px;">Filters</div>
-      <div style="font-size:11px;color:var(--aetna-gray-500);margin-top:2px;">Filter initiatives by pillar, user, or product line</div>
+      <div style="font-size:11px;color:var(--aetna-gray-500);margin-top:2px;">Filter initiatives by user, product line, or strategic pillar</div>
     </div>
     <button class="flyout-close" onclick="toggleRmFilters()">✕</button>
   </div>
   <div class="flyout-body" style="padding:18px 22px;">
-    <!-- 1. By Pillar / Business Priority -->
+    <!-- Reset -->
     <div style="margin-bottom:18px;">
-      <div class="flyout-lbl" style="margin-bottom:8px;">By Pillar / Business Priority</div>
       <div class="roadmap-filters" id="rmFilters" style="flex-direction:column;align-items:stretch;gap:6px;">
         <button class="filter-btn active" onclick="rmFilter('all',this)" style="text-align:left;">All initiatives</button>
       </div>
+    </div>
+    <!-- 1. By User -->
+    <div style="border-top:1px solid #EBEBEB;padding-top:14px;">
+      <div class="flyout-lbl" style="margin-bottom:8px;">By User</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <button class="filter-btn" onclick="rmFilter('u-member',this)" style="text-align:left;border-color:#0077C8;color:#0077C8;">Member</button>
+        <button class="filter-btn" onclick="rmFilter('u-caregiver',this)" style="text-align:left;border-color:#C8102E;color:#C8102E;">Caregiver</button>
+        <button class="filter-btn" onclick="rmFilter('u-provider',this)" style="text-align:left;border-color:#00A3A1;color:#007A79;">Provider</button>
+        <button class="filter-btn" onclick="rmFilter('u-casemanager',this)" style="text-align:left;border-color:#7F77DD;color:#534AB7;">Case Manager</button>
+        <button class="filter-btn" onclick="rmFilter('u-clinician',this)" style="text-align:left;border-color:#00843D;color:#00612D;">Clinician</button>
+      </div>
+    </div>
+    <!-- 2. By Product Line -->
+    <div style="border-top:1px solid #EBEBEB;padding-top:14px;margin-top:14px;">
+      <div class="flyout-lbl" style="margin-bottom:8px;">By Product Line</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <button class="filter-btn" onclick="rmFilter('pl0',this)" style="text-align:left;border-color:#378ADD;color:#185FA5;">Member Access</button>
+        <button class="filter-btn" onclick="rmFilter('pl1',this)" style="text-align:left;border-color:#1D9E75;color:#0F6E56;">Enrollment &amp; Eligibility</button>
+        <button class="filter-btn" onclick="rmFilter('pl2',this)" style="text-align:left;border-color:#BA7517;color:#854F0B;">Claims &amp; Encounters</button>
+        <button class="filter-btn" onclick="rmFilter('pl3',this)" style="text-align:left;border-color:#639922;color:#3B6D11;">Provider &amp; Network</button>
+        <button class="filter-btn" onclick="rmFilter('pl4',this)" style="text-align:left;border-color:#7F77DD;color:#534AB7;">Clinical &amp; Care Mgmt</button>
+        <button class="filter-btn" onclick="rmFilter('pl5',this)" style="text-align:left;border-color:#D85A30;color:#993C1D;">Finance &amp; Billing</button>
+        <button class="filter-btn" onclick="rmFilter('pl6',this)" style="text-align:left;border-color:#D4537E;color:#993556;">Data &amp; Analytics</button>
+        <button class="filter-btn" onclick="rmFilter('pl7',this)" style="text-align:left;border-color:#888780;color:#5F5E5A;">Contract &amp; Compliance</button>
+        <button class="filter-btn" onclick="rmFilter('pl8',this)" style="text-align:left;border-color:#4A6741;color:#4A6741;">Security</button>
+        <button class="filter-btn" onclick="rmFilter('pl9',this)" style="text-align:left;border-color:#2C5282;color:#2C5282;">Engineering Excellence</button>
+        <button class="filter-btn" onclick="rmFilter('pl10',this)" style="text-align:left;border-color:#9B2C6B;color:#9B2C6B;">Clinical</button>
+        <button class="filter-btn" onclick="rmFilter('pl11',this)" style="text-align:left;border-color:#B7791F;color:#B7791F;">Medicaid Quality</button>
+      </div>
+    </div>
+    <!-- 3. By Pillar / Business Priority -->
+    <div style="border-top:1px solid #EBEBEB;padding-top:14px;margin-top:14px;">
+      <div class="flyout-lbl" style="margin-bottom:8px;">By Pillar / Business Priority</div>
       <div style="margin-top:10px;margin-bottom:6px;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#0077C8;">Excel at the Fundamentals</div>
       <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px;">
         <button class="filter-btn" onclick="rmFilter('pr-ef-footprint',this)" style="text-align:left;border-color:#0077C8;color:#0077C8;">Expand Strategic Footprint</button>
@@ -2628,35 +2660,6 @@ function closePanel(){
         <button class="filter-btn" onclick="rmFilter('pr-wc-performance',this)" style="text-align:left;border-color:#4A4A6A;color:#4A4A6A;">High-Performance Culture</button>
         <button class="filter-btn" onclick="rmFilter('pr-wc-talent',this)" style="text-align:left;border-color:#6B5B95;color:#6B5B95;">Modernize Talent Capabilities</button>
         <button class="filter-btn" onclick="rmFilter('pr-wc-colleague',this)" style="text-align:left;border-color:#8B6914;color:#8B6914;">Best-in-Class Colleague Experience</button>
-      </div>
-    </div>
-    <!-- 2. By User -->
-    <div style="border-top:1px solid #EBEBEB;padding-top:14px;margin-top:14px;">
-      <div class="flyout-lbl" style="margin-bottom:8px;">By User</div>
-      <div style="display:flex;flex-direction:column;gap:6px;">
-        <button class="filter-btn" onclick="rmFilter('u-member',this)" style="text-align:left;border-color:#0077C8;color:#0077C8;">Member</button>
-        <button class="filter-btn" onclick="rmFilter('u-caregiver',this)" style="text-align:left;border-color:#C8102E;color:#C8102E;">Caregiver</button>
-        <button class="filter-btn" onclick="rmFilter('u-provider',this)" style="text-align:left;border-color:#00A3A1;color:#007A79;">Provider</button>
-        <button class="filter-btn" onclick="rmFilter('u-casemanager',this)" style="text-align:left;border-color:#7F77DD;color:#534AB7;">Case Manager</button>
-        <button class="filter-btn" onclick="rmFilter('u-clinician',this)" style="text-align:left;border-color:#00843D;color:#00612D;">Clinician</button>
-      </div>
-    </div>
-    <!-- 3. By Product Line -->
-    <div style="border-top:1px solid #EBEBEB;padding-top:14px;margin-top:14px;">
-      <div class="flyout-lbl" style="margin-bottom:8px;">By Product Line</div>
-      <div style="display:flex;flex-direction:column;gap:6px;">
-        <button class="filter-btn" onclick="rmFilter('pl0',this)" style="text-align:left;border-color:#378ADD;color:#185FA5;">Member Access</button>
-        <button class="filter-btn" onclick="rmFilter('pl1',this)" style="text-align:left;border-color:#1D9E75;color:#0F6E56;">Enrollment &amp; Eligibility</button>
-        <button class="filter-btn" onclick="rmFilter('pl2',this)" style="text-align:left;border-color:#BA7517;color:#854F0B;">Claims &amp; Encounters</button>
-        <button class="filter-btn" onclick="rmFilter('pl3',this)" style="text-align:left;border-color:#639922;color:#3B6D11;">Provider &amp; Network</button>
-        <button class="filter-btn" onclick="rmFilter('pl4',this)" style="text-align:left;border-color:#7F77DD;color:#534AB7;">Clinical &amp; Care Mgmt</button>
-        <button class="filter-btn" onclick="rmFilter('pl5',this)" style="text-align:left;border-color:#D85A30;color:#993C1D;">Finance &amp; Billing</button>
-        <button class="filter-btn" onclick="rmFilter('pl6',this)" style="text-align:left;border-color:#D4537E;color:#993556;">Data &amp; Analytics</button>
-        <button class="filter-btn" onclick="rmFilter('pl7',this)" style="text-align:left;border-color:#888780;color:#5F5E5A;">Contract &amp; Compliance</button>
-        <button class="filter-btn" onclick="rmFilter('pl8',this)" style="text-align:left;border-color:#4A6741;color:#4A6741;">Security</button>
-        <button class="filter-btn" onclick="rmFilter('pl9',this)" style="text-align:left;border-color:#2C5282;color:#2C5282;">Engineering Excellence</button>
-        <button class="filter-btn" onclick="rmFilter('pl10',this)" style="text-align:left;border-color:#9B2C6B;color:#9B2C6B;">Clinical</button>
-        <button class="filter-btn" onclick="rmFilter('pl11',this)" style="text-align:left;border-color:#B7791F;color:#B7791F;">Medicaid Quality</button>
       </div>
     </div>
   </div>
