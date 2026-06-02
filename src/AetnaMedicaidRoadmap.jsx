@@ -577,7 +577,6 @@ After creating, share the page URL.
   // ── NAV ITEMS ─────────────────────────────────────────────────────────────
   const NAV = [
     { id:"strat-overview", icon:"overview",    label:"Overview" },
-    { id:"strat-story",    icon:"story",       label:"Our Story" },
     { id:"strat-roadmap",  icon:"roadmap",     label:"Roadmap" },
     { id:"strat-context",  icon:"context",     label:"Context & Assumptions" },
     // { id:"storyboard",  icon:"northstar",   label:"Northstar Strategy" },  // merged into Our Story
@@ -1460,9 +1459,6 @@ After creating, share the page URL.
             <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=overview`} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="3-Year Overview" />
           )}
 
-          {view==="strat-story" && (
-            <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=story`} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Story Arc" />
-          )}
 
           {view==="strat-roadmap" && (
             <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=roadmap`} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Roadmap" />
