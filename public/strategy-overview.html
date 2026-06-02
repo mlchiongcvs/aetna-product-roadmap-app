@@ -2350,14 +2350,14 @@ function fmtM(v){if(!v||v===0)return '—';return '$'+v.toFixed(1)+'M';}
 /* ── INITIATIVE INVENTORY (Context & Assumptions) ──────────────── */
 function renderInitInventory(){
   let html='<div style="background:white;border-radius:var(--radius-lg);border:1px solid #EBEBEB;overflow:hidden;max-height:600px;overflow-y:auto;position:relative;">';
-  html+='<table class="inv-table" style="position:relative;"><thead><tr style="position:sticky;top:0;z-index:2;"><th style="width:36px">#</th><th>Initiative</th><th>Product Line</th><th style="width:70px">Funded</th><th style="width:80px">2026 CapEx</th><th style="width:80px">2027 CapEx</th><th>Source Document</th></tr></thead><tbody>';
+  html+='<table class="inv-table" style="position:relative;"><thead><tr style="position:sticky;top:0;z-index:2;"><th style="width:36px">#</th><th>Initiative</th><th style="min-width:140px">Product Line</th><th style="width:90px;white-space:nowrap;">Funded</th><th style="width:100px;white-space:nowrap;">2026 CapEx</th><th style="width:100px;white-space:nowrap;">2027 CapEx</th><th>Source Document</th></tr></thead><tbody>';
   let count=0;
   PLs.forEach(pl=>{
     pl.products.forEach(prod=>{
       prod.initiatives.forEach(init=>{
         count++;
         const fundedHtml=init.funded?'<span class="fund-yes">● Funded</span>':'<span class="fund-no">◌ TBD</span>';
-        html+=`<tr><td style="font-size:11px;color:var(--aetna-gray-500);text-align:center;">${init.id}</td><td style="font-weight:500;">${init.name}</td><td><span style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;background:${pl.color}15;color:${pl.color};border:1px solid ${pl.color}30;">${pl.name}</span></td><td>${fundedHtml}</td><td>${fmtM(init.capex26)}</td><td>${fmtM(init.capex27)}</td><td style="font-size:11px;color:var(--aetna-gray-600);">${init.src}</td></tr>`;
+        html+=`<tr><td style="font-size:11px;color:var(--aetna-gray-500);text-align:center;">${init.id}</td><td style="font-weight:500;">${init.name}</td><td><span style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;background:${pl.color}15;color:${pl.color};border:1px solid ${pl.color}30;">${pl.name}</span></td><td style="white-space:nowrap;">${fundedHtml}</td><td style="white-space:nowrap;">${fmtM(init.capex26)}</td><td style="white-space:nowrap;">${fmtM(init.capex27)}</td><td style="font-size:11px;color:var(--aetna-gray-600);">${init.src}</td></tr>`;
       });
     });
   });
