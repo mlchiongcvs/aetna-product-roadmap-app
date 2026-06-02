@@ -30,7 +30,7 @@ No test suite exists. No linter configured.
 
 The app has two layers:
 
-1. **React SPA** (`src/AetnaMedicaidRoadmap.jsx`) — Provides the collapsible left sidebar nav, routing between views, and renders server-dependent features (Dashboard, Ingest, Rally).
+1. **React SPA** (`src/AetnaMedicaidRoadmap.jsx`) — Provides the collapsible left sidebar nav with 4 active views (Overview, Our Story, Roadmap, Context & Assumptions). Additional views (Dashboard, Investments, Team & Reviews) are commented out for future use.
 
 2. **Standalone HTML pages** (`public/strategy-overview.html`, `public/storyboard.html`) — Complex self-contained apps (2000+ lines each) with their own CSS, JS, SVGs, and interactivity. Embedded via iframes in the React shell.
 
@@ -39,9 +39,23 @@ The iframe `src` attributes MUST use `import.meta.env.BASE_URL` (not absolute `/
 <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=roadmap`} />
 ```
 
+### CRITICAL: index.html Must Reference Source
+
+The root `index.html` MUST contain `<script type="module" src="/src/main.jsx"></script>`. If it points to a pre-built `./assets/index-*.js` file, Vite will not compile source changes. This was previously broken by accidentally copying the gh-pages built `index.html` back to main.
+
 ### URL-Based Page Routing in strategy-overview.html
 
 `strategy-overview.html?page=overview|story|roadmap|assumptions` — the `?page=` param selects which internal page to show and hides the built-in nav when embedded in an iframe.
+
+### Page Structure in strategy-overview.html
+
+- **Overview** (`page-overview`): Tabbed sub-navigation with 4 tabs — `showOvTab(tabId)` toggles `.ov-tab-content.active`. Default tab is "3-Year Strategic Overview" with prominent Northstar card. "Top Investments" tab has clickable pillar items → flyout detail panel (`openPillarDetail()`).
+
+- **Our Story** (`page-story`): Root causes grid → quote block → "The Evolution" section with left-nav panel layout. `showStoryPanel(n)` toggles 4 phases. Default is panel 1 (2021-2022).
+
+- **Roadmap** (`page-roadmap`): Full-width Gantt chart with sticky Now/Next/Future header. Filter panel (Priority → User → Product Line). Color legend near filter button.
+
+- **Context & Assumptions** (`page-assumptions`): Multiple sections (User Groups, Product Lines, Financials, Investments, Tech Capabilities, Funded Summary, Source Documents). Each section has a source footnote.
 
 ### Server
 
@@ -59,7 +73,7 @@ const PLs = [
         { id, name, funded, src, desc, outcomes, users,
           capex26, capex27, ebit, nonEbit, roi, benefits, measures,
           priority: ["ef-cost", ...],   // 1-3 priority codes
-          category: "cat-ai",           // single category code
+          category: "cat-ai",           // single category code (data only, no UI filter)
           now, next, future }           // quarter ranges for Gantt bar positioning
       ]}
     ]
@@ -76,9 +90,10 @@ pl0 Member Access, pl1 Enrollment, pl2 Claims, pl3 Provider & Network, pl4 Clini
 Filters use prefix-based keys dispatched in `renderRM(filter)`:
 - `all` — show everything
 - `pl0`–`pl11` — by product line
-- `cat-ai`, `cat-platform`, `cat-cost`, `cat-data`, `cat-exp`, `cat-security`, `cat-stability` — by category
-- `pr-ef-cost`, `pr-bd-member`, etc. — by priority (prefixed `pr-`)
+- `pr-ef-cost`, `pr-bd-member`, etc. — by priority/pillar (prefixed `pr-`)
 - `u-member`, `u-provider`, etc. — by user type
+
+Note: Category filter UI was removed (data field retained). Filter panel order: Priority/Pillar → User → Product Line.
 
 ### Gantt Bar Positioning
 
@@ -87,11 +102,14 @@ Filters use prefix-based keys dispatched in `renderRM(filter)`:
 - next: Q1-Q4 2027 → cols 4-7
 - future: H1/H2 2028 → cols 8-9, 2029+ → col 10
 
-### Key Functions
+### Key Functions (strategy-overview.html)
 - `renderRM(filter)` — renders full Gantt grid; handles all filter types
-- `openPanel(initId)` — opens flyout with initiative detail + category/priority badges
+- `openPanel(initId)` — opens flyout with initiative detail + priority badges
 - `toggleRmFilters()` — opens/closes filter panel
-- `showPage(name)` — switches internal pages
+- `showPage(name)` — switches internal pages (overview/story/roadmap/assumptions)
+- `showOvTab(tabId)` — switches Overview tab content
+- `showStoryPanel(n)` — switches Our Story evolution panels (1-4)
+- `openPillarDetail(pillarName, data)` — opens investment pillar flyout
 
 ---
 
@@ -109,6 +127,8 @@ git checkout main
 ```
 
 Always push both branches after changes. Use `git -c http.sslVerify=false push` (CVS proxy SSL cert issue).
+
+**IMPORTANT:** Never copy built files (from `dist/` or gh-pages) back into the `main` branch root. This previously broke the build by overwriting `index.html` with a pre-built version that didn't reference source files.
 
 ### CAP (container platform) — IN PROGRESS
 - Docker image pushed to JFrog: `cvsh.jfrog.io/cvsdigital-docker-local/aetna-medicaid-roadmap`
@@ -138,6 +158,10 @@ These are only needed for the Dashboard/Ingest AI features. The strategy pages, 
 
 **Modify React nav/views:** Edit `src/AetnaMedicaidRoadmap.jsx` → `NAV` array and corresponding render blocks.
 
+**Add a new Overview tab:** Add a `<button class="ov-tab-btn">` to the `.ov-tabs` div and a corresponding `<div class="ov-tab-content" id="ov-newtab">` container.
+
+**Add a new story phase:** Add a `.story-nav-item` with `data-panel="N"` and a corresponding `#story-panel-N` div.
+
 ---
 
 ## Key Design Decisions
@@ -145,6 +169,9 @@ These are only needed for the Dashboard/Ingest AI features. The strategy pages, 
 - Standalone HTML pages embedded via iframe (not React) — preserves 2000+ lines of complex interactive JS/CSS per page
 - `vite.config.js` uses `base: './'` (relative paths) — required for GitHub Pages subdirectory hosting
 - Collapsible sidebar with `useState` toggle — shows icon-only nav when collapsed
+- Gantt chart uses sticky header (Now/Next/Future + column labels) with scrollable body (`max-height: calc(100vh - 180px)`)
 - Gantt bars show EBIT and ROI inline for quick scanning
-- Flyout panels (not tooltips) for initiative detail and filters
-- Summary cards use colored top accent bars to differentiate metrics visually
+- Flyout panels (not tooltips) for initiative detail, filters, and pillar investment detail
+- Overview uses tabbed navigation to reduce scrolling
+- Our Story uses left-nav + right-content panel layout for phase evolution
+- Source footnotes under each Context & Assumptions section for content provenance
