@@ -614,6 +614,7 @@ input, textarea, select { font-family: var(--font-body); }
   <!-- TAB BAR -->
   <div class="ov-tabs">
     <button class="ov-tab-btn active" onclick="showOvTab('ov-summary')">3-Year Strategic Overview</button>
+    <button class="ov-tab-btn" onclick="showOvTab('ov-story')">How We Got Here</button>
     <button class="ov-tab-btn" onclick="showOvTab('ov-dials')">The 5 Dials We Are Moving</button>
     <button class="ov-tab-btn" onclick="showOvTab('ov-experience')">How Their Experience Will Change</button>
     <button class="ov-tab-btn" onclick="showOvTab('ov-investments')">Top Investments by Strategic Pillar</button>
@@ -740,6 +741,188 @@ input, textarea, select { font-family: var(--font-body); }
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- TAB: HOW WE GOT HERE (story) -->
+  <div class="ov-tab-content" id="ov-story">
+    <div class="section" style="padding:40px 48px;">
+      <h2 style="font-size:24px;font-weight:700;color:var(--aetna-navy);margin-bottom:4px;">How We Got Here</h2>
+      <p style="font-size:14px;color:var(--aetna-gray-600);margin-bottom:28px;max-width:700px;">Understanding how we got here is essential to understanding where we must go — and why 2026 is the moment we finally fix it from the ground up.</p>
+
+      <!-- ROOT CAUSES -->
+      <div style="margin-bottom:28px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--aetna-gray-500);margin-bottom:12px;">The 5 Root Causes We Are Solving For</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+          <div style="border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid #7D3F98;background:var(--aetna-gray-100);">
+            <div style="font-size:18px;font-weight:700;color:#7D3F98;margin-bottom:4px;">01</div>
+            <div style="font-size:12px;font-weight:700;color:var(--aetna-navy);margin-bottom:4px;">Fragmented Ecosystem</div>
+            <div style="font-size:11px;color:var(--aetna-gray-600);line-height:1.5;">~350 apps. Platform consolidation + app rationalization. 30%+ reduction by 2028.</div>
+          </div>
+          <div style="border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid #E87722;background:var(--aetna-gray-100);">
+            <div style="font-size:18px;font-weight:700;color:#E87722;margin-bottom:4px;">02</div>
+            <div style="font-size:12px;font-weight:700;color:var(--aetna-navy);margin-bottom:4px;">Run-the-Business Dominates</div>
+            <div style="font-size:11px;color:var(--aetna-gray-600);line-height:1.5;">Cloud reduces run cost. ABX program targets $60M+ improvement.</div>
+          </div>
+          <div style="border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid #C8102E;background:var(--aetna-gray-100);">
+            <div style="font-size:18px;font-weight:700;color:#C8102E;margin-bottom:4px;">03</div>
+            <div style="font-size:12px;font-weight:700;color:var(--aetna-navy);margin-bottom:4px;">Technical Debt</div>
+            <div style="font-size:11px;color:var(--aetna-gray-600);line-height:1.5;">ATLAS, QNXT upgrade, Azure cloud, API-first design.</div>
+          </div>
+          <div style="border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid #00A3A1;background:var(--aetna-gray-100);">
+            <div style="font-size:18px;font-weight:700;color:#00A3A1;margin-bottom:4px;">04</div>
+            <div style="font-size:12px;font-weight:700;color:var(--aetna-navy);margin-bottom:4px;">No Operating Model</div>
+            <div style="font-size:11px;color:var(--aetna-gray-600);line-height:1.5;">8 product lines with owners + OKRs, outcome-based funding.</div>
+          </div>
+          <div style="border-radius:var(--radius-md);padding:14px 16px;border-left:3px solid #00843D;background:var(--aetna-gray-100);">
+            <div style="font-size:18px;font-weight:700;color:#00843D;margin-bottom:4px;">05</div>
+            <div style="font-size:12px;font-weight:700;color:var(--aetna-navy);margin-bottom:4px;">Leadership Instability</div>
+            <div style="font-size:11px;color:var(--aetna-gray-600);line-height:1.5;">Stable aligned team under Greg Krause, 3-year horizon.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUOTE -->
+      <div class="quote-block" style="margin-bottom:32px;">
+        <div class="quote-text">"Over the past 5 years, Medicaid Technology grew rapidly to meet market and regulatory demand — but did so through fragmented systems, evolving leadership, and project-based execution. This enabled growth — but created complexity, cost, and inefficiency. Today marks a turning point."</div>
+        <div class="quote-attr">— Aetna Medicaid Technology Leadership · 2026 Strategic Direction</div>
+      </div>
+
+      <!-- THE EVOLUTION -->
+      <h3 style="font-size:22px;font-weight:800;color:var(--aetna-navy);margin-bottom:20px;">The Evolution</h3>
+      <div class="story-layout">
+        <div class="story-nav">
+          <div class="story-nav-line"></div>
+          <div class="story-nav-item active" onclick="showStoryPanel(1)" data-panel="1">
+            <div class="story-nav-num">1</div>
+            <div class="story-nav-text">2021–2022<br><strong>Growth at all costs</strong></div>
+          </div>
+          <div class="story-nav-item" onclick="showStoryPanel(2)" data-panel="2">
+            <div class="story-nav-num">2</div>
+            <div class="story-nav-text">2023–2024<br><strong>Complexity compounds</strong></div>
+          </div>
+          <div class="story-nav-item" onclick="showStoryPanel(3)" data-panel="3">
+            <div class="story-nav-num">3</div>
+            <div class="story-nav-text">2024–2025<br><strong>Complexity peaks</strong></div>
+          </div>
+          <div class="story-nav-item" onclick="showStoryPanel(4)" data-panel="4">
+            <div class="story-nav-num">4</div>
+            <div class="story-nav-text">2026 — Now<br><strong>The turning point</strong></div>
+          </div>
+        </div>
+        <div style="position:relative;">
+          <div class="story-panel active" id="story-panel-1">
+            <div class="story-panel-date">2021-2022</div>
+            <div class="story-panel-subtitle">GROWTH AT ALL COSTS</div>
+            <div class="story-callout"><div class="story-callout-n">+12</div><div class="story-callout-l">States added</div></div>
+            <div class="story-panel-title">We grew fast — and grew apart</div>
+            <div class="story-panel-text">Medicaid expansion, new state contracts, and regulatory mandates drove rapid technology investment. Systems grew organically, market-by-market, to meet urgent needs. QNXT became the core platform but was surrounded by a growing ecosystem of point solutions and market-specific applications.</div>
+            <svg viewBox="0 0 500 140" width="500" height="140" style="display:block;margin-bottom:12px;">
+              <rect x="10" y="10" width="130" height="100" rx="8" fill="rgba(0,119,200,0.06)" stroke="rgba(0,119,200,0.3)" stroke-width="1.5"/>
+              <text x="75" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#0077C8">Market A</text>
+              <text x="75" y="62" text-anchor="middle" font-size="10" fill="#767676">Claims · Enroll</text>
+              <text x="75" y="80" text-anchor="middle" font-size="10" fill="#767676">Portal · Auth</text>
+              <rect x="170" y="10" width="130" height="100" rx="8" fill="rgba(0,119,200,0.06)" stroke="rgba(0,119,200,0.3)" stroke-width="1.5"/>
+              <text x="235" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#0077C8">Market B</text>
+              <text x="235" y="62" text-anchor="middle" font-size="10" fill="#767676">Claims · Enroll</text>
+              <text x="235" y="80" text-anchor="middle" font-size="10" fill="#767676">Portal · Auth</text>
+              <rect x="330" y="10" width="130" height="100" rx="8" fill="rgba(0,119,200,0.06)" stroke="rgba(0,119,200,0.3)" stroke-width="1.5"/>
+              <text x="395" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#C8102E">Market C</text>
+              <text x="395" y="62" text-anchor="middle" font-size="10" fill="#767676">Claims · Enroll</text>
+              <text x="395" y="80" text-anchor="middle" font-size="10" fill="#767676">Portal · Auth</text>
+              <text x="235" y="130" text-anchor="middle" font-size="11" fill="#767676">Each market builds its own stack — siloed by design</text>
+            </svg>
+            <div class="story-outcomes">
+              <span class="outcome-tag outcome-good">✓ 12+ states served</span>
+              <span class="outcome-tag outcome-good">✓ Contracts won</span>
+              <span class="outcome-tag outcome-bad">✗ No shared design</span>
+              <span class="outcome-tag outcome-bad">✗ Siloed by market</span>
+            </div>
+          </div>
+          <div class="story-panel" id="story-panel-2">
+            <div class="story-panel-date">2023-2024</div>
+            <div class="story-panel-subtitle">COMPLEXITY COMPOUNDS</div>
+            <div class="story-callout"><div class="story-callout-n">40%</div><div class="story-callout-l">of changes touch 3+ systems</div></div>
+            <div class="story-panel-title">Capability breadth grew — but complexity exploded</div>
+            <div class="story-panel-text">Expanding markets demanded more features across claims, enrollment, clinical, and provider platforms. The result was a web of point-to-point connections that nobody fully understood. Every change needed to be tested in 6 places.</div>
+            <svg viewBox="0 0 400 130" width="400" height="130" style="display:block;margin-bottom:12px;">
+              <circle cx="80" cy="55" r="28" fill="rgba(232,119,34,0.1)" stroke="#E87722" stroke-width="1.5"/>
+              <text x="80" y="58" text-anchor="middle" font-size="10" font-weight="600" fill="#E87722">Claims</text>
+              <circle cx="200" cy="30" r="28" fill="rgba(232,119,34,0.1)" stroke="#E87722" stroke-width="1.5"/>
+              <text x="200" y="33" text-anchor="middle" font-size="10" font-weight="600" fill="#E87722">Enroll</text>
+              <circle cx="320" cy="55" r="28" fill="rgba(232,119,34,0.1)" stroke="#E87722" stroke-width="1.5"/>
+              <text x="320" y="58" text-anchor="middle" font-size="10" font-weight="600" fill="#E87722">Provider</text>
+              <circle cx="200" cy="100" r="28" fill="rgba(232,119,34,0.1)" stroke="#E87722" stroke-width="1.5"/>
+              <text x="200" y="103" text-anchor="middle" font-size="10" font-weight="600" fill="#E87722">Clinical</text>
+              <line x1="108" y1="55" x2="172" y2="30" stroke="#E87722" stroke-width="1" stroke-dasharray="4"/>
+              <line x1="228" y1="30" x2="292" y2="55" stroke="#E87722" stroke-width="1" stroke-dasharray="4"/>
+              <line x1="108" y1="55" x2="172" y2="100" stroke="#E87722" stroke-width="1" stroke-dasharray="4"/>
+              <line x1="228" y1="100" x2="292" y2="55" stroke="#E87722" stroke-width="1" stroke-dasharray="4"/>
+              <text x="200" y="128" text-anchor="middle" font-size="10" fill="#767676">Integration spaghetti — every system connected to every other</text>
+            </svg>
+            <div class="story-outcomes">
+              <span class="outcome-tag outcome-good">✓ Capability breadth grew</span>
+              <span class="outcome-tag outcome-good">✓ Digital work began</span>
+              <span class="outcome-tag outcome-bad">✗ Integration debt exploded</span>
+              <span class="outcome-tag outcome-bad">✗ Change became expensive</span>
+            </div>
+          </div>
+          <div class="story-panel" id="story-panel-3">
+            <div class="story-panel-date">2024-2025</div>
+            <div class="story-panel-subtitle">COMPLEXITY PEAKS</div>
+            <div class="story-callout"><div class="story-callout-n">350</div><div class="story-callout-l">applications</div></div>
+            <div class="story-panel-title">High cost, low agility, and leadership transition</div>
+            <div class="story-panel-text">The portfolio ballooned to ~350 applications with overlapping, redundant capabilities. Run-the-business spend crowded out innovation. Cost structure deteriorated without a clear line of sight to ROI.</div>
+            <svg viewBox="0 0 400 110" width="400" height="110" style="display:block;margin-bottom:12px;">
+              <rect x="20" y="70" width="70" height="24" rx="4" fill="rgba(200,16,46,0.12)" stroke="#C8102E" stroke-width="1"/>
+              <text x="55" y="85" text-anchor="middle" font-size="10" font-weight="600" fill="#C8102E">$74M</text>
+              <rect x="110" y="56" width="70" height="38" rx="4" fill="rgba(200,16,46,0.16)" stroke="#C8102E" stroke-width="1"/>
+              <text x="145" y="78" text-anchor="middle" font-size="10" font-weight="600" fill="#C8102E">$82M</text>
+              <rect x="200" y="38" width="70" height="56" rx="4" fill="rgba(200,16,46,0.22)" stroke="#C8102E" stroke-width="1"/>
+              <text x="235" y="70" text-anchor="middle" font-size="10" font-weight="600" fill="#C8102E">$95M</text>
+              <rect x="290" y="16" width="70" height="78" rx="4" fill="rgba(200,16,46,0.32)" stroke="#C8102E" stroke-width="1"/>
+              <text x="325" y="58" text-anchor="middle" font-size="11" font-weight="700" fill="#C8102E">$105M</text>
+              <text x="55" y="104" text-anchor="middle" font-size="9" fill="#767676">2022</text>
+              <text x="145" y="104" text-anchor="middle" font-size="9" fill="#767676">2023</text>
+              <text x="235" y="104" text-anchor="middle" font-size="9" fill="#767676">2024</text>
+              <text x="325" y="104" text-anchor="middle" font-size="9" fill="#767676">2025</text>
+            </svg>
+            <div class="story-outcomes">
+              <span class="outcome-tag outcome-bad">✗ $105M annual run cost</span>
+              <span class="outcome-tag outcome-bad">✗ ~350 apps, unclear ownership</span>
+              <span class="outcome-tag outcome-bad">✗ Slow delivery</span>
+              <span class="outcome-tag outcome-bad">✗ Limited ROI visibility</span>
+            </div>
+          </div>
+          <div class="story-panel" id="story-panel-4">
+            <div class="story-panel-date">2026 — NOW</div>
+            <div class="story-panel-subtitle">THE TURNING POINT</div>
+            <div class="story-callout"><div class="story-callout-n" style="color:#00843D;">$677M</div><div class="story-callout-l">EBIT benefit over 5 years</div></div>
+            <div class="story-panel-title">Leadership alignment. A clear direction. The moment to move.</div>
+            <div class="story-panel-text">With Katerina Guerraz, Gregory Krause, and Jeffrey Krasner aligned on direction, we are shifting from building for Medicaid individually to leveraging Aetna enterprise capabilities for Medicaid advantage.</div>
+            <svg viewBox="0 0 420 110" width="420" height="110" style="display:block;margin-bottom:12px;">
+              <rect x="20" y="15" width="190" height="80" rx="8" fill="rgba(0,132,61,0.06)" stroke="rgba(0,132,61,0.3)" stroke-width="1.5"/>
+              <text x="115" y="38" text-anchor="middle" font-size="11" font-weight="700" fill="#00843D">ONE Platform</text>
+              <text x="115" y="56" text-anchor="middle" font-size="10" fill="#767676">Claims · Enroll · Clinical · Portal</text>
+              <text x="115" y="72" text-anchor="middle" font-size="10" fill="#767676">Provider · Finance · Data</text>
+              <rect x="35" y="80" width="160" height="10" rx="4" fill="rgba(0,132,61,0.12)"/>
+              <text x="115" y="88" text-anchor="middle" font-size="7" fill="#00843D">Shared Data Platform (GCP)</text>
+              <circle cx="290" cy="32" r="20" fill="rgba(92,46,114,0.06)" stroke="var(--aetna-navy)" stroke-width="1"/>
+              <text x="290" y="35" text-anchor="middle" font-size="8" font-weight="600" fill="var(--aetna-navy)">Katerina</text>
+              <circle cx="350" cy="55" r="20" fill="rgba(92,46,114,0.06)" stroke="var(--aetna-navy)" stroke-width="1"/>
+              <text x="350" y="58" text-anchor="middle" font-size="8" font-weight="600" fill="var(--aetna-navy)">Greg</text>
+              <circle cx="310" cy="82" r="20" fill="rgba(92,46,114,0.06)" stroke="var(--aetna-navy)" stroke-width="1"/>
+              <text x="310" y="85" text-anchor="middle" font-size="8" font-weight="600" fill="var(--aetna-navy)">Jeff</text>
+            </svg>
+            <div class="story-outcomes">
+              <span class="outcome-tag outcome-good">✓ Leadership aligned</span>
+              <span class="outcome-tag outcome-good">✓ Product model launching</span>
+              <span class="outcome-tag outcome-good">✓ Cloud migration underway</span>
+              <span class="outcome-tag outcome-good">✓ 8 product lines defined</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1047,7 +1230,7 @@ input, textarea, select { font-family: var(--font-body); }
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <!-- PAGE 2 · STORY                                                 -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<div id="page-story" class="page">
+<div id="page-story" class="page" style="display:none !important">
   <div class="hero">
     <div class="hero-eyebrow">Our Story · Why We Must Change</div>
     <h1 contenteditable="false">5 Years of Growth Built on Fragile Foundations</h1>
