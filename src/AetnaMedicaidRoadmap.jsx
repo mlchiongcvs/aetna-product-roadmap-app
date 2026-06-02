@@ -292,6 +292,19 @@ export default function RoadmapApp() {
     try { localStorage.setItem("roadmap-items-v2", JSON.stringify(items)); } catch {}
   }, [items]);
 
+  // Listen for navigation messages from iframes
+  const [pendingInitId, setPendingInitId] = useState(null);
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.data && e.data.type === 'navigate' && e.data.view) {
+        if (e.data.initId) setPendingInitId(e.data.initId);
+        setView(e.data.view);
+      }
+    };
+    window.addEventListener('message', handler);
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
   // Load Rally features on mount
   useEffect(() => {
     fetch("/api/rally/features").then(r => r.ok ? r.json() : []).then(setRallyFeatures).catch(() => {});
@@ -1461,7 +1474,7 @@ After creating, share the page URL.
 
 
           {view==="strat-roadmap" && (
-            <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=roadmap`} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Roadmap" />
+            <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=roadmap${pendingInitId ? '&openInit='+pendingInitId : ''}`} onLoad={() => setPendingInitId(null)} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Roadmap" />
           )}
 
           {view==="strat-context" && (
