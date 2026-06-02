@@ -2144,7 +2144,7 @@ function openPillarDetail(name){
             ${m.capex27?`<span style="color:var(--aetna-gray-500);">2027: $${m.capex27}M</span>`:''}
             ${m.ebit?`<span style="color:#00843D;">EBIT: $${m.ebit}M</span>`:''}
           </div>
-          <a href="javascript:void(0)" onclick="closePillarDetail();showPage('roadmap');setTimeout(()=>openPanel(${m.id}),300);" style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:11px;color:var(--aetna-blue);text-decoration:none;font-weight:600;">
+          <a href="javascript:void(0)" onclick="closePillarDetail();if(window.parent!==window){window.parent.postMessage({type:'navigate',view:'strat-roadmap',initId:${m.id}},'*');}else{showPage('roadmap');setTimeout(()=>openPanel(${m.id}),300);}" style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:11px;color:var(--aetna-blue);text-decoration:none;font-weight:600;">
             <span>View on Roadmap</span><span style="font-size:13px;">›</span>
           </a>
         </div>
@@ -2581,6 +2581,10 @@ function closePanel(){
     const goto=sessionStorage.getItem('gotoPage');
     if(goto){sessionStorage.removeItem('gotoPage');showPage(goto);}
   }
+
+  // Open initiative flyout if requested via URL param
+  const openInitId=params.get('openInit');
+  if(openInitId){ setTimeout(()=>openPanel(parseInt(openInitId)),400); }
 
   // Pillar item click delegation
   document.querySelectorAll('.pillar-item').forEach(el=>{
