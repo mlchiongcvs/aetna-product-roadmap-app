@@ -2582,9 +2582,9 @@ function closePanel(){
     if(goto){sessionStorage.removeItem('gotoPage');showPage(goto);}
   }
 
-  // Open initiative flyout if requested via URL param
-  const openInitId=params.get('openInit');
-  if(openInitId){ setTimeout(()=>openPanel(parseInt(openInitId)),400); }
+  // Open initiative flyout if requested via sessionStorage
+  const openInitId=sessionStorage.getItem('openInitId');
+  if(openInitId){ sessionStorage.removeItem('openInitId'); setTimeout(()=>openPanel(parseInt(openInitId)),500); }
 
   // Pillar item click delegation
   document.querySelectorAll('.pillar-item').forEach(el=>{

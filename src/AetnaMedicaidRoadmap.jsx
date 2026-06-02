@@ -293,11 +293,10 @@ export default function RoadmapApp() {
   }, [items]);
 
   // Listen for navigation messages from iframes
-  const [pendingInitId, setPendingInitId] = useState(null);
   useEffect(() => {
     const handler = (e) => {
       if (e.data && e.data.type === 'navigate' && e.data.view) {
-        if (e.data.initId) setPendingInitId(e.data.initId);
+        if (e.data.initId) sessionStorage.setItem('openInitId', e.data.initId);
         setView(e.data.view);
       }
     };
@@ -1474,7 +1473,7 @@ After creating, share the page URL.
 
 
           {view==="strat-roadmap" && (
-            <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=roadmap${pendingInitId ? '&openInit='+pendingInitId : ''}`} onLoad={() => setPendingInitId(null)} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Roadmap" />
+            <iframe src={`${import.meta.env.BASE_URL || '/'}strategy-overview.html?page=roadmap`} style={{ flex:1, width:"100%", height:"100%", border:"none" }} title="Roadmap" />
           )}
 
           {view==="strat-context" && (
