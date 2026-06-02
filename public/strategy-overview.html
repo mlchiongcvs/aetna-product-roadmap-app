@@ -2144,6 +2144,9 @@ function openPillarDetail(name){
             ${m.capex27?`<span style="color:var(--aetna-gray-500);">2027: $${m.capex27}M</span>`:''}
             ${m.ebit?`<span style="color:#00843D;">EBIT: $${m.ebit}M</span>`:''}
           </div>
+          <a href="javascript:void(0)" onclick="closePillarDetail();showPage('roadmap');setTimeout(()=>openPanel(${m.id}),300);" style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:11px;color:var(--aetna-blue);text-decoration:none;font-weight:600;">
+            <span>View on Roadmap</span><span style="font-size:13px;">›</span>
+          </a>
         </div>
       `).join('')}
     `:`<div style="font-size:13px;color:var(--aetna-gray-500);padding:20px 0;">No direct roadmap initiative match found. This investment may span multiple initiatives.</div>`}
