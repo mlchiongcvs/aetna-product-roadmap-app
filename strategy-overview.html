@@ -2349,8 +2349,8 @@ function fmtM(v){if(!v||v===0)return '—';return '$'+v.toFixed(1)+'M';}
 
 /* ── INITIATIVE INVENTORY (Context & Assumptions) ──────────────── */
 function renderInitInventory(){
-  let html='<div style="background:white;border-radius:var(--radius-lg);border:1px solid #EBEBEB;overflow:hidden;max-height:600px;overflow-y:auto;">';
-  html+='<table class="inv-table"><thead><tr><th style="width:36px">#</th><th>Initiative</th><th>Product Line</th><th style="width:70px">Funded</th><th style="width:80px">2026 CapEx</th><th style="width:80px">2027 CapEx</th><th>Source Document</th></tr></thead><tbody>';
+  let html='<div style="background:white;border-radius:var(--radius-lg);border:1px solid #EBEBEB;overflow:hidden;max-height:600px;overflow-y:auto;position:relative;">';
+  html+='<table class="inv-table" style="position:relative;"><thead><tr style="position:sticky;top:0;z-index:2;"><th style="width:36px">#</th><th>Initiative</th><th>Product Line</th><th style="width:70px">Funded</th><th style="width:80px">2026 CapEx</th><th style="width:80px">2027 CapEx</th><th>Source Document</th></tr></thead><tbody>';
   let count=0;
   PLs.forEach(pl=>{
     pl.products.forEach(prod=>{
